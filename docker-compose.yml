@@ -1,0 +1,11 @@
+version: "2"
+services:
+  app:
+    container_name: tmdb_client
+    build: .
+    environment:
+      - NODE_ENV=dev
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
