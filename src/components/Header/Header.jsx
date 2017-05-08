@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.css';
-import { t } from 'services/translate';
 
 const Header = () => (
   <div className={styles.container}>
