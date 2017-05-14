@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/publish';
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/debounce';
-import 'rxjs/add/operator/distinctUntilChanged';
 import 'react-select/dist/react-select.css';
+import { Observable } from 'services/observable';
 import styles from './MovieSearch.css';
 
 class MovieSearch extends React.Component {
@@ -20,19 +16,9 @@ class MovieSearch extends React.Component {
     this.registerObservables();
   }
 
-  setOnInputChangeObserver(observer) {
-    this.onInputChangeObserver = observer;
-  }
-
   registerObservables() {
-    const source = Observable
-      .create(observer => this.setOnInputChangeObserver(observer))
-      .debounce(() => Observable.interval(500))
-      .distinctUntilChanged();
-
-    const published = source.publish();
-    published.subscribe(this.handleInputChange);
-    published.connect();
+    this.onInputChangeObservable = new Observable(value => this.handleInputChange(value));
+    this.onInputChangeObservable.debounce(500).distinctUntilChanged().register();
   }
 
   handleInputChange(value) {
@@ -44,7 +30,7 @@ class MovieSearch extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        <Select onInputChange={value => this.onInputChangeObserver.next(value)} multiple />
+        <Select onInputChange={this.onInputChangeObservable.getHandler()} multiple />
       </div>
     );
   }
