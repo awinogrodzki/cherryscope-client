@@ -1,10 +1,11 @@
-import { DISCOVER_MOVIES } from '../actions/types';
+import { DISCOVER_MOVIES, GET_GENRES } from '../actions/types';
 
 const initialState = {
   items: [],
   page: 1,
   pageCount: null,
   itemCount: null,
+  genres: [],
 };
 
 export default function userReducer(state = initialState, action) {
@@ -15,6 +16,10 @@ export default function userReducer(state = initialState, action) {
       page: action.page,
       pageCount: action.pageCount,
       itemCount: action.itemCount,
+    });
+  case GET_GENRES:
+    return Object.assign({}, state, {
+      genres: action.genres,
     });
   default:
     return state;

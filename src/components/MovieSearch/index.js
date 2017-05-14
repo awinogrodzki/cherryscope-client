@@ -1,1 +1,1 @@
-export { default } from './MovieSearch';
+export { default } from './MovieSearchContainer';

@@ -2,45 +2,48 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import { Observable } from 'services/observable';
 import styles from './MovieSearch.css';
 
 class MovieSearch extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      searchString: null,
+      selected: null,
     };
-
-    this.registerObservables();
+  }
+  getOptions() {
+    return this.props.genres.map(item => ({ value: item.id, label: item.name }));
   }
 
-  registerObservables() {
-    this.onInputChangeObservable = new Observable(value => this.handleInputChange(value));
-    this.onInputChangeObservable.debounce(500).distinctUntilChanged().register();
-  }
-
-  handleInputChange(value) {
+  onChange(value) {
+    this.props.onChange(value);
     this.setState({
-      searchString: value,
+      selected: value,
     });
   }
 
   render() {
     return (
       <div className={styles.container}>
-        <Select onInputChange={this.onInputChangeObservable.getHandler()} multiple />
+        <Select
+          value={this.state.selected}
+          onChange={value => this.onChange(value)}
+          options={this.getOptions()}
+          multi
+          joinValues
+        />
       </div>
     );
   }
 }
 
 MovieSearch.propTypes = {
+  genres: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
 };
 
 MovieSearch.defaultProps = {
+  genres: [],
   onChange: () => {},
 };
 

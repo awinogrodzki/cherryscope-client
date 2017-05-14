@@ -1,1 +1,2 @@
 export const DISCOVER_MOVIES = 'DISCOVER_MOVIES';
+export const GET_GENRES = 'GET_GENRES';

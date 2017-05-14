@@ -1,5 +1,5 @@
 import movieService from 'services/movie';
-import { DISCOVER_MOVIES } from './types';
+import { DISCOVER_MOVIES, GET_GENRES } from './types';
 
 const discoverMovies = filters => dispatch => (
   new Promise(resolve => movieService.discover(filters)
@@ -16,5 +16,17 @@ const discoverMovies = filters => dispatch => (
     }))
 );
 
+const getGenres = () => dispatch => (
+  new Promise(resolve => movieService.getGenres()
+    .then((data) => {
+      resolve(data);
 
-module.exports = { discoverMovies };
+      dispatch({
+        type: GET_GENRES,
+        genres: data.genres,
+      });
+    }))
+);
+
+
+module.exports = { discoverMovies, getGenres };
