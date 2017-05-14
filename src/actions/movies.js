@@ -28,5 +28,4 @@ const getGenres = () => dispatch => (
     }))
 );
 
-
 module.exports = { discoverMovies, getGenres };

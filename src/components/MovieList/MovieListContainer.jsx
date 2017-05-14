@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 import { discoverMovies } from 'actions';
 import MovieList from './MovieList';
 
@@ -10,7 +11,6 @@ class MovieListContainer extends React.Component {
 
     this.state = {
       isLoading: true,
-      filters: {},
     };
   }
 
@@ -18,12 +18,30 @@ class MovieListContainer extends React.Component {
     this.discoverMovies();
   }
 
-  discoverMovies() {
+  discoverMovies(filters = {}) {
     this.setState({ isLoading: true });
 
-    this.props.discoverMovies(this.state.filters)
+    this.props.discoverMovies(filters)
       .then(() => this.setState({ isLoading: false }))
       .catch(() => this.setState({ isLoading: false }));
+  }
+
+  getFilters() {
+    return {
+      with_genres: this.props.genres
+        .map(genre => genre.value)
+        .join(','),
+    };
+  }
+
+  hasGenresChanged(nextProps) {
+    return !isEqual(nextProps.genres, this.props.genres);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.hasGenresChanged(prevProps)) {
+      this.discoverMovies(this.getFilters());
+    }
   }
 
   render() {
@@ -45,6 +63,11 @@ const mapStateToProps = state => ({
 MovieListContainer.propTypes = {
   discoverMovies: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  genres: PropTypes.arrayOf(PropTypes.object),
+};
+
+MovieListContainer.defaultProps = {
+  genres: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieListContainer);

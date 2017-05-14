@@ -6,15 +6,15 @@ class Movies extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      genres: [],
+      selectedGenres: [],
     };
   }
 
   render() {
     return (
       <div>
-        <MovieSearch onChange={({ genres }) => this.setState({ genres })} />
-        <MovieList />
+        <MovieSearch onChange={genres => this.setState({ selectedGenres: genres })} />
+        <MovieList genres={this.state.selectedGenres} />
       </div>
     );
   }

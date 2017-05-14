@@ -20,7 +20,7 @@ const GENRES_URL = getUrl(GENRES_URI);
 
 export default {
   discover(filters = {}) {
-    return axios.get(DISCOVER_URL, filters)
+    return axios.get(DISCOVER_URL, { params: filters })
       .then(response => mapResponse(response));
   },
 
