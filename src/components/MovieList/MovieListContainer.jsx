@@ -22,8 +22,8 @@ class MovieListContainer extends React.Component {
     this.setState({ isLoading: true });
 
     this.props.discoverMovies(this.state.filters)
-      .then(data => this.setState({ isLoading: false }))
-      .catch(error => this.setState({ isLoading: false }));
+      .then(() => this.setState({ isLoading: false }))
+      .catch(() => this.setState({ isLoading: false }));
   }
 
   render() {
@@ -35,7 +35,7 @@ class MovieListContainer extends React.Component {
 }
 
 const mapDispatchToProps = {
-  discoverMovies: (filters) => discoverMovies(filters),
+  discoverMovies: filters => discoverMovies(filters),
 };
 
 const mapStateToProps = state => ({
@@ -44,7 +44,7 @@ const mapStateToProps = state => ({
 
 MovieListContainer.propTypes = {
   discoverMovies: PropTypes.func.isRequired,
-  items: PropTypes.array.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieListContainer);

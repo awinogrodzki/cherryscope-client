@@ -1,8 +1,8 @@
 import movieService from 'services/movie';
 import { DISCOVER_MOVIES } from './types';
 
-const discoverMovies = (filters) => dispatch => new Promise((resolve, reject) => {
-  return movieService.discover(filters)
+const discoverMovies = filters => dispatch => (
+  new Promise(resolve => movieService.discover(filters)
     .then((data) => {
       resolve(data);
 
@@ -13,7 +13,8 @@ const discoverMovies = (filters) => dispatch => new Promise((resolve, reject) =>
         pageCount: data.total_pages,
         itemCount: data.total_results,
       });
-    });
-});
+    }))
+);
+
 
 module.exports = { discoverMovies };

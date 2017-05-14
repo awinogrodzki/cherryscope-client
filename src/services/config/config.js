@@ -1,3 +1,6 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
+
 import getProperty from 'lodash/get';
 
 const getConfig = () => {
@@ -13,5 +16,5 @@ const configData = getConfig();
 export default {
   get(configName) {
     return getProperty(configData, configName);
-  }
-}
+  },
+};

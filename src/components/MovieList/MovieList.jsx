@@ -11,14 +11,12 @@ const renderMovies = (movies, isLoading) => {
     );
   }
 
-  return movies.map((item, index) => {
-    return (
-      <Movie
-        key={index}
-        imageUrl={movieService.getImageUrl(item.backdrop_path)}
-      />
-    );
-  });
+  return movies.map(item => (
+    <Movie
+      key={item.id}
+      imageUrl={movieService.getImageUrl(item.backdrop_path)}
+    />
+  ));
 };
 
 const MovieList = ({ movies, isLoading }) => (
@@ -28,7 +26,7 @@ const MovieList = ({ movies, isLoading }) => (
 );
 
 MovieList.propTypes = {
-  movies: PropTypes.array,
+  movies: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.boolean,
 };
 

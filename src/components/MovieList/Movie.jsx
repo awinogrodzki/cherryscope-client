@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Movie.css';
 
 const renderImage = (url) => {
@@ -18,5 +19,9 @@ const Movie = ({ imageUrl }) => (
     </div>
   </div>
 );
+
+Movie.propTypes = {
+  imageUrl: PropTypes.string,
+};
 
 export default Movie;

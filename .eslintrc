@@ -23,6 +23,7 @@
       { "devDependencies": true }
     ],
     "import/prefer-default-export": 0,
+    "import/no-named-as-default": 0,
     "indent": ["error", 2],
     "jsx-a11y/img-has-alt": 0
   },

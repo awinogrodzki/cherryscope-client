@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { discoverMovies } from './movies';
 import { DISCOVER_MOVIES } from './types';
 
-const middlewares = [ thunk ];
+const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 jest.mock('services/movie', () => ({
@@ -24,7 +24,7 @@ describe('movies actions', () => {
         page: 1,
         pageCount: 10,
         itemCount: 20,
-      }
+      },
     ];
     const store = mockStore({ movies: {} });
 
@@ -32,5 +32,5 @@ describe('movies actions', () => {
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
-  })
+  });
 });

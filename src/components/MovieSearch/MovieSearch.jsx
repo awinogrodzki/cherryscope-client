@@ -6,19 +6,27 @@ import 'rxjs/add/operator/publish';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/debounce';
 import 'rxjs/add/operator/distinctUntilChanged';
-import styles from './MovieSearch.css';
 import 'react-select/dist/react-select.css';
+import styles from './MovieSearch.css';
 
 class MovieSearch extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      searchString: null,
+    };
+
     this.registerObservables();
+  }
+
+  setOnInputChangeObserver(observer) {
+    this.onInputChangeObserver = observer;
   }
 
   registerObservables() {
     const source = Observable
-      .create(observer => this.onInputChangeObserver = (e) => observer.next(e))
+      .create(observer => this.setOnInputChangeObserver(observer))
       .debounce(() => Observable.interval(500))
       .distinctUntilChanged();
 
@@ -27,14 +35,16 @@ class MovieSearch extends React.Component {
     published.connect();
   }
 
-  handleInputChange(e) {
-    console.log(e);
+  handleInputChange(value) {
+    this.setState({
+      searchString: value,
+    });
   }
 
   render() {
     return (
       <div className={styles.container}>
-        <Select onInputChange={this.onInputChangeObserver} multiple />
+        <Select onInputChange={value => this.onInputChangeObserver.next(value)} multiple />
       </div>
     );
   }
@@ -42,6 +52,10 @@ class MovieSearch extends React.Component {
 
 MovieSearch.propTypes = {
   onChange: PropTypes.func,
+};
+
+MovieSearch.defaultProps = {
+  onChange: () => {},
 };
 
 export default MovieSearch;

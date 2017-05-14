@@ -6,13 +6,9 @@ const API_URL = config.get('services.movie.api_url');
 const DISCOVER_URI = config.get('services.movie.discover_uri');
 const IMAGE_URL = config.get('services.movie.image_url');
 
-const getImageUrl = (image) => {
-  return `${IMAGE_URL}${image}`;
-};
+const getImageUrl = image => `${IMAGE_URL}${image}`;
 
-const getUrl = (uri) => {
-  return `${API_URL}${DISCOVER_URI}?api_key=${API_KEY}`;
-}
+const getUrl = uri => `${API_URL}${uri}?api_key=${API_KEY}`;
 
 const mapResponse = (response) => {
   const data = response.data;
@@ -33,4 +29,4 @@ export default {
     });
   },
   getImageUrl,
-}
+};
