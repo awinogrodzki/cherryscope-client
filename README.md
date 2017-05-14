@@ -1,2 +1,1 @@
-# react-webpack-cssnext
-Boilerplate with React, Webpack and CSSNext configuration
+>>>>>>> 3f9b957e76994560f558a5796574d7f2a20c5539
