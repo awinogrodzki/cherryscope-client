@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf ./dist && webpack --bail --config webpack.config.js -p",
+    "build": "rm -rf ./dist && NODE_ENV=production webpack --bail --config webpack.config.js -p",
     "start": "webpack --config webpack.config.js --watch",
     "start:dev": "webpack-dev-server",
     "lint": "eslint --ext .jsx --ext .js src",
@@ -16,12 +16,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.16.1",
     "i18n-js": "^1.0.0",
+    "lodash": "^4.17.4",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
     "react-router-config": "^1.0.0-beta.3",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "react-select": "^1.0.0-rc.3",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "rxjs": "^5.4.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -43,6 +50,8 @@
     "postcss-cssnext": "^2.10.0",
     "postcss-loader": "^2.0.1",
     "react-test-renderer": "^15.5.4",
+    "redux-logger": "^3.0.1",
+    "redux-mock-store": "^1.2.3",
     "style-loader": "^0.17.0",
     "webpack": "^2.5.1",
     "webpack-dev-server": "^2.4.5"
@@ -52,6 +61,10 @@
     "npm": ">=3.10.9"
   },
   "jest": {
+    "modulePaths": [
+      "node_modules",
+      "src"
+    ],
     "moduleNameMapper": {
       "\\.(s?css)$": "identity-obj-proxy"
     },

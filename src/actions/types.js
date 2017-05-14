@@ -1,0 +1,1 @@
+export const DISCOVER_MOVIES = 'DISCOVER_MOVIES';

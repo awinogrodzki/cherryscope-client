@@ -1,5 +1,5 @@
 import Root from './Root';
-import Home from './Home';
+import Movies from './Movies';
 import NotFound from './NotFound';
 
 const routes = [
@@ -8,7 +8,7 @@ const routes = [
     routes: [
       { path: '/',
         exact: true,
-        component: Home,
+        component: Movies,
       },
       { path: '*',
         component: NotFound,

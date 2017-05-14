@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -27,6 +28,16 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        include: path.resolve("./node_modules/react-select"),
+        loader: [
+          'style-loader',
+          'css-loader?importLoaders=1',
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        exclude: path.resolve("./node_modules/react-select"),
         loader: [
           'style-loader',
           'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
@@ -35,6 +46,11 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'dev'),
+    }),
+  ],
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
     extensions: ['.js', '.jsx'],

@@ -1,0 +1,10 @@
+{
+  "services": {
+    "movie": {
+      "api_key": "1ef3f71a318d8d8ed927fdcf2fb90670",
+      "api_url": "https://api.themoviedb.org/3",
+      "discover_uri": "/discover/movie",
+      "image_url": "https://image.tmdb.org/t/p/w500"
+    }
+  }
+}
