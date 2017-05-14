@@ -2,3 +2,11 @@
 .container {
 
 }
+
+.genreValue {
+  &::before {
+    content: 'genre: ';
+    font-size: 12px;
+    vertical-align: top;
+  }
+}

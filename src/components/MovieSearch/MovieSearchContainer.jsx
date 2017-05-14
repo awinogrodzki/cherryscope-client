@@ -5,18 +5,30 @@ import { getGenres } from 'actions';
 import MovieSearch from './MovieSearch';
 
 class MovieSearchContainer extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: true,
+    };
+  }
+
   componentDidMount() {
     this.getGenres();
   }
 
   getGenres() {
-    this.props.getGenres();
+    this.setState({ isLoading: true });
+    this.props.getGenres()
+      .then(() => this.setState({ isLoading: false }))
+      .catch(() => this.setState({ isLoading: false }));
   }
 
   render() {
     return (<MovieSearch
       genres={this.props.genres}
       onChange={value => this.props.onChange(value)}
+      isLoading={this.state.isLoading}
     />);
   }
 }
@@ -39,6 +51,5 @@ MovieSearchContainer.defaultProps = {
   onChange: () => {},
   genres: [],
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieSearchContainer);

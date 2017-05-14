@@ -12,7 +12,7 @@ class MovieSearch extends React.Component {
     };
   }
   getOptions() {
-    return this.props.genres.map(item => ({ value: item.id, label: item.name }));
+    return this.props.genres.map(item => ({ value: item.id, label: item.name, type: 'genre' }));
   }
 
   onChange(value) {
@@ -20,6 +20,10 @@ class MovieSearch extends React.Component {
     this.setState({
       selected: value,
     });
+  }
+
+  renderValue(options) {
+    return <span className={styles[`${options.type}Value`]}>{options.label}</span>;
   }
 
   render() {
@@ -31,6 +35,8 @@ class MovieSearch extends React.Component {
           options={this.getOptions()}
           multi
           joinValues
+          valueRenderer={options => this.renderValue(options)}
+          isLoading={this.props.isLoading}
         />
       </div>
     );
@@ -38,11 +44,13 @@ class MovieSearch extends React.Component {
 }
 
 MovieSearch.propTypes = {
+  isLoading: PropTypes.bool,
   genres: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
 };
 
 MovieSearch.defaultProps = {
+  isLoading: true,
   genres: [],
   onChange: () => {},
 };
