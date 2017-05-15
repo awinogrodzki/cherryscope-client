@@ -7,7 +7,7 @@ const DISCOVER_URI = config.get('services.movie.discover_uri');
 const GENRES_URI = config.get('services.movie.genres_uri');
 const IMAGE_URL = config.get('services.movie.image_url');
 
-const getImageUrl = image => `${IMAGE_URL}${image}`;
+const getImageUrl = image => (image ? `${IMAGE_URL}${image}` : null);
 const getUrl = uri => `${API_URL}${uri}?api_key=${API_KEY}`;
 
 const mapResponse = (response) => {
@@ -30,4 +30,5 @@ export default {
   },
 
   getImageUrl,
+  getUrl,
 };

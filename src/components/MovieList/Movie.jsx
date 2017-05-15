@@ -4,11 +4,16 @@ import styles from './Movie.css';
 
 const renderImage = (url) => {
   if (!url) {
-    return <div className={styles.emptyImage} />;
+    return (
+      <div
+        dataTest="Movie.emptyImage"
+        className={styles.emptyImage}
+      />
+    );
   }
 
   return (
-    <img src={url} />
+    <img dataTest="Movie.image" src={url} />
   );
 };
 
