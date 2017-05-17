@@ -10,10 +10,14 @@ class Movies extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+
+  }
+
   render() {
     return (
       <div>
-        <MovieSearch onChange={genres => this.setState({ selectedGenres: genres })} />
+        <MovieSearch onChange={data => this.setState({ selectedGenres: data.genre })} />
         <MovieList genres={this.state.selectedGenres} />
       </div>
     );

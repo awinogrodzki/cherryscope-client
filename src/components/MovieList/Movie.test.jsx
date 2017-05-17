@@ -6,15 +6,15 @@ describe('Movie', () => {
   it('should display empty image element if there is no image url', () => {
     const wrapper = shallow(<Movie imageUrl={null} />);
 
-    expect(wrapper.find('[dataTest="Movie.image"]')).toHaveLength(0);
-    expect(wrapper.find('[dataTest="Movie.emptyImage"]')).toHaveLength(1);
+    expect(wrapper.find('[data-test="Movie.image"]')).toHaveLength(0);
+    expect(wrapper.find('[data-test="Movie.emptyImage"]')).toHaveLength(1);
   });
 
   it('should display image element if there is image url', () => {
     const wrapper = shallow(<Movie imageUrl={'test_url'} />);
-    const images = wrapper.find('[dataTest="Movie.image"]');
+    const images = wrapper.find('[data-test="Movie.image"]');
 
-    expect(wrapper.find('[dataTest="Movie.emptyImage"]')).toHaveLength(0);
+    expect(wrapper.find('[data-test="Movie.emptyImage"]')).toHaveLength(0);
     expect(images).toHaveLength(1);
     expect(images.node.props.src).toBe('test_url');
   });

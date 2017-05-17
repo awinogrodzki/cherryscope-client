@@ -6,14 +6,14 @@ const renderImage = (url) => {
   if (!url) {
     return (
       <div
-        dataTest="Movie.emptyImage"
+        data-test="Movie.emptyImage"
         className={styles.emptyImage}
       />
     );
   }
 
   return (
-    <img dataTest="Movie.image" src={url} />
+    <img data-test="Movie.image" src={url} />
   );
 };
 

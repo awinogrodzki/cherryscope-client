@@ -1,0 +1,11 @@
+.container {
+  padding: 20px;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  font-size: 18px;
+  outline-color: #ccc;
+  padding: 0 10px;
+}
