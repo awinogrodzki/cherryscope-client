@@ -79,10 +79,6 @@ class Select extends React.Component {
   }
 
   onInputKeyDown(e) {
-    if (!this.state.isExpanded) {
-      this.expand();
-    }
-
     switch (e.keyCode) {
       case 8:
         this.handleInputBackspace();
@@ -94,7 +90,7 @@ class Select extends React.Component {
         this.handleInputEscape();
         break;
       default:
-        break;
+        if (!this.state.isExpanded) { this.expand(); }
     }
   }
 
@@ -166,9 +162,12 @@ class Select extends React.Component {
     return options;
   }
 
-  deleteValue(optionToDelete) {
+  onValueDelete(optionToDelete) {
     this.ignoreBlurOnce();
+    this.deleteValue(optionToDelete);
+  }
 
+  deleteValue(optionToDelete) {
     this.setState({
       values: [
         ...this.state.values.filter(option => !isEqual(option, optionToDelete)),
@@ -187,7 +186,7 @@ class Select extends React.Component {
               <Value
                 key={option.value}
                 option={option}
-                onDelete={optionToDelete => this.deleteValue(optionToDelete)}
+                onDelete={optionToDelete => this.onValueDelete(optionToDelete)}
               />
             )) }
           </div>
