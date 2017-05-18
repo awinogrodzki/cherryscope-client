@@ -7,9 +7,10 @@ const Value = ({ option, onDelete }) => (
     <button
       data-test="Value.deleteButton"
       className={styles.deleteButton}
-      onClick={() => onDelete(option)}
+      onMouseDown={() => onDelete(option)}
+      onTouchStart={() => onDelete(option)}
     />
-    <span>{option.label}</span>
+    <span className={styles.label}>{option.label}</span>
   </div>
 );
 

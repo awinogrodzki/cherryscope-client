@@ -12,9 +12,12 @@ class Select extends React.Component {
   constructor(props) {
     super(props);
 
+    this.input = null;
+    this.ignoreBlur = false;
     this.state = {
       values: this.getInitialValues(),
       inputValue: props.inputValue,
+      isExpanded: props.isExpanded,
     };
   }
 
@@ -66,27 +69,106 @@ class Select extends React.Component {
     return this.props.onChange(this.state.values);
   }
 
+  setInput(input) {
+    this.input = input;
+  }
+
   onInputChange(e) {
     this.setState({ inputValue: e.target.value });
     this.props.onInputChange(e.target.value);
   }
 
-  onInputKeyUp(e) {
-    const keyCode = e.keyCode;
-
-    // backspace
-    if (keyCode === 8) {
-      this.handleInputBackspace();
+  onInputKeyDown(e) {
+    if (!this.state.isExpanded) {
+      this.expand();
     }
+
+    switch (e.keyCode) {
+      case 8:
+        this.handleInputBackspace();
+        break;
+      case 13:
+        this.handleInputEnter();
+        break;
+      case 27:
+        this.handleInputEscape();
+        break;
+      default:
+        break;
+    }
+  }
+
+  expand() {
+    this.setState({
+      isExpanded: true,
+    });
+  }
+
+  onInputFocus() {
+    this.expand();
+  }
+
+  collapse() {
+    this.setState({
+      isExpanded: false,
+    });
+  }
+
+  ignoreBlurOnce() {
+    this.ignoreBlur = true;
+  }
+
+  onInputBlur() {
+    if (this.ignoreBlur) {
+      this.input.focus();
+      this.ignoreBlur = false;
+      return;
+    }
+
+    this.collapse();
   }
 
   handleInputBackspace() {
     if (this.state.inputValue.length === 0 && this.state.values.length > 0) {
-      this.deleteOption(this.state.values[this.state.values.length - 1]);
+      this.deleteValue(this.state.values[this.state.values.length - 1]);
     }
   }
 
-  deleteOption(optionToDelete) {
+  handleInputEnter() {
+    const options = this.getFilteredOptions();
+    if (options.length > 0) {
+      this.selectOption(options[0]);
+    }
+  }
+
+  handleInputEscape() {
+    this.onInputBlur();
+    this.setState({
+      inputValue: '',
+    });
+  }
+
+  getFilteredOptions() {
+    if (this.props.optionGroups.length > 0) {
+      return this.filterOptions(this.getOptionsFromGroups());
+    }
+
+    return this.filterOptions(this.props.options);
+  }
+
+  getOptionsFromGroups() {
+    let options = [];
+
+    this.props.optionGroups.forEach((group) => {
+      options = [...options, ...group.options];
+    });
+
+    return options;
+  }
+
+  deleteValue(optionToDelete) {
+    this.ignoreBlurOnce();
+
     this.setState({
       values: [
         ...this.state.values.filter(option => !isEqual(option, optionToDelete)),
@@ -105,23 +187,28 @@ class Select extends React.Component {
               <Value
                 key={option.value}
                 option={option}
-                onDelete={optionToDelete => this.deleteOption(optionToDelete)}
+                onDelete={optionToDelete => this.deleteValue(optionToDelete)}
               />
             )) }
           </div>
           <input
+            ref={input => this.setInput(input)}
             data-test="Select.input"
             type="text"
             value={this.state.inputValue}
             onChange={e => this.onInputChange(e)}
-            onKeyUp={e => this.onInputKeyUp(e)}
+            onKeyDown={e => this.onInputKeyDown(e)}
+            onFocus={e => this.onInputFocus(e)}
+            onBlur={e => this.onInputBlur(e)}
             className={styles.input}
             placeholder={this.props.isLoading ? 'Loading' : ''}
           />
         </div>
-        <div className={classNames(styles.optionListContainer)}>
-          {this.renderOptionGroups()}
-        </div>
+        { !!this.state.isExpanded &&
+          <div data-test="Select.optionContainer" className={classNames(styles.optionContainer)}>
+            {this.renderOptionGroups()}
+          </div>
+        }
       </div>
     );
   }
@@ -149,13 +236,17 @@ class Select extends React.Component {
   }
 
   onOptionClick(option) {
-    const isSelected = this.isSelected(option);
+    this.ignoreBlurOnce();
 
-    if (!isSelected) {
-      return this.assignOption(option);
-    }
+    this.selectOption(option);
 
     return null;
+  }
+
+  selectOption(option) {
+    if (!this.isSelected(option)) {
+      this.assignOption(option);
+    }
   }
 
   isSelected(option) {
@@ -165,6 +256,7 @@ class Select extends React.Component {
   assignOption(option) {
     this.setState({
       values: [...this.state.values, option],
+      inputValue: '',
     }, () => {
       this.handleValuesChange();
     });
@@ -210,7 +302,8 @@ class Select extends React.Component {
         key={key}
         label={label}
         options={filteredOptions}
-        onOptionClick={value => this.onOptionClick(value, key)}
+        onLabelClick={() => this.ignoreBlurOnce()}
+        onOptionClick={value => this.onOptionClick(value)}
       />
     );
   }
@@ -237,6 +330,7 @@ Select.propTypes = {
   groupBy: PropTypes.string,
   options: PropTypes.arrayOf(optionType),
   isLoading: PropTypes.bool,
+  isExpanded: PropTypes.bool,
 };
 
 Select.defaultProps = {
@@ -248,6 +342,7 @@ Select.defaultProps = {
   groupBy: null,
   options: [],
   isLoading: false,
+  isExpanded: false,
 };
 
 export default Select;

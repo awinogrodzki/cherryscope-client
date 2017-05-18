@@ -1,5 +1,10 @@
+@import 'resources/styles/variables';
+
 .labelContainer {
-  padding: 20px;
+  padding: 10px;
+  font-size: 14px;
+  background: var(--color-light-grey);
+  border-bottom: 1px solid color(var(--input-color) alpha(-75%));
 }
 
 .label {

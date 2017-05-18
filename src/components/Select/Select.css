@@ -1,11 +1,38 @@
+@import 'resources/styles/variables';
+
 .container {
   padding: 20px;
 }
 
+.inputContainer {
+  background: #fff;
+  border: 1px solid color(var(--input-color) alpha(-50%));
+  box-shadow: 0 1px 2px 0 color(var(--input-color) alpha(-80%));
+  display: flex;
+  padding: 10px;
+}
+
+.optionContainer {
+  border: 1px solid color(var(--input-color) alpha(-50%));
+  border-width: 0 1px 1px 1px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.valueContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .input {
-  width: 100%;
-  height: 40px;
+  flex: 1;
+  height: 1.2em;
+  line-height: 1.2em;
   font-size: 18px;
-  outline-color: #ccc;
-  padding: 0 10px;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--input-text-color);
 }
