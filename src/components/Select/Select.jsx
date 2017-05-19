@@ -188,7 +188,6 @@ class Select extends React.Component {
 
   onOptionClick(option) {
     this.ignoreBlurOnce();
-
     this.selectOption(option);
 
     return null;
@@ -201,7 +200,7 @@ class Select extends React.Component {
   }
 
   isSelected(option) {
-    return find(this.state.values, { value: option.value });
+    return find(this.state.values, option);
   }
 
   assignOption(option) {
@@ -215,18 +214,16 @@ class Select extends React.Component {
 
   renderOptionGroups() {
     if (this.props.optionGroups.length > 0) {
-      return this.props.optionGroups.map((group, index) => this.renderOptionGroup(
-        group.options,
-        group.label,
-        group.id || index
-      ));
+      return this.props.optionGroups.map(
+        (group, index) => this.renderOptionGroup(group, group.id || index)
+      );
     }
 
-    return this.renderOptionGroup(this.props.options);
+    return this.renderOptionGroup({ options: this.props.options });
   }
 
-  renderOptionGroup(options, label = null, key = 0) {
-    const filteredOptions = this.filterOptions(options);
+  renderOptionGroup(group, key = 0) {
+    const filteredOptions = this.filterOptions(group.options);
 
     if (!filteredOptions.length) {
       return null;
@@ -235,7 +232,7 @@ class Select extends React.Component {
     return (
       <OptionGroup
         key={key}
-        label={label}
+        label={group.label}
         options={filteredOptions}
         onLabelClick={() => this.ignoreBlurOnce()}
         onOptionClick={value => this.onOptionClick(value)}

@@ -199,7 +199,6 @@ describe('Select', () => {
   it('should be able to select values on enter key with option groups', () => {
     const optionGroups = [
       {
-        id: 'genre',
         label: 'Test',
         options: [
           { value: 1, label: 'Value', type: 'genre' },
@@ -207,7 +206,6 @@ describe('Select', () => {
         ],
       },
       {
-        id: 'test',
         label: 'Test2',
         options: [
           { value: 3, label: 'Value3', type: 'test' },
