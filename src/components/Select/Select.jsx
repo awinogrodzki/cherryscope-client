@@ -15,57 +15,13 @@ class Select extends React.Component {
     this.input = null;
     this.ignoreBlur = false;
     this.state = {
-      values: this.getInitialValues(),
+      values: props.values,
       inputValue: props.inputValue,
       isExpanded: props.isExpanded,
     };
   }
 
-  getInitialValues() {
-    if (!this.props.values) {
-      return [];
-    }
-
-    if (this.props.values && this.props.groupBy) {
-      return this.mapGroupsToValue(this.props.values);
-    }
-
-    if (
-      typeof this.props.values === 'object'
-      && !Array.isArray(this.props.values)
-      && !this.props.groupBy
-    ) {
-      throw new Error('If values is of type object, groupBy needs to be specified.');
-    }
-
-    return this.props.values;
-  }
-
-  mapGroupsToValue(groups) {
-    let values = [];
-
-    Object.keys(groups).forEach((groupName) => {
-      const group = groups[groupName];
-      if (!group) {
-        return;
-      }
-
-      const mappedGroup = group.map(option => ({
-        ...option,
-        [this.props.groupBy]: groupName,
-      }));
-
-      values = [...values, ...mappedGroup];
-    });
-
-    return values;
-  }
-
   handleValuesChange() {
-    if (this.canGroup()) {
-      return this.props.onChange(this.groupValues(this.state.values, this.props.groupBy));
-    }
-
     return this.props.onChange(this.state.values);
   }
 
@@ -230,10 +186,6 @@ class Select extends React.Component {
       ) !== -1;
   }
 
-  canGroup() {
-    return this.props.groupBy;
-  }
-
   onOptionClick(option) {
     this.ignoreBlurOnce();
 
@@ -259,22 +211,6 @@ class Select extends React.Component {
     }, () => {
       this.handleValuesChange();
     });
-  }
-
-  groupValues(values, groupBy) {
-    const groups = {};
-
-    values.forEach((option) => {
-      const groupName = option[groupBy];
-
-      if (!groupName) {
-        return;
-      }
-
-      (groups[groupName] = groups[groupName] || []).push(option);
-    });
-
-    return groups;
   }
 
   renderOptionGroups() {
@@ -317,16 +253,12 @@ const optionType = PropTypes.shape({
 Select.propTypes = {
   inputValue: PropTypes.string,
   onInputChange: PropTypes.func,
-  values: PropTypes.oneOfType([
-    PropTypes.arrayOf(optionType),
-    PropTypes.object,
-  ]),
+  values: PropTypes.arrayOf(optionType),
   onChange: PropTypes.func,
   optionGroups: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,
     options: PropTypes.arrayOf(optionType),
   })),
-  groupBy: PropTypes.string,
   options: PropTypes.arrayOf(optionType),
   isLoading: PropTypes.bool,
   isExpanded: PropTypes.bool,
@@ -335,10 +267,9 @@ Select.propTypes = {
 Select.defaultProps = {
   inputValue: '',
   onInputChange: () => {},
-  values: null,
+  values: [],
   onChange: () => {},
   optionGroups: [],
-  groupBy: null,
   options: [],
   isLoading: false,
   isExpanded: false,

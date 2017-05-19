@@ -27,7 +27,7 @@ class MovieSearchContainer extends React.Component {
   render() {
     return (<MovieSearch
       genres={this.props.genres}
-      onChange={value => this.props.onChange(value)}
+      onChange={values => this.props.onChange(values)}
       isLoading={this.state.isLoading}
     />);
   }

@@ -17,7 +17,7 @@ class Movies extends React.Component {
   render() {
     return (
       <div>
-        <MovieSearch onChange={data => this.setState({ selectedGenres: data.genre })} />
+        <MovieSearch onChange={data => this.setState({ selectedGenres: data.filter(value => value.type === 'genre') })} />
         <MovieList genres={this.state.selectedGenres} />
       </div>
     );

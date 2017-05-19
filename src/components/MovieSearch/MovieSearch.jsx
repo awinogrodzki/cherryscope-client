@@ -9,7 +9,7 @@ class MovieSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: null,
+      selected: [],
     };
   }
 
@@ -22,10 +22,10 @@ class MovieSearch extends React.Component {
     ];
   }
 
-  onChange(value) {
-    this.props.onChange(value);
+  onChange(values) {
+    this.props.onChange(values);
     this.setState({
-      selected: value,
+      selected: values,
     });
   }
 
@@ -37,10 +37,9 @@ class MovieSearch extends React.Component {
     return (
       <div className={styles.container}>
         <Select
-          value={this.state.value}
-          onChange={value => this.onChange(value)}
+          values={this.state.selected}
+          onChange={values => this.onChange(values)}
           optionGroups={this.getOptionGroups()}
-          groupBy={'type'}
           isLoading={this.props.isLoading}
         />
       </div>
