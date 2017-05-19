@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import find from 'lodash/find';
 import isEqual from 'lodash/isEqual';
 import OptionGroup from './OptionGroup';
 import Value from './Value';
 import styles from './Select.css';
-
 
 class Select extends React.Component {
   constructor(props) {
@@ -112,7 +110,7 @@ class Select extends React.Component {
     let options = [];
 
     this.props.optionGroups.forEach((group) => {
-      options = [...options, ...group.options];
+      options = [...options, ...(group.options || [])];
     });
 
     return options;
@@ -142,6 +140,7 @@ class Select extends React.Component {
               <Value
                 key={option.value}
                 option={option}
+                getClass={this.props.getValueClass}
                 onDelete={optionToDelete => this.onValueDelete(optionToDelete)}
               />
             )) }
@@ -159,11 +158,13 @@ class Select extends React.Component {
             placeholder={this.props.isLoading ? 'Loading' : ''}
           />
         </div>
-        { !!this.state.isExpanded &&
-          <div data-test="Select.optionContainer" className={classNames(styles.optionContainer)}>
+        <div className={styles.expandable}>
+          { !!this.state.isExpanded &&
+          <div data-test="Select.optionContainer" className={styles.optionContainer}>
             {this.renderOptionGroups()}
           </div>
         }
+        </div>
       </div>
     );
   }
@@ -212,6 +213,10 @@ class Select extends React.Component {
     });
   }
 
+  onCustomComponentClick() {
+    this.ignoreBlurOnce();
+  }
+
   renderOptionGroups() {
     if (this.props.optionGroups.length > 0) {
       return this.props.optionGroups.map(
@@ -223,9 +228,9 @@ class Select extends React.Component {
   }
 
   renderOptionGroup(group, key = 0) {
-    const filteredOptions = this.filterOptions(group.options);
+    const filteredOptions = this.filterOptions(group.options || []);
 
-    if (!filteredOptions.length) {
+    if (!filteredOptions.length && !group.customComponent) {
       return null;
     }
 
@@ -236,6 +241,8 @@ class Select extends React.Component {
         options={filteredOptions}
         onLabelClick={() => this.ignoreBlurOnce()}
         onOptionClick={value => this.onOptionClick(value)}
+        customComponent={group.customComponent}
+        onCustomComponentClick={e => this.onCustomComponentClick(e)}
       />
     );
   }
@@ -244,7 +251,6 @@ class Select extends React.Component {
 const optionType = PropTypes.shape({
   value: PropTypes.any.isRequired,
   label: PropTypes.string.isRequired,
-  type: PropTypes.string,
 });
 
 Select.propTypes = {
@@ -252,6 +258,7 @@ Select.propTypes = {
   onInputChange: PropTypes.func,
   values: PropTypes.arrayOf(optionType),
   onChange: PropTypes.func,
+  getValueClass: PropTypes.func,
   optionGroups: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,
     options: PropTypes.arrayOf(optionType),
@@ -266,6 +273,7 @@ Select.defaultProps = {
   onInputChange: () => {},
   values: [],
   onChange: () => {},
+  getValueClass: () => {},
   optionGroups: [],
   options: [],
   isLoading: false,

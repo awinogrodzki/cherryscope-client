@@ -308,4 +308,20 @@ describe('Select', () => {
     wrapper.instance().handleInputEscape();
     expect(wrapper.find('[data-test="Select.input"]').props().value).toBe('');
   });
+
+  it('should be able to display custom component in options group', () => {
+    const CustomComponent = () => (
+      <div>CustomComponent</div>
+    );
+    const optionGroups = [
+      {
+        label: 'Sort',
+        customComponent: <CustomComponent />,
+      },
+    ];
+    const wrapper = mount(<Select optionGroups={optionGroups} isExpanded />);
+    const customComponentWrapper = wrapper.find(CustomComponent);
+
+    expect(customComponentWrapper).toHaveLength(1);
+  });
 });

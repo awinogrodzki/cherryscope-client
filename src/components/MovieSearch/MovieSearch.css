@@ -4,9 +4,11 @@
 }
 
 .genreValue {
-  &::before {
-    content: 'genre: ';
-    font-size: 12px;
-    vertical-align: top;
+  & span {
+    &::before {
+      content: 'genre: ';
+      font-size: 8px;
+      vertical-align: middle;
+    }
   }
 }

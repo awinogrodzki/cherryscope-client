@@ -18,7 +18,6 @@ Option.propTypes = {
   option: PropTypes.shape({
     value: PropTypes.any.isRequired,
     label: PropTypes.string.isRequired,
-    type: PropTypes.string,
   }).isRequired,
 };
 

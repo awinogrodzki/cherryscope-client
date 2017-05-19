@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import styles from './Value.css';
 
-const Value = ({ option, onDelete }) => (
-  <div className={styles.container}>
+const Value = ({ option, onDelete, getClass }) => (
+  <div className={classNames(styles.container, getClass(option))}>
     <button
       data-test="Value.deleteButton"
       className={styles.deleteButton}
@@ -16,6 +17,7 @@ const Value = ({ option, onDelete }) => (
 
 Value.propTypes = {
   onDelete: PropTypes.func,
+  getClass: PropTypes.func,
   option: PropTypes.shape({
     value: PropTypes.number.isRequired,
     label: PropTypes.string.isRequired,
@@ -24,6 +26,7 @@ Value.propTypes = {
 
 Value.defaultProps = {
   onDelete: () => {},
+  getClass: () => {},
 };
 
 export default Value;

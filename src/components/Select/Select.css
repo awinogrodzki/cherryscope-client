@@ -17,6 +17,12 @@
   border-width: 0 1px 1px 1px;
   max-height: 240px;
   overflow-y: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: #fff;
 }
 
 .valueContainer {
@@ -35,4 +41,8 @@
   border: none;
   background-color: transparent;
   color: var(--input-text-color);
+}
+
+.expandable {
+  position: relative;
 }

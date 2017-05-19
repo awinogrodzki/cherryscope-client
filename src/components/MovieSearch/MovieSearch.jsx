@@ -16,6 +16,10 @@ class MovieSearch extends React.Component {
   getOptionGroups() {
     return [
       {
+        label: t('movies.sortBy'),
+        customComponent: <div>SORT_RADIO</div>,
+      },
+      {
         label: t('movies.genres'),
         options: this.props.genres.map(item => ({ value: item.id, label: item.name, type: 'genre' })),
       },
@@ -39,6 +43,7 @@ class MovieSearch extends React.Component {
         <Select
           values={this.state.selected}
           onChange={values => this.onChange(values)}
+          getValueClass={option => styles[`${option.type}Value`]}
           optionGroups={this.getOptionGroups()}
           isLoading={this.props.isLoading}
         />

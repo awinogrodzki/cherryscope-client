@@ -12,9 +12,13 @@
 
   &:nth-child(2n) {
     background-color: var(--color-light-grey);
+
+    &:hover {
+      background-color: color(var(--color-light-grey2) blackness(5%));
+    }
   }
 
   &:hover {
-    background-color: color(var(--color-light-grey2) blackness(10%));
+    background-color: color(var(--color-light-grey2) blackness(5%));
   }
 }
