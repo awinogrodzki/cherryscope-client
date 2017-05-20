@@ -117,7 +117,6 @@ class Select extends React.Component {
   }
 
   onValueDelete(optionToDelete) {
-    this.ignoreBlurOnce();
     this.deleteValue(optionToDelete);
   }
 
@@ -134,7 +133,11 @@ class Select extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        <div className={styles.inputContainer}>
+        <div
+          className={styles.inputContainer}
+          onMouseDown={() => this.ignoreBlurOnce()}
+          onTouchStart={() => this.ignoreBlurOnce()}
+        >
           <div className={styles.valueContainer}>
             { !!this.state.values.length && this.state.values.map(option => (
               <Value
@@ -158,7 +161,11 @@ class Select extends React.Component {
             placeholder={this.props.isLoading ? 'Loading' : ''}
           />
         </div>
-        <div className={styles.expandable}>
+        <div
+          className={styles.expandable}
+          onMouseDown={() => this.ignoreBlurOnce()}
+          onTouchStart={() => this.ignoreBlurOnce()}
+        >
           { !!this.state.isExpanded &&
           <div data-test="Select.optionContainer" className={styles.optionContainer}>
             {this.renderOptionGroups()}
@@ -188,7 +195,6 @@ class Select extends React.Component {
   }
 
   onOptionClick(option) {
-    this.ignoreBlurOnce();
     this.selectOption(option);
 
     return null;
@@ -213,10 +219,6 @@ class Select extends React.Component {
     });
   }
 
-  onCustomComponentClick() {
-    this.ignoreBlurOnce();
-  }
-
   renderOptionGroups() {
     if (this.props.optionGroups.length > 0) {
       return this.props.optionGroups.map(
@@ -239,10 +241,8 @@ class Select extends React.Component {
         key={key}
         label={group.label}
         options={filteredOptions}
-        onLabelClick={() => this.ignoreBlurOnce()}
         onOptionClick={value => this.onOptionClick(value)}
         customComponent={group.customComponent}
-        onCustomComponentClick={e => this.onCustomComponentClick(e)}
       />
     );
   }
