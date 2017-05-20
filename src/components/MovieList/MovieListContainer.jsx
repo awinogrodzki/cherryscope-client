@@ -31,15 +31,19 @@ class MovieListContainer extends React.Component {
       with_genres: this.props.genres
         .map(genre => genre.value)
         .join(','),
+      sort_by: this.props.sortBy,
     };
   }
 
-  hasGenresChanged(nextProps) {
-    return !isEqual(nextProps.genres, this.props.genres);
+  hasGenresChanged(prevProps) {
+    return !isEqual(prevProps.genres, this.props.genres);
   }
 
   componentDidUpdate(prevProps) {
-    if (this.hasGenresChanged(prevProps)) {
+    if (
+      prevProps.sortBy !== this.props.sortBy
+      || this.hasGenresChanged(prevProps)
+    ) {
       this.discoverMovies(this.getFilters());
     }
   }
@@ -64,10 +68,12 @@ MovieListContainer.propTypes = {
   discoverMovies: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   genres: PropTypes.arrayOf(PropTypes.object),
+  sortBy: PropTypes.string,
 };
 
 MovieListContainer.defaultProps = {
   genres: [],
+  sortBy: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieListContainer);

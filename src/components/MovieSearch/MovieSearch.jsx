@@ -11,14 +11,28 @@ class MovieSearch extends React.Component {
     super(props);
     this.state = {
       selected: [],
+      sortBy: null,
     };
+  }
+
+  onSortChange(value) {
+    this.setState({
+      sortBy: value,
+    }, () => {
+      this.props.onChange(this.getValues());
+    });
   }
 
   getOptionGroups() {
     return [
       {
         label: t('movies.sortBy'),
-        customComponent: <MovieSort />,
+        customComponent: (
+          <MovieSort
+            value={this.state.sortBy}
+            onChange={value => this.onSortChange(value)}
+          />
+        ),
       },
       {
         label: t('movies.genres'),
@@ -28,10 +42,18 @@ class MovieSearch extends React.Component {
   }
 
   onChange(values) {
-    this.props.onChange(values);
     this.setState({
       selected: values,
+    }, () => {
+      this.props.onChange(this.getValues());
     });
+  }
+
+  getValues() {
+    return {
+      genres: this.state.selected,
+      sortBy: this.state.sortBy,
+    };
   }
 
   renderValue(options) {

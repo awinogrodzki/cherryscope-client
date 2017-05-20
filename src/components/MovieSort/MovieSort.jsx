@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Radio from 'components/Radio';
 import { t } from 'services/translate';
 import styles from './MovieSort.css';
@@ -46,10 +47,20 @@ const getOptions = () => [
   },
 ];
 
-const MovieSort = () => (
+const MovieSort = ({ onChange, value }) => (
   <div className={styles.container}>
-    <Radio value="popularity.desc" options={getOptions()} />
+    <Radio onChange={onChange} value={value || 'popularity.desc'} options={getOptions()} />
   </div>
-);
+  );
+
+MovieSort.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+};
+
+MovieSort.defaultProps = {
+  value: null,
+  onChange: () => {},
+};
 
 export default MovieSort;

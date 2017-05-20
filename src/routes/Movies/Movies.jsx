@@ -7,18 +7,20 @@ class Movies extends React.Component {
     super(props);
     this.state = {
       genres: [],
+      sortBy: null,
     };
-  }
-
-  componentDidUpdate() {
-
   }
 
   render() {
     return (
       <div>
-        <MovieSearch onChange={data => this.setState({ genres: data.filter(value => value.type === 'genre') })} />
-        <MovieList genres={this.state.genres} />
+        <MovieSearch
+          onChange={data => this.setState({
+            genres: data.genres.filter(value => value.type === 'genre'),
+            sortBy: data.sortBy,
+          })}
+        />
+        <MovieList genres={this.state.genres} sortBy={this.state.sortBy} />
       </div>
     );
   }

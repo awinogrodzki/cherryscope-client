@@ -15,6 +15,8 @@ class Radio extends React.Component {
     this.setState({
       value,
     });
+
+    this.props.onChange(value);
   }
 
   getSelectedClass(option) {
@@ -29,7 +31,7 @@ class Radio extends React.Component {
             key={option.value}
             className={classNames(styles.option, this.getSelectedClass(option))}
           >
-            <button onClick={() => this.onChange(option.value)}>
+            <button className={styles.button} onClick={() => this.onChange(option.value)}>
               {option.label}
             </button>
           </div>
@@ -51,11 +53,13 @@ Radio.propTypes = {
     ]),
     label: PropTypes.string,
   })),
+  onChange: PropTypes.func,
 };
 
 Radio.defaultProps = {
   value: null,
   options: [],
+  onChange: () => {},
 };
 
 export default Radio;
