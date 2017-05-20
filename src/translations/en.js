@@ -23,6 +23,6 @@ export default {
         asc: 'Best vote',
         desc: 'Worst vote',
       },
-    }
+    },
   },
 };
