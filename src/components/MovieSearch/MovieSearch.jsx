@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'components/Select';
+import MovieSort from 'components/MovieSort';
 import { t } from 'services/translate';
 import styles from './MovieSearch.css';
 
@@ -17,7 +18,7 @@ class MovieSearch extends React.Component {
     return [
       {
         label: t('movies.sortBy'),
-        customComponent: <div>SORT_RADIO</div>,
+        customComponent: <MovieSort />,
       },
       {
         label: t('movies.genres'),

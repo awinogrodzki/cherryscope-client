@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+}
+
+.option {
+  &.isSelected {
+    & button {
+      border-color: red;
+    }
+  }
+}
