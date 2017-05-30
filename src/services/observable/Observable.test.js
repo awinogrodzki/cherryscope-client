@@ -34,7 +34,7 @@ describe('Observable', () => {
     expect(observable.debounce(500).source).toEqual(500);
   });
 
-  it('should be able to debounce', () => {
+  it('should be able to handle distinctUntilChanged', () => {
     const observable = new Observable(value => value);
     expect(observable.distinctUntilChanged('test').source).toEqual('test');
   });
