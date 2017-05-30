@@ -5,8 +5,7 @@ import styles from './Option.css';
 const Option = ({ option, onClick }) => (
   <div
     className={styles.container}
-    onMouseDown={() => onClick(option)}
-    onTouchStart={() => onClick(option)}
+    onClick={() => onClick(option)}
     role={'button'}
   >
     <span className={styles.label}>{option.label}</span>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import OptionGroup from './OptionGroup';
+import Option from '../Option';
 
 describe('OptionGroup', () => {
   it('should display label', () => {
@@ -15,5 +16,20 @@ describe('OptionGroup', () => {
     const wrapper = shallow(<OptionGroup label={''} />);
 
     expect(wrapper.find('[data-test="OptionGroup.label"]')).toHaveLength(0);
+  });
+
+  it('should display custom component instead of options if provided', () => {
+    const options = [
+      { value: 123, label: 'Option1' },
+      { value: 124, label: 'Option2' },
+    ];
+    const CustomComponent = () => <div />;
+    const wrapper = shallow(<OptionGroup
+      options={options}
+      customComponent={<CustomComponent />}
+    />);
+
+    expect(wrapper.find(CustomComponent)).toHaveLength(1);
+    expect(wrapper.find(Option)).toHaveLength(0);
   });
 });
