@@ -5,7 +5,7 @@ import { discoverMovies } from 'actions';
 import MovieSearch from 'components/MovieSearch';
 import MovieList from 'components/MovieList';
 
-class Movies extends React.Component {
+class Movies extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
