@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Perf from 'react-addons-perf';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import routes from './routes';
 import createStore from './store/createStore';
-import Perf from 'react-addons-perf';
 
 const initialState = window.INITIAL_STATE;
 const store = createStore(initialState);
