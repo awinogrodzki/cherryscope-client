@@ -35,6 +35,24 @@ describe('Select', () => {
     expect(optionGroupWrapper.find(Option)).toHaveLength(3);
   });
 
+  it('should be able to not filter grouped options', () => {
+    const optionGroups = [
+      {
+        label: 'Test',
+        filterByInput: false,
+        options: [
+          { value: 1, label: 'Value' },
+          { value: 2, label: 'Abc' },
+          { value: 3, label: 'Xyz' },
+        ],
+      },
+    ];
+    const wrapper = mount(<Select isExpanded inputValue={'val'} optionGroups={optionGroups} />);
+    const optionGroupWrapper = wrapper.find(OptionGroup);
+
+    expect(optionGroupWrapper.find(Option)).toHaveLength(3);
+  });
+
   it('should pass input value on change', () => {
     const onInputChange = jest.fn();
     const wrapper = mount(<Select onInputChange={onInputChange} />);
