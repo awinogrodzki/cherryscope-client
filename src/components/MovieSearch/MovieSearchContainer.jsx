@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getGenres } from 'actions';
 import MovieSearch from './MovieSearch';
 
-class MovieSearchContainer extends React.Component {
+class MovieSearchContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 

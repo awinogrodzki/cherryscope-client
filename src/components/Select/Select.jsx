@@ -6,7 +6,7 @@ import OptionGroup from './OptionGroup';
 import Value from './Value';
 import styles from './Select.css';
 
-class Select extends React.Component {
+class Select extends React.PureComponent {
   constructor(props) {
     super(props);
 

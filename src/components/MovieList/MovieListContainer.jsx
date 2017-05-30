@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual';
 import { discoverMovies } from 'actions';
 import MovieList from './MovieList';
 
-class MovieListContainer extends React.Component {
+class MovieListContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 

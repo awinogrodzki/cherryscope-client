@@ -5,7 +5,7 @@ import MovieSort from 'components/MovieSort';
 import { t } from 'services/translate';
 import styles from './MovieSearch.css';
 
-class MovieSearch extends React.Component {
+class MovieSearch extends React.PureComponent {
 
   constructor(props) {
     super(props);
