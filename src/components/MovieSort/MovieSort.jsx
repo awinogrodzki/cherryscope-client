@@ -38,12 +38,12 @@ const getOptions = () => [
     label: t('movies.sort.vote_count.asc'),
   },
   {
-    value: 'vote_avarage.desc',
-    label: t('movies.sort.vote_avarage.desc'),
+    value: 'vote_average.desc',
+    label: t('movies.sort.vote_average.desc'),
   },
   {
-    value: 'vote_avarage.asc',
-    label: t('movies.sort.vote_avarage.asc'),
+    value: 'vote_average.asc',
+    label: t('movies.sort.vote_average.asc'),
   },
 ];
 

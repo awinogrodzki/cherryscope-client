@@ -26,7 +26,7 @@ export default {
         asc: 'Most votes',
         desc: 'Least votes',
       },
-      vote_avarage: {
+      vote_average: {
         asc: 'Best vote',
         desc: 'Worst vote',
       },
