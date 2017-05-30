@@ -40,6 +40,13 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'dev'),
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks(module, count) {
+        var context = module.context;
+        return context && context.indexOf('node_modules') >= 0;
+      },
+    }),
   ],
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
