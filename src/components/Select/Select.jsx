@@ -134,6 +134,7 @@ class Select extends React.Component {
     return (
       <div className={styles.container}>
         <div
+          data-test="Select.inputContainer"
           className={styles.inputContainer}
           onMouseDown={() => this.ignoreBlurOnce()}
           onTouchStart={() => this.ignoreBlurOnce()}
@@ -162,6 +163,7 @@ class Select extends React.Component {
           />
         </div>
         <div
+          data-test="Select.expandable"
           className={styles.expandable}
           onMouseDown={() => this.ignoreBlurOnce()}
           onTouchStart={() => this.ignoreBlurOnce()}

@@ -296,32 +296,76 @@ describe('Select', () => {
 
   it('should blur input on escape key', () => {
     const wrapper = mount(<Select isExpanded />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
     expect(wrapper.find('[data-test="Select.optionContainer"]')).toHaveLength(1);
-    wrapper.instance().handleInputEscape();
+
+    inputWrapper.simulate('keydown', {
+      keyCode: 27,
+    });
+
     expect(wrapper.find('[data-test="Select.optionContainer"]')).toHaveLength(0);
   });
 
   it('should clear input on escape key', () => {
     const wrapper = mount(<Select inputValue={'Test'} />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
+    inputWrapper.simulate('keydown', {
+      keyCode: 27,
+    });
 
-    wrapper.instance().handleInputEscape();
     expect(wrapper.find('[data-test="Select.input"]').props().value).toBe('');
   });
 
-  it('should be able to display custom component in options group', () => {
-    const CustomComponent = () => (
-      <div>CustomComponent</div>
-    );
-    const optionGroups = [
-      {
-        label: 'Sort',
-        customComponent: <CustomComponent />,
-      },
+  it('should re-focus on option group area click', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
     ];
-    const wrapper = mount(<Select optionGroups={optionGroups} isExpanded />);
-    const customComponentWrapper = wrapper.find(CustomComponent);
+    const wrapper = mount(<Select isExpanded options={options} />);
+    const expandableWrapper = wrapper.find('[data-test="Select.expandable"]');
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
-    expect(customComponentWrapper).toHaveLength(1);
+    expandableWrapper.simulate('mousedown');
+    inputWrapper.simulate('blur');
+    expandableWrapper.simulate('touchstart');
+    inputWrapper.simulate('blur');
+
+    expect(wrapper.find(Option)).toHaveLength(2);
+  });
+
+  it('should re-focus on input area click', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+    ];
+    const wrapper = mount(<Select isExpanded options={options} />);
+    const inputContainerWrapper = wrapper.find('[data-test="Select.inputContainer"]');
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
+
+    inputContainerWrapper.simulate('mousedown');
+    inputWrapper.simulate('blur');
+    inputContainerWrapper.simulate('touchstart');
+    inputWrapper.simulate('blur');
+
+    expect(wrapper.find(Option)).toHaveLength(2);
+  });
+
+  it('should expand on input keydown when not expanded', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(<Select options={options} />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
+
+    expect(wrapper.find(Option)).toHaveLength(0);
+
+    inputWrapper.simulate('keydown', {
+      keyCode: 99,
+    });
+
+    expect(wrapper.find(Option)).toHaveLength(3);
   });
 });
