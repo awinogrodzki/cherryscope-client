@@ -7,7 +7,10 @@ import { Provider } from 'react-redux';
 import routes from './routes';
 import createStore from './store/createStore';
 
-const initialState = window.INITIAL_STATE;
+/* eslint-disable no-underscore-dangle */
+const initialState = window.__INITIAL_STATE__;
+/* eslint-enable no-underscore-dangle */
+
 const store = createStore(initialState);
 
 if (process.env.NODE_ENV === 'dev') {
