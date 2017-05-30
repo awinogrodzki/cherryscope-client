@@ -148,9 +148,9 @@ describe('Select', () => {
 
     expect(valueWrapper).toHaveLength(3);
 
-    valueWrapper.at(0).find('[data-test="Value.deleteButton"]').simulate('click');
-    valueWrapper.at(1).find('[data-test="Value.deleteButton"]').simulate('click');
-    valueWrapper.at(2).find('[data-test="Value.deleteButton"]').simulate('click');
+    valueWrapper.at(0).find('[data-test="Value.deleteButton"]').simulate('mousedown');
+    valueWrapper.at(1).find('[data-test="Value.deleteButton"]').simulate('mousedown');
+    valueWrapper.at(2).find('[data-test="Value.deleteButton"]').simulate('mousedown');
 
     expect(wrapper.find(Value)).toHaveLength(0);
   });
@@ -329,23 +329,6 @@ describe('Select', () => {
     expandableWrapper.simulate('mousedown');
     inputWrapper.simulate('blur');
     expandableWrapper.simulate('touchstart');
-    inputWrapper.simulate('blur');
-
-    expect(wrapper.find(Option)).toHaveLength(2);
-  });
-
-  it('should re-focus on input area click', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-    ];
-    const wrapper = mount(<Select isExpanded options={options} />);
-    const inputContainerWrapper = wrapper.find('[data-test="Select.inputContainer"]');
-    const inputWrapper = wrapper.find('[data-test="Select.input"]');
-
-    inputContainerWrapper.simulate('mousedown');
-    inputWrapper.simulate('blur');
-    inputContainerWrapper.simulate('touchstart');
     inputWrapper.simulate('blur');
 
     expect(wrapper.find(Option)).toHaveLength(2);

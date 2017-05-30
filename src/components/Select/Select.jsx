@@ -117,6 +117,7 @@ class Select extends React.PureComponent {
   }
 
   onValueDelete(optionToDelete) {
+    this.ignoreBlurOnce();
     this.deleteValue(optionToDelete);
   }
 
@@ -134,10 +135,7 @@ class Select extends React.PureComponent {
     return (
       <div className={styles.container}>
         <div
-          data-test="Select.inputContainer"
           className={styles.inputContainer}
-          onMouseDown={() => this.ignoreBlurOnce()}
-          onTouchStart={() => this.ignoreBlurOnce()}
         >
           <div className={styles.valueContainer}>
             { !!this.state.values.length && this.state.values.map(option => (
