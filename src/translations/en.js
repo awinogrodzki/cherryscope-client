@@ -1,5 +1,12 @@
 export default {
   movies: {
+    dates: 'Dates',
+    date: {
+      release_date: {
+        lte: 'Release date after',
+        gte: 'Release date before',
+      },
+    },
     genres: 'Genres',
     sortBy: 'Sort by',
     sort: {

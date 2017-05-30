@@ -3,16 +3,27 @@ import PropTypes from 'prop-types';
 import Select from 'components/Select';
 import MovieSort from 'components/MovieSort';
 import { t } from 'services/translate';
+import { Observable } from 'services/observable';
 import styles from './MovieSearch.css';
 
-class MovieSearch extends React.PureComponent {
+class MovieSearch extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      query: null,
       selected: [],
       sortBy: null,
     };
+
+    this.registerObservables();
+  }
+
+  registerObservables() {
+    this.inputChangeObservable = new Observable(value => this.onInputChange(value))
+      .debounce(500)
+      .distinctUntilChanged()
+      .register();
   }
 
   onSortChange(value) {
@@ -35,6 +46,11 @@ class MovieSearch extends React.PureComponent {
         ),
       },
       {
+        label: t('movies.dates'),
+        filterByInput: false,
+        options: this.getDateOptionsFromQuery(),
+      },
+      {
         label: t('movies.genres'),
         options: this.props.genres.map(item => ({ value: item.id, label: item.name, type: 'genre' })),
       },
@@ -44,9 +60,40 @@ class MovieSearch extends React.PureComponent {
   onChange(values) {
     this.setState({
       selected: values,
+      query: null,
     }, () => {
       this.props.onChange(this.getValues());
     });
+  }
+
+  onInputChange(value) {
+    this.setState({ query: value });
+  }
+
+  getDateOptionsFromQuery() {
+    if (!this.state.query || !this.isDate(this.state.query)) {
+      return null;
+    }
+
+    return [
+      {
+        value: 'release_date.lte',
+        label: `${t('movies.date.release_date.lte')} ${this.state.query}`,
+        type: 'date',
+        date: new Date(this.state.query),
+      },
+      {
+        value: 'release_date.gte',
+        label: `${t('movies.date.release_date.gte')} ${this.state.query}`,
+        type: 'date',
+        date: new Date(this.state.query),
+      },
+    ];
+  }
+
+  isDate(value) {
+    const date = new Date(value);
+    return !isNaN(date.valueOf());
   }
 
   getValues() {
@@ -67,6 +114,7 @@ class MovieSearch extends React.PureComponent {
           values={this.state.selected}
           onChange={values => this.onChange(values)}
           getValueClass={option => styles[`${option.type}Value`]}
+          onInputChange={this.inputChangeObservable.getHandler()}
           optionGroups={this.getOptionGroups()}
           isLoading={this.props.isLoading}
         />

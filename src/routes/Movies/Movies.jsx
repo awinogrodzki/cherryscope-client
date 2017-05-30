@@ -2,7 +2,7 @@ import React from 'react';
 import MovieSearch from 'components/MovieSearch';
 import MovieList from 'components/MovieList';
 
-class Movies extends React.PureComponent {
+class Movies extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -19,7 +19,7 @@ Value.propTypes = {
   onDelete: PropTypes.func,
   getClass: PropTypes.func,
   option: PropTypes.shape({
-    value: PropTypes.number.isRequired,
+    value: PropTypes.any.isRequired,
     label: PropTypes.string.isRequired,
   }).isRequired,
 };

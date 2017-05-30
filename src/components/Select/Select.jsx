@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import find from 'lodash/find';
-import isEqual from 'lodash/isEqual';
+import { isEqual, find } from 'lodash';
 import OptionGroup from './OptionGroup';
 import Value from './Value';
 import styles from './Select.css';
@@ -100,7 +99,7 @@ class Select extends React.PureComponent {
 
   getFilteredOptions() {
     if (this.props.optionGroups.length > 0) {
-      return this.filterOptions(this.getOptionsFromGroups());
+      return this.getOptionsFromGroups();
     }
 
     return this.filterOptions(this.props.options);
@@ -110,7 +109,10 @@ class Select extends React.PureComponent {
     let options = [];
 
     this.props.optionGroups.forEach((group) => {
-      options = [...options, ...(group.options || [])];
+      options = [
+        ...options,
+        ...this.filterOptionsByGroup(group),
+      ];
     });
 
     return options;
@@ -177,6 +179,10 @@ class Select extends React.PureComponent {
   }
 
   filterOptions(options) {
+    if (!options) {
+      return [];
+    }
+
     const notSelectedOptions = options.filter(option => !this.isSelected(option));
 
     if (!this.state.inputValue) {
@@ -184,6 +190,12 @@ class Select extends React.PureComponent {
     }
 
     return notSelectedOptions.filter(option => this.isInputValueLikeOption(option));
+  }
+
+  filterOptionsByGroup(group) {
+    return group.filterByInput === false
+    ? group.options || []
+    : this.filterOptions(group.options);
   }
 
   isInputValueLikeOption(option) {
@@ -222,7 +234,7 @@ class Select extends React.PureComponent {
   renderOptionGroups() {
     if (this.props.optionGroups.length > 0) {
       return this.props.optionGroups.map(
-        (group, index) => this.renderOptionGroup(group, group.id || index)
+        (group, index) => group && this.renderOptionGroup(group, group.id || index)
       );
     }
 
@@ -230,7 +242,7 @@ class Select extends React.PureComponent {
   }
 
   renderOptionGroup(group, key = 0) {
-    const filteredOptions = this.filterOptions(group.options || []);
+    const filteredOptions = this.filterOptionsByGroup(group);
 
     if (!filteredOptions.length && !group.customComponent) {
       return null;
