@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const isDev = (process.env.NODE_ENV || 'dev') === 'dev';
+
 module.exports = {
   entry: {
     index: ['./src/index'],
@@ -16,7 +18,7 @@ module.exports = {
     port: 8080,
     historyApiFallback: true,
   },
-  devtool: 'source-map',
+  devtool: isDev ? 'source-map' : false,
   module: {
     rules: [
       {

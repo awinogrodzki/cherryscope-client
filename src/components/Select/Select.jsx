@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEqual, find } from 'lodash';
+import find from 'lodash/find';
+import isEqual from 'lodash/isEqual';
 import OptionGroup from './OptionGroup';
 import Value from './Value';
 import styles from './Select.css';

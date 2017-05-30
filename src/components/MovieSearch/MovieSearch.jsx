@@ -98,7 +98,8 @@ class MovieSearch extends React.Component {
 
   getValues() {
     return {
-      genres: this.state.selected,
+      dates: this.state.selected.filter(value => value.type === 'date'),
+      genres: this.state.selected.filter(value => value.type === 'genre'),
       sortBy: this.state.sortBy,
     };
   }

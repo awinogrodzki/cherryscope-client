@@ -27,12 +27,12 @@ const MovieList = ({ movies, isLoading }) => (
 
 MovieList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object),
-  isLoading: PropTypes.boolean,
+  isLoading: PropTypes.bool,
 };
 
 MovieList.defaultProps = {
   movies: [],
-  isLoading: true,
+  isLoading: false,
 };
 
 export default MovieList;
