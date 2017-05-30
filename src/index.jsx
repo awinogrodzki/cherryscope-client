@@ -9,7 +9,7 @@ import createStore from './store/createStore';
 
 /* eslint-disable no-underscore-dangle */
 const initialState = window.__INITIAL_STATE__;
-/* eslint-enable no-underscore-dangle */
+/* eslint-enable */
 
 const store = createStore(initialState);
 
