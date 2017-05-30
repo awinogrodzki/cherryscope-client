@@ -46,3 +46,7 @@
 .expandable {
   position: relative;
 }
+
+.container .activeOption {
+  border: 1px solid black;
+}

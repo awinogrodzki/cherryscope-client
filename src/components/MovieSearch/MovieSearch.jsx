@@ -48,6 +48,7 @@ class MovieSearch extends React.Component {
       {
         label: t('movies.dates'),
         filterByInput: false,
+        isUnique: true,
         options: this.getDateOptionsFromQuery(),
       },
       {

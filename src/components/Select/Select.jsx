@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import find from 'lodash/find';
-import isEqual from 'lodash/isEqual';
+import { find, isEqual, get } from 'lodash';
 import OptionGroup from './OptionGroup';
 import Value from './Value';
 import styles from './Select.css';
 
-class Select extends React.PureComponent {
+class Select extends React.Component {
   constructor(props) {
     super(props);
 
     this.input = null;
     this.ignoreBlur = false;
+    this.activeOptionIndex = 0;
+
     this.state = {
       values: props.values,
       inputValue: props.inputValue,
@@ -20,6 +21,12 @@ class Select extends React.PureComponent {
   }
 
   handleValuesChange() {
+    const optionCount = this.getOptionCount();
+    if (optionCount && this.activeOptionIndex > optionCount - 1) {
+      this.activeOptionIndex = this.getOptionCount() - 1;
+      this.forceUpdate();
+    }
+
     return this.props.onChange(this.state.values);
   }
 
@@ -42,6 +49,12 @@ class Select extends React.PureComponent {
         break;
       case 27:
         this.handleInputEscape();
+        break;
+      case 40:
+        this.handleArrowDown();
+        break;
+      case 38:
+        this.handleArrowUp();
         break;
       default:
         if (!this.state.isExpanded) { this.expand(); }
@@ -86,8 +99,8 @@ class Select extends React.PureComponent {
 
   handleInputEnter() {
     const options = this.getFilteredOptions();
-    if (options.length > 0) {
-      this.selectOption(options[0]);
+    if (options.length > 0 && get(options, this.activeOptionIndex)) {
+      this.selectOption(options[this.activeOptionIndex]);
     }
   }
 
@@ -96,6 +109,34 @@ class Select extends React.PureComponent {
     this.setState({
       inputValue: '',
     });
+  }
+
+  handleArrowUp() {
+    if (this.activeOptionIndex <= 0) {
+      this.activeOptionIndex = 0;
+      this.forceUpdate();
+      return;
+    }
+
+    this.activeOptionIndex = this.activeOptionIndex - 1;
+    this.forceUpdate();
+  }
+
+  getOptionCount() {
+    return this.getOptionsFromGroups().length || this.props.options.length;
+  }
+
+  handleArrowDown() {
+    const optionLength = this.getOptionCount();
+
+    if (this.activeOptionIndex >= optionLength - 1) {
+      this.activeOptionIndex = optionLength - 1;
+      this.forceUpdate();
+      return;
+    }
+
+    this.activeOptionIndex = this.activeOptionIndex + 1;
+    this.forceUpdate();
   }
 
   getFilteredOptions() {
@@ -179,11 +220,7 @@ class Select extends React.PureComponent {
     );
   }
 
-  filterOptions(options) {
-    if (!options) {
-      return [];
-    }
-
+  filterOptions(options = []) {
     const notSelectedOptions = options.filter(option => !this.isSelected(option));
 
     if (!this.state.inputValue) {
@@ -194,9 +231,21 @@ class Select extends React.PureComponent {
   }
 
   filterOptionsByGroup(group) {
+    if (group.isSingle === true && this.hasSelectedOptions(group)) {
+      return [];
+    }
+
     return group.filterByInput === false
     ? group.options || []
     : this.filterOptions(group.options);
+  }
+
+  hasSelectedOptions(group) {
+    if (!group.options) {
+      return false;
+    }
+
+    return !!group.options.filter(option => this.isSelected(option)).length;
   }
 
   isInputValueLikeOption(option) {
@@ -232,6 +281,14 @@ class Select extends React.PureComponent {
     });
   }
 
+  getOptionClass(key) {
+    if (key === this.activeOptionIndex) {
+      return styles.activeOption;
+    }
+
+    return '';
+  }
+
   renderOptionGroups() {
     if (this.props.optionGroups.length > 0) {
       return this.props.optionGroups.map(
@@ -252,6 +309,7 @@ class Select extends React.PureComponent {
     return (
       <OptionGroup
         key={key}
+        getOptionClass={optionKey => this.getOptionClass(optionKey)}
         label={group.label}
         options={filteredOptions}
         onOptionClick={value => this.onOptionClick(value)}
@@ -261,22 +319,23 @@ class Select extends React.PureComponent {
   }
 }
 
-const optionType = PropTypes.shape({
-  value: PropTypes.any.isRequired,
-  label: PropTypes.string.isRequired,
-});
-
 Select.propTypes = {
   inputValue: PropTypes.string,
   onInputChange: PropTypes.func,
-  values: PropTypes.arrayOf(optionType),
+  values: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
   getValueClass: PropTypes.func,
   optionGroups: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    getOptionClass: PropTypes.func,
     label: PropTypes.string,
-    options: PropTypes.arrayOf(optionType),
+    onOptionClick: PropTypes.func,
+    filterByInput: PropTypes.bool,
+    isSingle: PropTypes.bool,
+    options: PropTypes.arrayOf(PropTypes.object),
+    customComponent: PropTypes.node,
   })),
-  options: PropTypes.arrayOf(optionType),
+  options: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
   isExpanded: PropTypes.bool,
 };

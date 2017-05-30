@@ -3,8 +3,8 @@ export default {
     dates: 'Dates',
     date: {
       release_date: {
-        lte: 'Release date <=',
-        gte: 'Release date >=',
+        lte: 'Release date before',
+        gte: 'Release date after',
       },
     },
     genres: 'Genres',

@@ -53,6 +53,27 @@ describe('Select', () => {
     expect(optionGroupWrapper.find(Option)).toHaveLength(3);
   });
 
+  it('should be able to not select only one item from group', () => {
+    const optionGroups = [
+      {
+        label: 'Test',
+        isSingle: true,
+        options: [
+          { value: 1, label: 'Value' },
+          { value: 2, label: 'Abc' },
+          { value: 3, label: 'Xyz' },
+        ],
+      },
+    ];
+    const wrapper = mount(<Select isExpanded optionGroups={optionGroups} />);
+
+    wrapper.find(Option).at(0).simulate('click');
+
+    expect(wrapper.find(Option)).toHaveLength(0);
+    expect(wrapper.find(Value)).toHaveLength(1);
+    expect(wrapper.find(Value).props().option.label).toBe('Value');
+  });
+
   it('should pass input value on change', () => {
     const onInputChange = jest.fn();
     const wrapper = mount(<Select onInputChange={onInputChange} />);
@@ -368,5 +389,100 @@ describe('Select', () => {
     });
 
     expect(wrapper.find(Option)).toHaveLength(3);
+  });
+
+  it('should make first option active', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(<Select isExpanded options={options} />);
+
+    expect(wrapper.find('.activeOption').length).toBe(1);
+    expect(wrapper.find('.activeOption').text()).toBe('Value');
+  });
+
+  it('should make active options incrementally on arrow down click', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(<Select isExpanded options={options} />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
+
+    inputWrapper.simulate('keydown', {
+      keyCode: 40,
+    });
+
+    expect(wrapper.find('.activeOption').length).toBe(1);
+    expect(wrapper.find('.activeOption').text()).toBe('Value2');
+  });
+
+  it('should make active options decrementally on arrow up click', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(<Select isExpanded options={options} />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
+
+    inputWrapper.simulate('keydown', { keyCode: 40 });
+    inputWrapper.simulate('keydown', { keyCode: 40 });
+    inputWrapper.simulate('keydown', { keyCode: 38 });
+
+    expect(wrapper.find('.activeOption').length).toBe(1);
+    expect(wrapper.find('.activeOption').text()).toBe('Value2');
+  });
+
+  it('should stop increment on option limit', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(<Select isExpanded options={options} />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
+
+    inputWrapper.simulate('keydown', { keyCode: 40 });
+    inputWrapper.simulate('keydown', { keyCode: 40 });
+    inputWrapper.simulate('keydown', { keyCode: 40 });
+    inputWrapper.simulate('keydown', { keyCode: 40 });
+
+    expect(wrapper.find('.activeOption').length).toBe(1);
+    expect(wrapper.find('.activeOption').text()).toBe('Value3');
+  });
+
+  it('should stop decrement on option limit', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(<Select isExpanded options={options} />);
+
+    wrapper.find('[data-test="Select.input"]').simulate('keydown', { keyCode: 38 });
+
+    expect(wrapper.find('.activeOption').length).toBe(1);
+    expect(wrapper.find('.activeOption').text()).toBe('Value');
+  });
+
+  it('should be able to select active option on enter key', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(<Select options={options} />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
+
+    inputWrapper.simulate('keydown', { keyCode: 40 });
+    inputWrapper.simulate('keydown', { keyCode: 40 });
+    inputWrapper.simulate('keydown', { keyCode: 13 });
+
+    expect(wrapper.find(Value)).toHaveLength(1);
+    expect(wrapper.find(Value).at(0).props().option.label).toBe('Value3');
   });
 });

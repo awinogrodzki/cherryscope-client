@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import styles from './Option.css';
 
-const Option = ({ option, onClick }) => (
+const Option = ({ index, option, onClick, getClass }) => (
   <div
-    className={styles.container}
+    className={classNames(styles.container, getClass(index))}
     onClick={() => onClick(option)}
     role={'button'}
   >
@@ -13,6 +14,8 @@ const Option = ({ option, onClick }) => (
 );
 
 Option.propTypes = {
+  index: PropTypes.number,
+  getClass: PropTypes.func,
   onClick: PropTypes.func,
   option: PropTypes.shape({
     value: PropTypes.any.isRequired,
@@ -21,6 +24,8 @@ Option.propTypes = {
 };
 
 Option.defaultProps = {
+  index: 0,
+  getClass: () => {},
   onClick: () => {},
 };
 
