@@ -12,6 +12,7 @@ class Select extends React.Component {
     this.input = null;
     this.ignoreBlur = false;
     this.activeOptionIndex = 0;
+    this.expandableContainer = null;
 
     this.state = {
       values: props.values,
@@ -175,6 +176,14 @@ class Select extends React.Component {
     });
   }
 
+  setExpandableContainer(ref) {
+    if (!ref) {
+      return;
+    }
+
+    this.expandableContainer = ref;
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -205,16 +214,21 @@ class Select extends React.Component {
           />
         </div>
         <div
-          data-test="Select.expandable"
-          className={styles.expandable}
-          onMouseDown={() => this.ignoreBlurOnce()}
-          onTouchStart={() => this.ignoreBlurOnce()}
+          className={styles.expandableContainer}
         >
-          { !!this.state.isExpanded &&
-          <div data-test="Select.optionContainer" className={styles.optionContainer}>
-            {this.renderOptionGroups()}
+          <div
+            ref={ref => this.setExpandableContainer(ref)}
+            data-test="Select.expandable"
+            className={styles.expandable}
+            onMouseDown={() => this.ignoreBlurOnce()}
+            onTouchStart={() => this.ignoreBlurOnce()}
+          >
+            { !!this.state.isExpanded &&
+            <div data-test="Select.optionContainer" className={styles.optionContainer}>
+              {this.renderOptionGroups()}
+            </div>
+          }
           </div>
-        }
         </div>
       </div>
     );
@@ -297,10 +311,7 @@ class Select extends React.Component {
     }
 
     for (let i = 0; i < groupIndex; i += 1) {
-      const group = this.props.optionGroups[i];
-      const groupOptions = get(group, 'options') || [];
-
-      optionCount += groupOptions.length;
+      optionCount += this.filterOptionsByGroup(this.props.optionGroups[i]).length;
     }
 
     return optionIndex + optionCount;
@@ -308,7 +319,28 @@ class Select extends React.Component {
 
   handleOptionRef(ref, index) {
     if (index === this.activeOptionIndex) {
-      console.log(ref, index);
+      this.updateExpandableContainerScroll(this.expandableContainer, ref, index);
+    }
+  }
+
+  updateExpandableContainerScroll(expandableContainer, option, index) {
+    const expandableRect = expandableContainer.getBoundingClientRect();
+    const optionRect = option.getBoundingClientRect();
+    const optionTop = optionRect.top;
+    const optionBottom = optionRect.bottom;
+    const expandableTop = expandableRect.top;
+    const expandableBottom = expandableRect.bottom;
+
+    if (index === 0) {
+      expandableContainer.scrollTop = 0;
+    }
+
+    if (optionTop < expandableTop) {
+      expandableContainer.scrollTop -= expandableTop - optionTop;
+    }
+
+    if (optionBottom > expandableBottom) {
+      expandableContainer.scrollTop += optionBottom - expandableBottom;
     }
   }
 
@@ -335,7 +367,7 @@ class Select extends React.Component {
         index={index}
         getOptionIndex={optionIndex => this.getOptionIndex(optionIndex, index)}
         getOptionClass={optionKey => this.getOptionClass(optionKey)}
-        getRef={(ref, refIndex) => this.handleOptionRef(ref, refIndex)}
+        getOptionRef={(ref, refIndex) => this.handleOptionRef(ref, refIndex)}
         label={group.label}
         options={filteredOptions}
         onOptionClick={value => this.onOptionClick(value)}
@@ -355,7 +387,7 @@ Select.propTypes = {
     id: PropTypes.string,
     index: PropTypes.number,
     getOptionClass: PropTypes.func,
-    getRef: PropTypes.func,
+    getOptionRef: PropTypes.func,
     label: PropTypes.string,
     onOptionClick: PropTypes.func,
     filterByInput: PropTypes.bool,

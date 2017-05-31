@@ -15,13 +15,6 @@
 .optionContainer {
   border: 1px solid color(var(--input-color) alpha(-50%));
   border-width: 0 1px 1px 1px;
-  max-height: 360px;
-  overflow-y: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
   background-color: #fff;
 }
 
@@ -43,8 +36,19 @@
   color: var(--input-text-color);
 }
 
-.expandable {
+.expandableContainer {
   position: relative;
+}
+
+.expandable {
+  overflow-y: auto;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  max-height: 360px;
 }
 
 .container .activeOption {

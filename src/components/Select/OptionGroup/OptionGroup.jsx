@@ -9,7 +9,7 @@ const renderOptions = ({
   customComponent,
   getOptionClass,
   getOptionIndex,
-  getRef,
+  getOptionRef,
 }) => {
   if (customComponent) {
     return customComponent;
@@ -22,7 +22,7 @@ const renderOptions = ({
       option={option}
       onClick={onOptionClick}
       getClass={getOptionClass}
-      getRef={getRef}
+      getRef={getOptionRef}
     />
   ));
 };
@@ -36,7 +36,7 @@ const OptionGroup = ({
   customComponent,
   getOptionClass,
   getOptionIndex,
-  getRef,
+  getOptionRef,
 }) => (
   <div className={styles.container}>
     { label &&
@@ -55,7 +55,7 @@ const OptionGroup = ({
       customComponent,
       getOptionClass,
       getOptionIndex,
-      getRef,
+      getOptionRef,
     }) }
   </div>
 );
@@ -65,7 +65,7 @@ OptionGroup.propTypes = {
   index: PropTypes.number,
   getOptionIndex: PropTypes.func,
   getOptionClass: PropTypes.func,
-  getRef: PropTypes.func,
+  getOptionRef: PropTypes.func,
   label: PropTypes.string,
   onOptionClick: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
@@ -79,7 +79,7 @@ OptionGroup.defaultProps = {
   label: null,
   getOptionIndex: index => index,
   onOptionClick: () => {},
-  getRef: () => {},
+  getOptionRef: () => {},
   options: [],
   customComponent: null,
 };
