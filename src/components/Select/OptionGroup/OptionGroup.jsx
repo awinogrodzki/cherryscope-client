@@ -26,6 +26,7 @@ const renderOptions = (
 
 const OptionGroup = ({
   id,
+  index,
   label,
   options,
   onOptionClick,
@@ -35,6 +36,7 @@ const OptionGroup = ({
   <div className={styles.container}>
     { label &&
       <div
+        data-index={index}
         id={id}
         data-test="OptionGroup.label"
         className={styles.labelContainer}
@@ -48,6 +50,7 @@ const OptionGroup = ({
 
 OptionGroup.propTypes = {
   id: PropTypes.string,
+  index: PropTypes.number,
   getOptionClass: PropTypes.func,
   label: PropTypes.string,
   onOptionClick: PropTypes.func,
@@ -57,6 +60,7 @@ OptionGroup.propTypes = {
 
 OptionGroup.defaultProps = {
   id: null,
+  index: 0,
   getOptionClass: () => {},
   label: null,
   onOptionClick: () => {},

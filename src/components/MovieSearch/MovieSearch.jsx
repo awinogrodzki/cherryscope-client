@@ -52,6 +52,15 @@ class MovieSearch extends React.Component {
         options: this.getDateOptionsFromQuery(),
       },
       {
+        label: 'Test',
+        options: [
+          { value: 1, label: 'Test1' },
+          { value: 2, label: 'Test2' },
+          { value: 3, label: 'Test3' },
+          { value: 4, label: 'Test4' },
+        ],
+      },
+      {
         label: t('movies.genres'),
         options: this.props.genres.map(item => ({ value: item.id, label: item.name, type: 'genre' })),
       },

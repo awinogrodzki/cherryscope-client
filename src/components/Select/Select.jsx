@@ -23,7 +23,7 @@ class Select extends React.Component {
   handleValuesChange() {
     const optionCount = this.getOptionCount();
     if (optionCount && this.activeOptionIndex > optionCount - 1) {
-      this.activeOptionIndex = this.getOptionCount() - 1;
+      this.activeOptionIndex = optionCount - 1;
       this.forceUpdate();
     }
 
@@ -99,7 +99,7 @@ class Select extends React.Component {
 
   handleInputEnter() {
     const options = this.getFilteredOptions();
-    if (options.length > 0 && get(options, this.activeOptionIndex)) {
+    if (options.length > 0 && get(options, this.activeOptionIndex, false)) {
       this.selectOption(options[this.activeOptionIndex]);
     }
   }
@@ -292,14 +292,14 @@ class Select extends React.Component {
   renderOptionGroups() {
     if (this.props.optionGroups.length > 0) {
       return this.props.optionGroups.map(
-        (group, index) => group && this.renderOptionGroup(group, group.id || index)
+        (group, index) => group && this.renderOptionGroup(group, index)
       );
     }
 
     return this.renderOptionGroup({ options: this.props.options });
   }
 
-  renderOptionGroup(group, key = 0) {
+  renderOptionGroup(group, index) {
     const filteredOptions = this.filterOptionsByGroup(group);
 
     if (!filteredOptions.length && !group.customComponent) {
@@ -308,7 +308,8 @@ class Select extends React.Component {
 
     return (
       <OptionGroup
-        key={key}
+        key={group.id || index}
+        index={index}
         getOptionClass={optionKey => this.getOptionClass(optionKey)}
         label={group.label}
         options={filteredOptions}
@@ -327,6 +328,7 @@ Select.propTypes = {
   getValueClass: PropTypes.func,
   optionGroups: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
+    index: PropTypes.number,
     getOptionClass: PropTypes.func,
     label: PropTypes.string,
     onOptionClick: PropTypes.func,
