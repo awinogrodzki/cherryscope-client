@@ -289,6 +289,29 @@ class Select extends React.Component {
     return '';
   }
 
+  getOptionIndex(optionIndex, groupIndex) {
+    let optionCount = 0;
+
+    if (groupIndex === 0) {
+      return optionIndex;
+    }
+
+    for (let i = 0; i < groupIndex; i += 1) {
+      const group = this.props.optionGroups[i];
+      const groupOptions = get(group, 'options') || [];
+
+      optionCount += groupOptions.length;
+    }
+
+    return optionIndex + optionCount;
+  }
+
+  handleOptionRef(ref, index) {
+    if (index === this.activeOptionIndex) {
+      console.log(ref, index);
+    }
+  }
+
   renderOptionGroups() {
     if (this.props.optionGroups.length > 0) {
       return this.props.optionGroups.map(
@@ -310,7 +333,9 @@ class Select extends React.Component {
       <OptionGroup
         key={group.id || index}
         index={index}
+        getOptionIndex={optionIndex => this.getOptionIndex(optionIndex, index)}
         getOptionClass={optionKey => this.getOptionClass(optionKey)}
+        getRef={(ref, refIndex) => this.handleOptionRef(ref, refIndex)}
         label={group.label}
         options={filteredOptions}
         onOptionClick={value => this.onOptionClick(value)}
@@ -330,6 +355,7 @@ Select.propTypes = {
     id: PropTypes.string,
     index: PropTypes.number,
     getOptionClass: PropTypes.func,
+    getRef: PropTypes.func,
     label: PropTypes.string,
     onOptionClick: PropTypes.func,
     filterByInput: PropTypes.bool,

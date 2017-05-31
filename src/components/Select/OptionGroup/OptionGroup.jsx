@@ -3,23 +3,26 @@ import PropTypes from 'prop-types';
 import Option from '../Option';
 import styles from './OptionGroup.css';
 
-const renderOptions = (
+const renderOptions = ({
   options,
   onOptionClick,
   customComponent,
-  getOptionClass
-) => {
+  getOptionClass,
+  getOptionIndex,
+  getRef,
+}) => {
   if (customComponent) {
     return customComponent;
   }
 
   return options.map((option, index) => (
     <Option
-      index={index}
+      index={getOptionIndex(index)}
       key={option.value}
       option={option}
       onClick={onOptionClick}
       getClass={getOptionClass}
+      getRef={getRef}
     />
   ));
 };
@@ -32,6 +35,8 @@ const OptionGroup = ({
   onOptionClick,
   customComponent,
   getOptionClass,
+  getOptionIndex,
+  getRef,
 }) => (
   <div className={styles.container}>
     { label &&
@@ -44,14 +49,23 @@ const OptionGroup = ({
         <span className={styles.label}>{label}</span>
       </div>
     }
-    { renderOptions(options, onOptionClick, customComponent, getOptionClass) }
+    { renderOptions({
+      options,
+      onOptionClick,
+      customComponent,
+      getOptionClass,
+      getOptionIndex,
+      getRef,
+    }) }
   </div>
 );
 
 OptionGroup.propTypes = {
   id: PropTypes.string,
   index: PropTypes.number,
+  getOptionIndex: PropTypes.func,
   getOptionClass: PropTypes.func,
+  getRef: PropTypes.func,
   label: PropTypes.string,
   onOptionClick: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
@@ -63,7 +77,9 @@ OptionGroup.defaultProps = {
   index: 0,
   getOptionClass: () => {},
   label: null,
+  getOptionIndex: index => index,
   onOptionClick: () => {},
+  getRef: () => {},
   options: [],
   customComponent: null,
 };

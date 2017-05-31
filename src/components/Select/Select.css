@@ -15,7 +15,7 @@
 .optionContainer {
   border: 1px solid color(var(--input-color) alpha(-50%));
   border-width: 0 1px 1px 1px;
-  max-height: 240px;
+  max-height: 360px;
   overflow-y: auto;
   position: absolute;
   top: 0;

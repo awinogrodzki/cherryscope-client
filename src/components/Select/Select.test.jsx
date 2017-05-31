@@ -403,6 +403,27 @@ describe('Select', () => {
     expect(wrapper.find('.activeOption').text()).toBe('Value');
   });
 
+  it('should make first option from option groups active', () => {
+    const optionGroups = [
+      {
+        label: 'Test',
+        options: [
+          { value: 1, label: 'Value' },
+        ],
+      },
+      {
+        label: 'Test2',
+        options: [
+          { value: 2, label: 'Value2' },
+        ],
+      },
+    ];
+    const wrapper = mount(<Select isExpanded optionGroups={optionGroups} />);
+
+    expect(wrapper.find('.activeOption').length).toBe(1);
+    expect(wrapper.find('.activeOption').text()).toBe('Value');
+  });
+
   it('should make active options incrementally on arrow down click', () => {
     const options = [
       { value: 1, label: 'Value', type: 'genre' },
