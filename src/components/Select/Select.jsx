@@ -319,11 +319,11 @@ class Select extends React.Component {
 
   handleOptionRef(ref, index) {
     if (index === this.activeOptionIndex) {
-      this.updateExpandableContainerScroll(this.expandableContainer, ref, index);
+      this.updateExpandableContainerScroll(this.expandableContainer, ref);
     }
   }
 
-  updateExpandableContainerScroll(expandableContainer, option, index) {
+  updateExpandableContainerScroll(expandableContainer, option) {
     if (!expandableContainer) {
       return;
     }
@@ -333,10 +333,6 @@ class Select extends React.Component {
     const optionBottom = optionRect.bottom;
     const expandableBottom = expandableRect.bottom;
     const scrollTop = expandableContainer.scrollTop;
-
-    if (index === 0) {
-      this.setScrollTop(expandableContainer, 0);
-    }
 
     if (optionBottom < expandableBottom) {
       this.setScrollTop(expandableContainer, scrollTop + optionBottom - expandableBottom);
