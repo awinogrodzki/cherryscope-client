@@ -324,24 +324,31 @@ class Select extends React.Component {
   }
 
   updateExpandableContainerScroll(expandableContainer, option, index) {
-    const expandableRect = expandableContainer.getBoundingClientRect();
-    const optionRect = option.getBoundingClientRect();
-    const optionTop = optionRect.top;
-    const optionBottom = optionRect.bottom;
-    const expandableTop = expandableRect.top;
-    const expandableBottom = expandableRect.bottom;
-
-    if (index === 0) {
-      expandableContainer.scrollTop = 0;
+    if (!expandableContainer) {
+      return;
     }
 
-    if (optionTop < expandableTop) {
-      expandableContainer.scrollTop -= expandableTop - optionTop;
+    const expandableRect = expandableContainer.getBoundingClientRect();
+    const optionRect = option.getBoundingClientRect();
+    const optionBottom = optionRect.bottom;
+    const expandableBottom = expandableRect.bottom;
+    const scrollTop = expandableContainer.scrollTop;
+
+    if (index === 0) {
+      this.setScrollTop(expandableContainer, 0);
+    }
+
+    if (optionBottom < expandableBottom) {
+      this.setScrollTop(expandableContainer, scrollTop + optionBottom - expandableBottom);
     }
 
     if (optionBottom > expandableBottom) {
-      expandableContainer.scrollTop += optionBottom - expandableBottom;
+      this.setScrollTop(expandableContainer, scrollTop + optionBottom - expandableBottom);
     }
+  }
+
+  setScrollTop(element, value) {
+    element.scrollTop = value; // eslint-disable-line no-param-reassign
   }
 
   renderOptionGroups() {
