@@ -7,7 +7,8 @@ const Option = ({ index, option, onClick, getClass, getRef }) => (
   <div
     ref={ref => ref && getRef(ref, index)}
     className={classNames(styles.container, getClass(index))}
-    onClick={() => onClick(option)}
+    onMouseDown={() => onClick(option)}
+    onTouchStart={() => onClick(option)}
     role={'button'}
   >
     <span className={styles.label}>{option.label}</span>

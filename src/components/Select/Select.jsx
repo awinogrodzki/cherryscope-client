@@ -11,10 +11,11 @@ class Select extends React.Component {
 
     this.input = null;
     this.ignoreBlur = false;
-    this.activeOptionIndex = 0;
+    this.activeOption = null;
     this.expandableContainer = null;
 
     this.state = {
+      activeOptionIndex: 0,
       values: props.values,
       inputValue: props.inputValue,
       isExpanded: props.isExpanded,
@@ -23,9 +24,8 @@ class Select extends React.Component {
 
   handleValuesChange() {
     const optionCount = this.getOptionCount();
-    if (optionCount && this.activeOptionIndex > optionCount - 1) {
-      this.activeOptionIndex = optionCount - 1;
-      this.forceUpdate();
+    if (optionCount && this.state.activeOptionIndex > optionCount - 1) {
+      this.setState({ activeOptionIndex: optionCount - 1 });
     }
 
     return this.props.onChange(this.state.values);
@@ -100,8 +100,8 @@ class Select extends React.Component {
 
   handleInputEnter() {
     const options = this.getFilteredOptions();
-    if (options.length > 0 && get(options, this.activeOptionIndex, false)) {
-      this.selectOption(options[this.activeOptionIndex]);
+    if (options.length > 0 && get(options, this.state.activeOptionIndex, false)) {
+      this.selectOption(options[this.state.activeOptionIndex]);
     }
   }
 
@@ -113,31 +113,35 @@ class Select extends React.Component {
   }
 
   handleArrowUp() {
-    if (this.activeOptionIndex <= 0) {
-      this.activeOptionIndex = 0;
-      this.forceUpdate();
+    if (this.state.activeOptionIndex <= 0) {
+      this.setState({
+        activeOptionIndex: 0,
+      }, () => this.updateExpandableContainerScroll());
       return;
     }
 
-    this.activeOptionIndex = this.activeOptionIndex - 1;
-    this.forceUpdate();
-  }
-
-  getOptionCount() {
-    return this.getOptionsFromGroups().length || this.props.options.length;
+    this.setState({
+      activeOptionIndex: this.state.activeOptionIndex - 1,
+    }, () => this.updateExpandableContainerScroll());
   }
 
   handleArrowDown() {
     const optionLength = this.getOptionCount();
 
-    if (this.activeOptionIndex >= optionLength - 1) {
-      this.activeOptionIndex = optionLength - 1;
-      this.forceUpdate();
+    if (this.state.activeOptionIndex >= optionLength - 1) {
+      this.setState({
+        activeOptionIndex: optionLength - 1,
+      }, () => this.updateExpandableContainerScroll());
       return;
     }
 
-    this.activeOptionIndex = this.activeOptionIndex + 1;
-    this.forceUpdate();
+    this.setState({
+      activeOptionIndex: this.state.activeOptionIndex + 1,
+    }, () => this.updateExpandableContainerScroll());
+  }
+
+  getOptionCount() {
+    return this.getOptionsFromGroups().length || this.props.options.length;
   }
 
   getFilteredOptions() {
@@ -296,7 +300,7 @@ class Select extends React.Component {
   }
 
   getOptionClass(key) {
-    if (key === this.activeOptionIndex) {
+    if (key === this.state.activeOptionIndex) {
       return styles.activeOption;
     }
 
@@ -318,28 +322,32 @@ class Select extends React.Component {
   }
 
   handleOptionRef(ref, index) {
-    if (index === this.activeOptionIndex) {
-      this.updateExpandableContainerScroll(this.expandableContainer, ref);
+    if (index === this.state.activeOptionIndex && ref !== null) {
+      this.setActiveOption(ref);
     }
   }
 
-  updateExpandableContainerScroll(expandableContainer, option) {
-    if (!expandableContainer) {
+  setActiveOption(ref) {
+    this.activeOption = ref;
+  }
+
+  updateExpandableContainerScroll() {
+    if (!this.expandableContainer || !this.activeOption) {
       return;
     }
 
-    const expandableRect = expandableContainer.getBoundingClientRect();
-    const optionRect = option.getBoundingClientRect();
+    const expandableRect = this.expandableContainer.getBoundingClientRect();
+    const optionRect = this.activeOption.getBoundingClientRect();
     const optionBottom = optionRect.bottom;
     const expandableBottom = expandableRect.bottom;
-    const scrollTop = expandableContainer.scrollTop;
+    const scrollTop = this.expandableContainer.scrollTop;
 
     if (optionBottom < expandableBottom) {
-      this.setScrollTop(expandableContainer, scrollTop + optionBottom - expandableBottom);
+      this.setScrollTop(this.expandableContainer, scrollTop + optionBottom - expandableBottom);
     }
 
     if (optionBottom > expandableBottom) {
-      this.setScrollTop(expandableContainer, scrollTop + optionBottom - expandableBottom);
+      this.setScrollTop(this.expandableContainer, scrollTop + optionBottom - expandableBottom);
     }
   }
 

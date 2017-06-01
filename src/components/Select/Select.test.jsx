@@ -67,7 +67,7 @@ describe('Select', () => {
     ];
     const wrapper = mount(<Select isExpanded optionGroups={optionGroups} />);
 
-    wrapper.find(Option).at(0).simulate('click');
+    wrapper.find(Option).at(0).simulate('mousedown');
 
     expect(wrapper.find(Option)).toHaveLength(0);
     expect(wrapper.find(Value)).toHaveLength(1);
@@ -134,13 +134,13 @@ describe('Select', () => {
     const onChangeHandler = jest.fn();
     const wrapper = mount(<Select isExpanded options={options} onChange={onChangeHandler} />);
 
-    wrapper.find(Option).at(0).simulate('click');
+    wrapper.find(Option).at(0).simulate('mousedown');
     expect(onChangeHandler).toBeCalledWith([options[0]]);
 
-    wrapper.find(Option).at(0).simulate('click');
+    wrapper.find(Option).at(0).simulate('mousedown');
     expect(onChangeHandler).toBeCalledWith([options[0], options[1]]);
 
-    wrapper.find(Option).at(0).simulate('click');
+    wrapper.find(Option).at(0).simulate('mousedown');
     expect(onChangeHandler).toBeCalledWith([options[0], options[1], options[2]]);
   });
 
@@ -153,9 +153,9 @@ describe('Select', () => {
     const onChangeHandler = jest.fn();
     const wrapper = mount(<Select isExpanded options={options} onChange={onChangeHandler} />);
 
-    wrapper.find(Option).at(0).simulate('click');
-    wrapper.find(Option).at(0).simulate('click');
-    wrapper.find(Option).at(0).simulate('click');
+    wrapper.find(Option).at(0).simulate('mousedown');
+    wrapper.find(Option).at(0).simulate('mousedown');
+    wrapper.find(Option).at(0).simulate('mousedown');
 
     expect(onChangeHandler).toBeCalledWith([options[0]]);
   });
@@ -169,9 +169,9 @@ describe('Select', () => {
     const wrapper = mount(<Select isExpanded options={options} />);
     const optionWrapper = wrapper.find(Option);
 
-    optionWrapper.at(0).simulate('click');
-    optionWrapper.at(1).simulate('click');
-    optionWrapper.at(2).simulate('click');
+    optionWrapper.at(0).simulate('mousedown');
+    optionWrapper.at(1).simulate('mousedown');
+    optionWrapper.at(2).simulate('mousedown');
 
     expect(wrapper.find(Value)).toHaveLength(3);
   });
@@ -269,7 +269,7 @@ describe('Select', () => {
       { value: 1, label: 'Value', type: 'genre' },
     ];
     const wrapper = mount(<Select inputValue={'Value'} isExpanded options={options} />);
-    wrapper.find(Option).at(0).simulate('click');
+    wrapper.find(Option).at(0).simulate('mousedown');
 
     expect(wrapper.find('[data-test="Select.input"]').props().value).toBe('');
   });
@@ -296,7 +296,7 @@ describe('Select', () => {
     ];
     const wrapper = mount(<Select isExpanded options={options} />);
     const optionWrapper = wrapper.find(Option);
-    optionWrapper.at(0).simulate('click');
+    optionWrapper.at(0).simulate('mousedown');
 
     expect(wrapper.find(Option)).toHaveLength(1);
     expect(wrapper.find(Option).at(0).props().option.value).toBe(2);
@@ -328,7 +328,7 @@ describe('Select', () => {
     const wrapper = mount(<Select isExpanded options={options} />);
     const optionWrapper = wrapper.find(Option);
 
-    optionWrapper.at(0).simulate('click');
+    optionWrapper.at(0).simulate('mousedown');
 
     expect(wrapper.find('[data-test="Select.optionContainer"]')).toHaveLength(1);
   });
