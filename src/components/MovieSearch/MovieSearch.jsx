@@ -10,13 +10,27 @@ class MovieSearch extends React.Component {
 
   constructor(props) {
     super(props);
+
+    const defaultDate = new Date();
+
     this.state = {
       query: null,
-      selected: [],
+      selected: [
+        {
+          value: 'release_date.lte',
+          label: `${t('movies.date.release_date.lte')} ${defaultDate.toLocaleDateString()}`,
+          type: 'date',
+          date: defaultDate,
+        },
+      ],
       sortBy: null,
     };
 
     this.registerObservables();
+  }
+
+  componentDidMount() {
+    this.props.onChange(this.getValues());
   }
 
   registerObservables() {
