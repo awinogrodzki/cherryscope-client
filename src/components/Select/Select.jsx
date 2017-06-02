@@ -41,6 +41,8 @@ class Select extends React.Component {
   }
 
   onInputKeyDown(e) {
+    this.setState({ activeOptionIndex: 0 });
+
     switch (e.keyCode) {
       case 8:
         this.handleInputBackspace();
