@@ -188,6 +188,7 @@ class Select extends React.Component {
     this.expandableContainer = ref;
   }
 
+  /* eslint-disable react/no-array-index-key */
   render() {
     return (
       <div className={styles.container}>
@@ -195,9 +196,9 @@ class Select extends React.Component {
           className={styles.inputContainer}
         >
           <div className={styles.valueContainer}>
-            { !!this.state.values.length && this.state.values.map(option => (
+            { !!this.state.values.length && this.state.values.map((option, index) => (
               <Value
-                key={option.value}
+                key={index}
                 option={option}
                 getClass={this.props.getValueClass}
                 onDelete={optionToDelete => this.onValueDelete(optionToDelete)}
@@ -237,6 +238,7 @@ class Select extends React.Component {
       </div>
     );
   }
+  /* eslint-enable */
 
   filterOptions(options = []) {
     const notSelectedOptions = options.filter(option => !this.isSelected(option));

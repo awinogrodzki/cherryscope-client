@@ -183,13 +183,10 @@ describe('Select', () => {
       { value: 3, label: 'Value3', type: 'test' },
     ];
     const wrapper = mount(<Select values={options} options={options} />);
-    const valueWrapper = wrapper.find(Value);
 
-    expect(valueWrapper).toHaveLength(3);
-
-    valueWrapper.at(0).find('[data-test="Value.deleteButton"]').simulate('mousedown');
-    valueWrapper.at(1).find('[data-test="Value.deleteButton"]').simulate('mousedown');
-    valueWrapper.at(2).find('[data-test="Value.deleteButton"]').simulate('mousedown');
+    wrapper.find(Value).at(0).find('[data-test="Value.deleteButton"]').simulate('mousedown');
+    wrapper.find(Value).at(0).find('[data-test="Value.deleteButton"]').simulate('mousedown');
+    wrapper.find(Value).at(0).find('[data-test="Value.deleteButton"]').simulate('mousedown');
 
     expect(wrapper.find(Value)).toHaveLength(0);
   });
