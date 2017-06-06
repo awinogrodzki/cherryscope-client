@@ -18,7 +18,7 @@ const renderOptions = ({
   return options.map((option, index) => (
     <Option
       index={getOptionIndex(index)}
-      key={option.value}
+      key={getOptionIndex(index)}
       option={option}
       onClick={onOptionClick}
       getClass={getOptionClass}

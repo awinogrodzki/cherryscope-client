@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Select from 'components/Select';
 import MovieSort from 'components/MovieSort';
 import { t } from 'services/translate';
-import { Observable } from 'services/observable';
 import styles from './MovieSearch.css';
 
 class MovieSearch extends React.Component {
@@ -11,33 +10,11 @@ class MovieSearch extends React.Component {
   constructor(props) {
     super(props);
 
-    const defaultDate = new Date();
-
     this.state = {
       query: null,
-      selected: [
-        {
-          value: 'release_date.lte',
-          label: `${t('movies.date.release_date.lte')} ${defaultDate.toLocaleDateString()}`,
-          type: 'date',
-          date: defaultDate,
-        },
-      ],
+      selected: [],
       sortBy: null,
     };
-
-    this.registerObservables();
-  }
-
-  componentDidMount() {
-    this.props.onChange(this.getValues());
-  }
-
-  registerObservables() {
-    this.inputChangeObservable = new Observable(value => this.onInputChange(value))
-      .debounce(500)
-      .distinctUntilChanged()
-      .register();
   }
 
   onSortChange(value) {
@@ -62,6 +39,7 @@ class MovieSearch extends React.Component {
       {
         label: t('movies.dates'),
         filterByInput: false,
+        isUnique: true,
         options: this.getDateOptionsFromQuery(),
       },
       {
@@ -91,14 +69,14 @@ class MovieSearch extends React.Component {
 
     return [
       {
-        value: 'release_date.lte',
-        label: `${t('movies.date.release_date.lte')} ${this.state.query}`,
+        value: 'primary_release_date.lte',
+        label: `${t('movies.date.primary_release_date.lte')} ${this.state.query}`,
         type: 'date',
         date: new Date(this.state.query),
       },
       {
-        value: 'release_date.gte',
-        label: `${t('movies.date.release_date.gte')} ${this.state.query}`,
+        value: 'primary_release_date.gte',
+        label: `${t('movies.date.primary_release_date.gte')} ${this.state.query}`,
         type: 'date',
         date: new Date(this.state.query),
       },
@@ -129,7 +107,7 @@ class MovieSearch extends React.Component {
           values={this.state.selected}
           onChange={values => this.onChange(values)}
           getValueClass={option => styles[`${option.type}Value`]}
-          onInputChange={this.inputChangeObservable.getHandler()}
+          onInputChange={value => this.onInputChange(value)}
           optionGroups={this.getOptionGroups()}
           isLoading={this.props.isLoading}
         />

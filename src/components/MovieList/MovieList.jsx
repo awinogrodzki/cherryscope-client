@@ -14,7 +14,12 @@ const renderMovies = (movies, isLoading) => {
   return movies.map(item => (
     <Movie
       key={item.id}
+      title={item.title}
+      originalTitle={item.original_title}
       imageUrl={movieService.getImageUrl(item.backdrop_path)}
+      voteAverage={item.vote_average}
+      voteCount={item.vote_count}
+      releaseDate={new Date(item.release_date)}
     />
   ));
 };

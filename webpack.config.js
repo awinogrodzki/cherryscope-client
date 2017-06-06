@@ -1,11 +1,13 @@
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isDev = (process.env.NODE_ENV || 'dev') === 'dev';
 
 module.exports = {
   entry: {
     index: ['./src/index'],
+    globalStyles: ['./src/resources/styles/global']
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -29,13 +31,21 @@ module.exports = {
         }
       },
       {
+        test: path.resolve(__dirname, 'src/resources/styles/global.css'),
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?minimize!postcss-loader'
+        })
+      },
+      {
         test: /\.css$/,
+        exclude: path.resolve(__dirname, 'src/resources/styles'),
         loader: [
           'style-loader',
           'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
           'postcss-loader'
         ]
-      }
+      },
     ]
   },
   plugins: [
@@ -49,9 +59,10 @@ module.exports = {
         return context && context.indexOf('node_modules') >= 0;
       },
     }),
+    new ExtractTextPlugin('global.css'),
   ],
   resolve: {
-    modules: [path.resolve(__dirname, "src"), "node_modules"],
-    extensions: ['.js', '.jsx'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    extensions: ['.js', '.jsx', '.css'],
   }
 };

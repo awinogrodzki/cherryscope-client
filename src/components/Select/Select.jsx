@@ -41,7 +41,9 @@ class Select extends React.Component {
   }
 
   onInputKeyDown(e) {
-    this.setState({ activeOptionIndex: 0 });
+    this.setState({
+      activeOptionIndex: 0,
+    }, () => this.updateExpandableContainerScroll());
 
     switch (e.keyCode) {
       case 8:
@@ -54,10 +56,10 @@ class Select extends React.Component {
         this.handleInputEscape();
         break;
       case 40:
-        this.handleArrowDown();
+        this.handleArrowDown(e);
         break;
       case 38:
-        this.handleArrowUp();
+        this.handleArrowUp(e);
         break;
       default:
         if (!this.state.isExpanded) { this.expand(); }
@@ -114,7 +116,9 @@ class Select extends React.Component {
     });
   }
 
-  handleArrowUp() {
+  handleArrowUp(e) {
+    e.preventDefault();
+
     if (this.state.activeOptionIndex <= 0) {
       this.setState({
         activeOptionIndex: 0,
@@ -127,8 +131,10 @@ class Select extends React.Component {
     }, () => this.updateExpandableContainerScroll());
   }
 
-  handleArrowDown() {
+  handleArrowDown(e) {
     const optionLength = this.getOptionCount();
+
+    e.preventDefault();
 
     if (this.state.activeOptionIndex >= optionLength - 1) {
       this.setState({
@@ -242,8 +248,12 @@ class Select extends React.Component {
   }
   /* eslint-enable */
 
-  filterOptions(options = []) {
-    const notSelectedOptions = options.filter(option => !this.isSelected(option));
+  filterSelected(options = [], filterByValue = false) {
+    return options.filter(option => !this.isSelected(option, filterByValue));
+  }
+
+  filterOptions(options = [], filterByValue = false) {
+    const notSelectedOptions = this.filterSelected(options, filterByValue);
 
     if (!this.state.inputValue) {
       return notSelectedOptions;
@@ -253,13 +263,18 @@ class Select extends React.Component {
   }
 
   filterOptionsByGroup(group) {
-    if (group.isSingle === true && this.hasSelectedOptions(group)) {
+    if (
+      !group.options ||
+      group.isSingle === true && this.hasSelectedOptions(group)
+    ) {
       return [];
     }
 
-    return group.filterByInput === false
-    ? group.options || []
-    : this.filterOptions(group.options);
+    if (group.filterByInput === false) {
+      return this.filterSelected(group.options, group.isUnique);
+    }
+
+    return this.filterOptions(group.options, group.isUnique);
   }
 
   hasSelectedOptions(group) {
@@ -290,7 +305,11 @@ class Select extends React.Component {
     }
   }
 
-  isSelected(option) {
+  isSelected(option, filterByValue = false) {
+    if (filterByValue) {
+      return find(this.state.values, { value: option.value });
+    }
+
     return find(this.state.values, option);
   }
 
@@ -407,6 +426,7 @@ Select.propTypes = {
     onOptionClick: PropTypes.func,
     filterByInput: PropTypes.bool,
     isSingle: PropTypes.bool,
+    isUnique: PropTypes.bool,
     options: PropTypes.arrayOf(PropTypes.object),
     customComponent: PropTypes.node,
   })),

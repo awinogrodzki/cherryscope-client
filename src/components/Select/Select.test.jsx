@@ -74,6 +74,28 @@ describe('Select', () => {
     expect(wrapper.find(Value).props().option.label).toBe('Value');
   });
 
+  it('should be able to select only unique values from group', () => {
+    const optionGroups = [
+      {
+        label: 'Test',
+        isUnique: true,
+        options: [
+          { value: 1, label: 'Value' },
+          { value: 1, label: 'Abc' },
+          { value: 3, label: 'Xyz' },
+        ],
+      },
+    ];
+    const wrapper = mount(<Select isExpanded optionGroups={optionGroups} />);
+
+    wrapper.find(Option).at(0).simulate('mousedown');
+
+    expect(wrapper.find(Option)).toHaveLength(1);
+    expect(wrapper.find(Value)).toHaveLength(1);
+    expect(wrapper.find(Value).props().option.label).toBe('Value');
+    expect(wrapper.find(Option).props().option.label).toBe('Xyz');
+  });
+
   it('should pass input value on change', () => {
     const onInputChange = jest.fn();
     const wrapper = mount(<Select onInputChange={onInputChange} />);
@@ -170,8 +192,8 @@ describe('Select', () => {
     const optionWrapper = wrapper.find(Option);
 
     optionWrapper.at(0).simulate('mousedown');
-    optionWrapper.at(1).simulate('mousedown');
-    optionWrapper.at(2).simulate('mousedown');
+    optionWrapper.at(0).simulate('mousedown');
+    optionWrapper.at(0).simulate('mousedown');
 
     expect(wrapper.find(Value)).toHaveLength(3);
   });

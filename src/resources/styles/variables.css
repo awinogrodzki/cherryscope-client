@@ -1,4 +1,5 @@
 :root {
+  --color-white: #fff;
   --color-light-grey: #f9f9f9;
   --color-light-grey2: #fcfcfc;
 
@@ -6,5 +7,6 @@
   --input-color: #c4c7f9;
   --input-text-color: #000;
 
+  --default-padding: 20px;
   --small-padding: 10px;
 }

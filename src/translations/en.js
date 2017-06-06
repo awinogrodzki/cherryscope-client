@@ -1,10 +1,15 @@
 export default {
+  movie: {
+    voteCount: 'Vote count',
+    voteAverage: 'Vote average',
+    releaseDate: 'Released',
+  },
   movies: {
     dates: 'Dates',
     date: {
-      release_date: {
-        lte: 'Release date before',
-        gte: 'Release date after',
+      primary_release_date: {
+        lte: 'Released before',
+        gte: 'Released after',
       },
     },
     genres: 'Genres',
@@ -23,12 +28,12 @@ export default {
         desc: 'Primary released latest',
       },
       vote_count: {
-        asc: 'Most votes',
-        desc: 'Least votes',
+        asc: 'Least votes',
+        desc: 'Most votes',
       },
       vote_average: {
-        asc: 'Best vote',
-        desc: 'Worst vote',
+        asc: 'Worst vote',
+        desc: 'Best vote',
       },
     },
   },

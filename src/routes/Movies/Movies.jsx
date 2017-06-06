@@ -16,6 +16,10 @@ class Movies extends React.PureComponent {
     };
   }
 
+  componentDidMount() {
+    this.discoverMovies();
+  }
+
   discoverMovies(filters = {}) {
     this.setState({ isLoading: true });
 
