@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Option from '../Option';
 import styles from './OptionGroup.css';
 
@@ -34,6 +35,7 @@ const OptionGroup = ({
   options,
   onOptionClick,
   customComponent,
+  labelClass,
   getOptionClass,
   getOptionIndex,
   getOptionRef,
@@ -44,7 +46,10 @@ const OptionGroup = ({
         data-index={index}
         id={id}
         data-test="OptionGroup.label"
-        className={styles.labelContainer}
+        className={classNames(
+          styles.labelContainer,
+          labelClass
+        )}
       >
         <span className={styles.label}>{label}</span>
       </div>
@@ -61,12 +66,16 @@ const OptionGroup = ({
 );
 
 OptionGroup.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   index: PropTypes.number,
   getOptionIndex: PropTypes.func,
   getOptionClass: PropTypes.func,
   getOptionRef: PropTypes.func,
   label: PropTypes.string,
+  labelClass: PropTypes.string,
   onOptionClick: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
   customComponent: PropTypes.node,
@@ -77,6 +86,7 @@ OptionGroup.defaultProps = {
   index: 0,
   getOptionClass: () => {},
   label: null,
+  labelClass: null,
   getOptionIndex: index => index,
   onOptionClick: () => {},
   getOptionRef: () => {},

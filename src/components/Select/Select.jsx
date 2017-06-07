@@ -378,6 +378,10 @@ class Select extends React.Component {
     element.scrollTop = value; // eslint-disable-line no-param-reassign
   }
 
+  getLabelClass(optionGroupId) {
+    return `${optionGroupId}Group`;
+  }
+
   renderOptionGroups() {
     if (this.props.optionGroups.length > 0) {
       return this.props.optionGroups.map(
@@ -397,8 +401,10 @@ class Select extends React.Component {
 
     return (
       <OptionGroup
+        id={group.id || index}
         key={group.id || index}
         index={index}
+        labelClass={this.props.getLabelClass(group)}
         getOptionIndex={optionIndex => this.getOptionIndex(optionIndex, index)}
         getOptionClass={optionKey => this.getOptionClass(optionKey)}
         getOptionRef={(ref, refIndex) => this.handleOptionRef(ref, refIndex)}
@@ -416,10 +422,12 @@ Select.propTypes = {
   onInputChange: PropTypes.func,
   values: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
+  getLabelClass: PropTypes.func,
   getValueClass: PropTypes.func,
   optionGroups: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.any,
     index: PropTypes.number,
+    labelClass: PropTypes.string,
     getOptionClass: PropTypes.func,
     getOptionRef: PropTypes.func,
     label: PropTypes.string,
@@ -440,6 +448,7 @@ Select.defaultProps = {
   onInputChange: () => {},
   values: [],
   onChange: () => {},
+  getLabelClass: () => {},
   getValueClass: () => {},
   optionGroups: [],
   options: [],

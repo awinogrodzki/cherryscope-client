@@ -28,6 +28,7 @@ class MovieSearch extends React.Component {
   getOptionGroups() {
     return [
       {
+        id: 'sort',
         label: t('movies.sortBy'),
         customComponent: (
           <MovieSort
@@ -37,12 +38,14 @@ class MovieSearch extends React.Component {
         ),
       },
       {
+        id: 'dates',
         label: t('movies.dates'),
         filterByInput: false,
         isUnique: true,
         options: this.getDateOptionsFromQuery(),
       },
       {
+        id: 'genres',
         label: t('movies.genres'),
         options: this.props.genres.map(item => ({ value: item.id, label: item.name, type: 'genre' })),
       },
@@ -118,10 +121,12 @@ class MovieSearch extends React.Component {
         <Select
           values={this.state.selected}
           onChange={values => this.onChange(values)}
+          getLabelClass={group => styles[`${group.id}Label`]}
           getValueClass={option => styles[`${option.type}Value`]}
           onInputChange={value => this.onInputChange(value)}
           optionGroups={this.getOptionGroups()}
           isLoading={this.props.isLoading}
+          isExpanded
         />
       </div>
     );

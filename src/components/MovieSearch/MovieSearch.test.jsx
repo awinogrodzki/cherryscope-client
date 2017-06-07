@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { find } from 'lodash';
 import Select from 'components/Select';
 import MovieSearch from './MovieSearch';
 
@@ -50,9 +49,9 @@ describe('MovieSearch', () => {
     const wrapper = shallow(<MovieSearch />);
     const input = '2017-12-10';
     wrapper.find(Select).simulate('inputChange', input);
-    const optionGroups = [];
 
     expect(wrapper.find(Select).props().optionGroups).toContainEqual({
+      id: 'dates',
       label: 'movies.dates',
       filterByInput: false,
       isUnique: true,
@@ -77,32 +76,32 @@ describe('MovieSearch', () => {
     const wrapper = shallow(<MovieSearch />);
     const input = '2017';
     wrapper.find(Select).simulate('inputChange', input);
-    const optionGroups = [];
 
     expect(wrapper.find(Select).props().optionGroups).toContainEqual({
-        label: 'movies.dates',
-        filterByInput: false,
-        isUnique: true,
-        options: [
-          {
-            value: 'primary_release_date.lte',
-            label: `movies.date.primary_release_date.lte ${input}`,
-            type: 'date',
-            date: new Date(input),
-          },
-          {
-            value: 'primary_release_year',
-            label: `movies.date.primary_release_year ${input}`,
-            type: 'date',
-            date: new Date(input).getFullYear(),
-          },
-          {
-            value: 'primary_release_date.gte',
-            label: `movies.date.primary_release_date.gte ${input}`,
-            type: 'date',
-            date: new Date(input),
-          },
-        ],
+      id: 'dates',
+      label: 'movies.dates',
+      filterByInput: false,
+      isUnique: true,
+      options: [
+        {
+          value: 'primary_release_date.lte',
+          label: `movies.date.primary_release_date.lte ${input}`,
+          type: 'date',
+          date: new Date(input),
+        },
+        {
+          value: 'primary_release_year',
+          label: `movies.date.primary_release_year ${input}`,
+          type: 'date',
+          date: new Date(input).getFullYear(),
+        },
+        {
+          value: 'primary_release_date.gte',
+          label: `movies.date.primary_release_date.gte ${input}`,
+          type: 'date',
+          date: new Date(input),
+        },
+      ],
     });
   });
 
@@ -117,10 +116,10 @@ describe('MovieSearch', () => {
 
     expect(onChangeSpy).toBeCalledWith({
       dates: [
-        { label: "Test", type: "date", value: "test" },
+        { label: 'Test', type: 'date', value: 'test' },
       ],
       genres: [
-        { label: "Test1", type: "genre", value: "test1" },
+        { label: 'Test1', type: 'genre', value: 'test1' },
       ],
       sortBy: null,
     });

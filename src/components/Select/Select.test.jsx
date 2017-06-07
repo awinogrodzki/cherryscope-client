@@ -525,4 +525,36 @@ describe('Select', () => {
     expect(wrapper.find(Value)).toHaveLength(1);
     expect(wrapper.find(Value).at(0).props().option.label).toBe('Value3');
   });
+
+  it('should name option group label class by option group', () => {
+    const optionGroups = [
+      {
+        id: 'test',
+        label: 'Test',
+        options: [
+          { value: 1, label: 'Value' },
+        ],
+      },
+    ];
+    const wrapper = mount(
+      <Select isExpanded getLabelClass={group => group.id} optionGroups={optionGroups} />
+    );
+
+    expect(wrapper.find('.test').length).toBe(1);
+  });
+
+  it('should name value class by option', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(
+      <Select isExpanded getValueClass={option => option.type} options={options} />
+    );
+    wrapper.find(Option).at(2).simulate('mousedown');
+
+    expect(wrapper.find('.test')).toHaveLength(1);
+    expect(wrapper.find('.test').text()).toBe('Value3');
+  });
 });
