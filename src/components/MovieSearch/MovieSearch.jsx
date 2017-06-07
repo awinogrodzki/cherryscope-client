@@ -126,7 +126,6 @@ class MovieSearch extends React.Component {
           onInputChange={value => this.onInputChange(value)}
           optionGroups={this.getOptionGroups()}
           isLoading={this.props.isLoading}
-          isExpanded
         />
       </div>
     );
