@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from 'components/Select';
-import MovieSort from 'components/MovieSort';
 import { t } from 'services/translate';
+import MovieSort from 'components/MovieSort';
+import Select from 'components/Select';
 import styles from './MovieSearch.css';
 
 class MovieSearch extends React.Component {
@@ -74,6 +74,12 @@ class MovieSearch extends React.Component {
         type: 'date',
         date: new Date(this.state.query),
       },
+      ...[(this.isYear(this.state.query) ? {
+        value: 'primary_release_year',
+        label: `${t('movies.date.primary_release_year')} ${this.state.query}`,
+        type: 'date',
+        date: new Date(this.state.query).getFullYear(),
+      } : false)].filter(value => value !== false),
       {
         value: 'primary_release_date.gte',
         label: `${t('movies.date.primary_release_date.gte')} ${this.state.query}`,
@@ -86,6 +92,12 @@ class MovieSearch extends React.Component {
   isDate(value) {
     const date = new Date(value);
     return !isNaN(date.valueOf());
+  }
+
+  isYear(value) {
+    const date = new Date(value);
+
+    return value === String(date.getFullYear());
   }
 
   getValues() {

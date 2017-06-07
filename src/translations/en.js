@@ -7,6 +7,7 @@ export default {
   movies: {
     dates: 'Dates',
     date: {
+      primary_release_year: 'Released in year',
       primary_release_date: {
         lte: 'Released before',
         gte: 'Released after',
