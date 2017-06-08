@@ -105,7 +105,9 @@ class MovieSearch extends React.Component {
 
   isDate(value) {
     const date = new Date(value);
-    return !isNaN(date.valueOf());
+
+    return !isNaN(date.valueOf())
+      && String(value).length >= 4;
   }
 
   hasPrimaryReleaseYear(options) {
@@ -126,7 +128,8 @@ class MovieSearch extends React.Component {
   isYear(value) {
     const date = new Date(value);
 
-    return value === String(date.getFullYear());
+    return value === String(date.getFullYear())
+      && String(value).length >= 4;
   }
 
   getValues() {
