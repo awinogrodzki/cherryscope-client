@@ -27,29 +27,41 @@ class MovieSearch extends React.Component {
 
   getOptionGroups() {
     return [
-      {
-        id: 'sort',
-        label: t('movies.sortBy'),
-        customComponent: (
-          <MovieSort
-            value={this.state.sortBy}
-            onChange={value => this.onSortChange(value)}
-          />
-        ),
-      },
-      {
-        id: 'dates',
-        label: t('movies.dates'),
-        filterByInput: false,
-        isUnique: true,
-        options: this.getDateOptionsFromQuery(),
-      },
-      {
-        id: 'genres',
-        label: t('movies.genres'),
-        options: this.props.genres.map(item => ({ value: item.id, label: item.name, type: 'genre' })),
-      },
+      this.getSortOptionGroup(),
+      this.getDateOptionGroup(),
+      this.getGenreOptionGroup(),
     ];
+  }
+
+  getSortOptionGroup() {
+    return {
+      id: 'sort',
+      label: t('movies.sortBy'),
+      customComponent: (
+        <MovieSort
+          value={this.state.sortBy}
+          onChange={value => this.onSortChange(value)}
+        />
+      ),
+    };
+  }
+
+  getDateOptionGroup() {
+    return {
+      id: 'dates',
+      label: t('movies.dates'),
+      filterByInput: false,
+      isUnique: true,
+      options: this.getDateOptionsFromQuery(),
+    };
+  }
+
+  getGenreOptionGroup() {
+    return {
+      id: 'genres',
+      label: t('movies.genres'),
+      options: this.props.genres.map(item => ({ value: item.id, label: item.name, type: 'genre' })),
+    };
   }
 
   onChange(values) {

@@ -164,14 +164,15 @@ describe('MovieSearch', () => {
     ];
     wrapper.find(Select).simulate('change', options);
 
-    expect(onChangeSpy).toBeCalledWith({
-      dates: [
-        { label: 'Test', type: 'date', value: 'test' },
-      ],
-      genres: [
-        { label: 'Test1', type: 'genre', value: 'test1' },
-      ],
-      sortBy: null,
-    });
+    expect(onChangeSpy).toBeCalledWith(
+      expect.objectContaining({
+        dates: [
+          { label: 'Test', type: 'date', value: 'test' },
+        ],
+        genres: [
+          { label: 'Test1', type: 'genre', value: 'test1' },
+        ],
+      })
+    );
   });
 });
