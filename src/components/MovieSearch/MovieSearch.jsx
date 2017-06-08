@@ -66,7 +66,10 @@ class MovieSearch extends React.Component {
   }
 
   getDateOptionsFromQuery() {
-    if (!this.state.query || !this.isDate(this.state.query)) {
+    if (
+      !this.state.query
+      || !this.isDate(this.state.query)
+      || this.hasPrimaryReleaseYear(this.state.selected)) {
       return null;
     }
 
@@ -97,6 +100,12 @@ class MovieSearch extends React.Component {
     return !isNaN(date.valueOf());
   }
 
+  hasPrimaryReleaseYear(options) {
+    return !!options.filter(
+      option => option.value === 'primary_release_year'
+    ).length;
+  }
+
   isYear(value) {
     const date = new Date(value);
 
@@ -109,10 +118,6 @@ class MovieSearch extends React.Component {
       genres: this.state.selected.filter(value => value.type === 'genre'),
       sortBy: this.state.sortBy,
     };
-  }
-
-  renderValue(options) {
-    return <span className={styles[`${options.type}Value`]}>{options.label}</span>;
   }
 
   render() {
