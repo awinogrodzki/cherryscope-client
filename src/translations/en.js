@@ -6,11 +6,18 @@ export default {
   },
   movies: {
     dates: 'Dates',
+    votes: 'Votes',
     date: {
       primary_release_year: 'Released in year',
       primary_release_date: {
         lte: 'Released before',
         gte: 'Released after',
+      },
+    },
+    vote: {
+      vote_count: {
+        lte: 'Less votes than',
+        gte: 'More votes than',
       },
     },
     genres: 'Genres',

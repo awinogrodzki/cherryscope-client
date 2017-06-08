@@ -12,7 +12,11 @@
   background-color: var(--color-blue);
 }
 
-.datesLabel, .genresLabel {
+.voteValue {
+  background-color: var(--color-purple);
+}
+
+.datesLabel, .genresLabel, .votesLabel {
   vertical-align: middle;
 
   &::before {
@@ -29,5 +33,11 @@
 .genresLabel {
   &::before {
     background-color: var(--color-red);
+  }
+}
+
+.votesLabel {
+  &::before {
+    background-color: var(--color-purple);
   }
 }

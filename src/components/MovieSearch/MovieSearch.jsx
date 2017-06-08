@@ -29,6 +29,7 @@ class MovieSearch extends React.Component {
     return [
       this.getSortOptionGroup(),
       this.getDateOptionGroup(),
+      this.getVoteOptionGroup(),
       this.getGenreOptionGroup(),
     ];
   }
@@ -53,6 +54,16 @@ class MovieSearch extends React.Component {
       filterByInput: false,
       isUnique: true,
       options: this.getDateOptionsFromQuery(),
+    };
+  }
+
+  getVoteOptionGroup() {
+    return {
+      id: 'votes',
+      label: t('movies.votes'),
+      filterByInput: false,
+      isUnique: true,
+      options: this.getVoteOptionsFromQuery(),
     };
   }
 
@@ -102,6 +113,30 @@ class MovieSearch extends React.Component {
     ];
   }
 
+  getVoteOptionsFromQuery() {
+    if (
+      !this.state.query
+      || !this.isNumber(this.state.query)
+    ) {
+      return null;
+    }
+
+    return [
+      {
+        value: 'vote_count.gte',
+        label: `${t('movies.vote.vote_count.gte')} ${this.state.query}`,
+        type: 'vote',
+        data: this.state.query,
+      },
+      {
+        value: 'vote_count.lte',
+        label: `${t('movies.vote.vote_count.lte')} ${this.state.query}`,
+        type: 'vote',
+        data: this.state.query,
+      },
+    ];
+  }
+
   getPrimaryReleaseYearOption() {
     return [(
       this.isYear(this.state.query)
@@ -120,6 +155,10 @@ class MovieSearch extends React.Component {
 
     return !isNaN(date.valueOf())
       && String(value).length >= 4;
+  }
+
+  isNumber(value) {
+    return !isNaN(parseFloat(value)) && isFinite(value);
   }
 
   hasPrimaryReleaseYear(options) {
@@ -148,6 +187,7 @@ class MovieSearch extends React.Component {
     return {
       dates: this.state.selected.filter(value => value.type === 'date'),
       genres: this.state.selected.filter(value => value.type === 'genre'),
+      votes: this.state.selected.filter(value => value.type === 'vote'),
       sortBy: this.state.sortBy,
     };
   }

@@ -175,4 +175,21 @@ describe('MovieSearch', () => {
       })
     );
   });
+
+  it('should pass vote options with data on change', () => {
+    const onChangeSpy = jest.fn();
+    const wrapper = shallow(<MovieSearch onChange={onChangeSpy} />);
+    const options = [
+      { label: 'Test', value: 'test', type: 'vote', data: 123 },
+    ];
+    wrapper.find(Select).simulate('change', options);
+
+    expect(onChangeSpy).toBeCalledWith(
+      expect.objectContaining({
+        votes: [
+          { label: 'Test', type: 'vote', value: 'test', data: 123 },
+        ],
+      })
+    );
+  });
 });

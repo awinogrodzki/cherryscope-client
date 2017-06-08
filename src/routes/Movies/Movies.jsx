@@ -11,6 +11,7 @@ class Movies extends React.PureComponent {
     this.state = {
       dates: [],
       genres: [],
+      votes: [],
       sortBy: null,
       isLoading: false,
     };
@@ -44,6 +45,14 @@ class Movies extends React.PureComponent {
       filters[date.value] = date.date;
     });
 
+    this.state.votes.forEach((vote) => {
+      if (!vote || !vote.value || !vote.data) {
+        return;
+      }
+
+      filters[vote.value] = vote.data;
+    });
+
     return filters;
   }
 
@@ -51,6 +60,7 @@ class Movies extends React.PureComponent {
     this.setState({
       dates: data.dates,
       genres: data.genres,
+      votes: data.votes,
       sortBy: data.sortBy,
     }, () => {
       this.discoverMovies(this.getFilters());
