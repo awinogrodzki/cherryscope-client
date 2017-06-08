@@ -80,12 +80,7 @@ class MovieSearch extends React.Component {
         type: 'date',
         date: new Date(this.state.query),
       },
-      ...[(this.isYear(this.state.query) ? {
-        value: 'primary_release_year',
-        label: `${t('movies.date.primary_release_year')} ${this.state.query}`,
-        type: 'date',
-        date: new Date(this.state.query).getFullYear(),
-      } : false)].filter(value => value !== false),
+      ...this.getPrimaryReleaseYearOption(),
       {
         value: 'primary_release_date.gte',
         label: `${t('movies.date.primary_release_date.gte')} ${this.state.query}`,
@@ -93,6 +88,19 @@ class MovieSearch extends React.Component {
         date: new Date(this.state.query),
       },
     ];
+  }
+
+  getPrimaryReleaseYearOption() {
+    return [(
+      this.isYear(this.state.query)
+      && !this.hasPrimaryReleaseDate(this.state.selected) ?
+      {
+        value: 'primary_release_year',
+        label: `${t('movies.date.primary_release_year')} ${this.state.query}`,
+        type: 'date',
+        date: new Date(this.state.query).getFullYear(),
+      } : false
+    )].filter(value => value !== false);
   }
 
   isDate(value) {
@@ -103,6 +111,15 @@ class MovieSearch extends React.Component {
   hasPrimaryReleaseYear(options) {
     return !!options.filter(
       option => option.value === 'primary_release_year'
+    ).length;
+  }
+
+  hasPrimaryReleaseDate(options) {
+    return !!options.filter(
+      option => (
+        option.value
+        && option.value.indexOf('primary_release_date') >= 0
+      )
     ).length;
   }
 

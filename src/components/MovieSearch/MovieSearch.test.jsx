@@ -127,6 +127,42 @@ describe('MovieSearch', () => {
     });
   });
 
+  it('should not show primary release year option if primary release date is selected', () => {
+    const wrapper = shallow(<MovieSearch />);
+    const input = '2017';
+    const options = [
+      {
+        label: 'Test',
+        value: 'primary_release_date.gte',
+      },
+    ];
+
+    wrapper.find(Select).simulate('inputChange', input);
+    wrapper.find(Select).simulate('change', options);
+    wrapper.find(Select).simulate('inputChange', input);
+
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual({
+      id: 'dates',
+      label: 'movies.dates',
+      filterByInput: false,
+      isUnique: true,
+      options: [
+        {
+          value: 'primary_release_date.lte',
+          label: `movies.date.primary_release_date.lte ${input}`,
+          type: 'date',
+          date: new Date(input),
+        },
+        {
+          value: 'primary_release_date.gte',
+          label: `movies.date.primary_release_date.gte ${input}`,
+          type: 'date',
+          date: new Date(input),
+        },
+      ],
+    });
+  });
+
   it('should segregate values by type on select change', () => {
     const onChangeSpy = jest.fn();
     const wrapper = shallow(<MovieSearch onChange={onChangeSpy} />);
