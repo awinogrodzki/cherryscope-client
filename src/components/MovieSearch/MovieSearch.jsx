@@ -171,8 +171,9 @@ class MovieSearch extends React.Component {
     return !!options.filter(
       option => (
         option.value
-        && option.value.indexOf('primary_release_date') >= 0
-      )
+        && String(option.value)
+        || ''
+      ).indexOf('primary_release_date') >= 0
     ).length;
   }
 
