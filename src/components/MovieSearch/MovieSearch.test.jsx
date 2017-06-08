@@ -50,26 +50,24 @@ describe('MovieSearch', () => {
     const input = '2017-12-10';
     wrapper.find(Select).simulate('inputChange', input);
 
-    expect(wrapper.find(Select).props().optionGroups).toContainEqual({
-      id: 'dates',
-      label: 'movies.dates',
-      filterByInput: false,
-      isUnique: true,
-      options: [
-        {
-          value: 'primary_release_date.lte',
-          label: `movies.date.primary_release_date.lte ${input}`,
-          type: 'date',
-          date: new Date(input),
-        },
-        {
-          value: 'primary_release_date.gte',
-          label: `movies.date.primary_release_date.gte ${input}`,
-          type: 'date',
-          date: new Date(input),
-        },
-      ],
-    });
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: [
+          {
+            value: 'primary_release_date.lte',
+            label: `movies.date.primary_release_date.lte ${input}`,
+            type: 'date',
+            date: new Date(input),
+          },
+          {
+            value: 'primary_release_date.gte',
+            label: `movies.date.primary_release_date.gte ${input}`,
+            type: 'date',
+            date: new Date(input),
+          },
+        ],
+      })
+    );
   });
 
   it('should recognize a year on input change and pass according value to select', () => {
@@ -77,32 +75,30 @@ describe('MovieSearch', () => {
     const input = '2017';
     wrapper.find(Select).simulate('inputChange', input);
 
-    expect(wrapper.find(Select).props().optionGroups).toContainEqual({
-      id: 'dates',
-      label: 'movies.dates',
-      filterByInput: false,
-      isUnique: true,
-      options: [
-        {
-          value: 'primary_release_date.lte',
-          label: `movies.date.primary_release_date.lte ${input}`,
-          type: 'date',
-          date: new Date(input),
-        },
-        {
-          value: 'primary_release_year',
-          label: `movies.date.primary_release_year ${input}`,
-          type: 'date',
-          date: new Date(input).getFullYear(),
-        },
-        {
-          value: 'primary_release_date.gte',
-          label: `movies.date.primary_release_date.gte ${input}`,
-          type: 'date',
-          date: new Date(input),
-        },
-      ],
-    });
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: [
+          {
+            value: 'primary_release_date.lte',
+            label: `movies.date.primary_release_date.lte ${input}`,
+            type: 'date',
+            date: new Date(input),
+          },
+          {
+            value: 'primary_release_year',
+            label: `movies.date.primary_release_year ${input}`,
+            type: 'date',
+            date: new Date(input).getFullYear(),
+          },
+          {
+            value: 'primary_release_date.gte',
+            label: `movies.date.primary_release_date.gte ${input}`,
+            type: 'date',
+            date: new Date(input),
+          },
+        ],
+      })
+    );
   });
 
   it('should not show date options if primary release year is selected', () => {
@@ -118,13 +114,11 @@ describe('MovieSearch', () => {
     wrapper.find(Select).simulate('inputChange', input);
     wrapper.find(Select).simulate('change', options);
 
-    expect(wrapper.find(Select).props().optionGroups).toContainEqual({
-      id: 'dates',
-      label: 'movies.dates',
-      filterByInput: false,
-      isUnique: true,
-      options: null,
-    });
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: null,
+      })
+    );
   });
 
   it('should not show primary release year option if primary release date is selected', () => {
@@ -141,26 +135,24 @@ describe('MovieSearch', () => {
     wrapper.find(Select).simulate('change', options);
     wrapper.find(Select).simulate('inputChange', input);
 
-    expect(wrapper.find(Select).props().optionGroups).toContainEqual({
-      id: 'dates',
-      label: 'movies.dates',
-      filterByInput: false,
-      isUnique: true,
-      options: [
-        {
-          value: 'primary_release_date.lte',
-          label: `movies.date.primary_release_date.lte ${input}`,
-          type: 'date',
-          date: new Date(input),
-        },
-        {
-          value: 'primary_release_date.gte',
-          label: `movies.date.primary_release_date.gte ${input}`,
-          type: 'date',
-          date: new Date(input),
-        },
-      ],
-    });
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: [
+          {
+            value: 'primary_release_date.lte',
+            label: `movies.date.primary_release_date.lte ${input}`,
+            type: 'date',
+            date: new Date(input),
+          },
+          {
+            value: 'primary_release_date.gte',
+            label: `movies.date.primary_release_date.gte ${input}`,
+            type: 'date',
+            date: new Date(input),
+          },
+        ],
+      })
+    );
   });
 
   it('should segregate values by type on select change', () => {
