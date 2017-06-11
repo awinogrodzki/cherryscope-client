@@ -53,18 +53,16 @@ describe('MovieSearch', () => {
     expect(wrapper.find(Select).props().optionGroups).toContainEqual(
       expect.objectContaining({
         options: [
-          {
+          expect.objectContaining({
             value: 'primary_release_date.lte',
-            label: `movies.date.primary_release_date.lte ${input}`,
             type: 'date',
             date: new Date(input),
-          },
-          {
+          }),
+          expect.objectContaining({
             value: 'primary_release_date.gte',
-            label: `movies.date.primary_release_date.gte ${input}`,
             type: 'date',
             date: new Date(input),
-          },
+          }),
         ],
       })
     );
@@ -78,24 +76,21 @@ describe('MovieSearch', () => {
     expect(wrapper.find(Select).props().optionGroups).toContainEqual(
       expect.objectContaining({
         options: [
-          {
+          expect.objectContaining({
             value: 'primary_release_date.lte',
-            label: `movies.date.primary_release_date.lte ${input}`,
             type: 'date',
             date: new Date(input),
-          },
-          {
+          }),
+          expect.objectContaining({
             value: 'primary_release_year',
-            label: `movies.date.primary_release_year ${input}`,
             type: 'date',
             date: new Date(input).getFullYear(),
-          },
-          {
+          }),
+          expect.objectContaining({
             value: 'primary_release_date.gte',
-            label: `movies.date.primary_release_date.gte ${input}`,
             type: 'date',
             date: new Date(input),
-          },
+          }),
         ],
       })
     );
@@ -138,18 +133,16 @@ describe('MovieSearch', () => {
     expect(wrapper.find(Select).props().optionGroups).toContainEqual(
       expect.objectContaining({
         options: [
-          {
+          expect.objectContaining({
             value: 'primary_release_date.lte',
-            label: `movies.date.primary_release_date.lte ${input}`,
             type: 'date',
             date: new Date(input),
-          },
-          {
+          }),
+          expect.objectContaining({
             value: 'primary_release_date.gte',
-            label: `movies.date.primary_release_date.gte ${input}`,
             type: 'date',
             date: new Date(input),
-          },
+          }),
         ],
       })
     );
@@ -189,6 +182,54 @@ describe('MovieSearch', () => {
         votes: [
           { label: 'Test', type: 'vote', value: 'test', data: 123 },
         ],
+      })
+    );
+  });
+
+  it('should show vote count options if input value is a number', () => {
+    const wrapper = shallow(<MovieSearch />);
+    const input = '1000';
+
+    wrapper.find(Select).simulate('inputChange', input);
+
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: [
+          expect.objectContaining({
+            value: 'vote_count.gte',
+            type: 'vote',
+            data: input,
+          }),
+          expect.objectContaining({
+            value: 'vote_count.lte',
+            type: 'vote',
+            data: input,
+          }),
+        ],
+      })
+    );
+  });
+
+  it('should show vote average options if input value is a number between 0 and 10', () => {
+    const wrapper = shallow(<MovieSearch />);
+    const input = '5.5';
+
+    wrapper.find(Select).simulate('inputChange', input);
+
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: expect.arrayContaining([
+          expect.objectContaining({
+            value: 'vote_average.gte',
+            type: 'vote',
+            data: input,
+          }),
+          expect.objectContaining({
+            value: 'vote_average.lte',
+            type: 'vote',
+            data: input,
+          }),
+        ]),
       })
     );
   });

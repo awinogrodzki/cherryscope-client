@@ -8,16 +8,20 @@ export default {
     dates: 'Dates',
     votes: 'Votes',
     date: {
-      primary_release_year: 'Released in year',
-      primary_release_date: {
+      primaryReleaseYear: 'Released in year',
+      primaryReleaseDate: {
         lte: 'Released before',
         gte: 'Released after',
       },
     },
     vote: {
-      vote_count: {
+      count: {
         lte: 'Less votes than',
         gte: 'More votes than',
+      },
+      average: {
+        lte: 'Vote average lower or equal',
+        gte: 'Vote average greater or equal',
       },
     },
     genres: 'Genres',
@@ -27,19 +31,19 @@ export default {
         asc: 'Least popular',
         desc: 'Most popular',
       },
-      release_date: {
+      releaseDate: {
         asc: 'Released earliest',
         desc: 'Released latest',
       },
-      primary_release_date: {
+      primaryReleaseDate: {
         asc: 'Primary released earliest',
         desc: 'Primary released latest',
       },
-      vote_count: {
+      voteCount: {
         asc: 'Least votes',
         desc: 'Most votes',
       },
-      vote_average: {
+      voteAverage: {
         asc: 'Worst vote',
         desc: 'Best vote',
       },

@@ -99,14 +99,14 @@ class MovieSearch extends React.Component {
     return [
       {
         value: 'primary_release_date.lte',
-        label: `${t('movies.date.primary_release_date.lte')} ${this.state.query}`,
+        label: `${t('movies.date.primaryReleaseDate.lte')} ${this.state.query}`,
         type: 'date',
         date: new Date(this.state.query),
       },
       ...this.getPrimaryReleaseYearOption(),
       {
         value: 'primary_release_date.gte',
-        label: `${t('movies.date.primary_release_date.gte')} ${this.state.query}`,
+        label: `${t('movies.date.primaryReleaseDate.gte')} ${this.state.query}`,
         type: 'date',
         date: new Date(this.state.query),
       },
@@ -124,13 +124,40 @@ class MovieSearch extends React.Component {
     return [
       {
         value: 'vote_count.gte',
-        label: `${t('movies.vote.vote_count.gte')} ${this.state.query}`,
+        label: `${t('movies.vote.count.gte')} ${this.state.query}`,
         type: 'vote',
         data: this.state.query,
       },
       {
         value: 'vote_count.lte',
-        label: `${t('movies.vote.vote_count.lte')} ${this.state.query}`,
+        label: `${t('movies.vote.count.lte')} ${this.state.query}`,
+        type: 'vote',
+        data: this.state.query,
+      },
+      ...this.getVoteAverageOptions(),
+    ];
+  }
+
+  getVoteAverageOptions() {
+    if (
+      !this.state.query
+      || !this.isNumber(this.state.query)
+      || this.state.query < 0
+      || this.state.query > 10
+    ) {
+      return [];
+    }
+
+    return [
+      {
+        value: 'vote_average.gte',
+        label: `${t('movies.vote.average.gte')} ${this.state.query}`,
+        type: 'vote',
+        data: this.state.query,
+      },
+      {
+        value: 'vote_average.lte',
+        label: `${t('movies.vote.average.lte')} ${this.state.query}`,
         type: 'vote',
         data: this.state.query,
       },
@@ -143,7 +170,7 @@ class MovieSearch extends React.Component {
       && !this.hasPrimaryReleaseDate(this.state.selected) ?
       {
         value: 'primary_release_year',
-        label: `${t('movies.date.primary_release_year')} ${this.state.query}`,
+        label: `${t('movies.date.primaryReleaseYear')} ${this.state.query}`,
         type: 'date',
         date: new Date(this.state.query).getFullYear(),
       } : false

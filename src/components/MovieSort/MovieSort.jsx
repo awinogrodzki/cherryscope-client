@@ -15,35 +15,35 @@ const getOptions = () => [
   },
   {
     value: 'release_date.desc',
-    label: t('movies.sort.release_date.desc'),
+    label: t('movies.sort.releaseDate.desc'),
   },
   {
     value: 'release_date.asc',
-    label: t('movies.sort.release_date.asc'),
+    label: t('movies.sort.releaseDate.asc'),
   },
   {
     value: 'primary_release_date.desc',
-    label: t('movies.sort.primary_release_date.desc'),
+    label: t('movies.sort.primaryReleaseDate.desc'),
   },
   {
     value: 'primary_release_date.asc',
-    label: t('movies.sort.primary_release_date.asc'),
+    label: t('movies.sort.primaryReleaseDate.asc'),
   },
   {
     value: 'vote_count.desc',
-    label: t('movies.sort.vote_count.desc'),
+    label: t('movies.sort.voteCount.desc'),
   },
   {
     value: 'vote_count.asc',
-    label: t('movies.sort.vote_count.asc'),
+    label: t('movies.sort.voteCount.asc'),
   },
   {
     value: 'vote_average.desc',
-    label: t('movies.sort.vote_average.desc'),
+    label: t('movies.sort.voteAverage.desc'),
   },
   {
     value: 'vote_average.asc',
-    label: t('movies.sort.vote_average.asc'),
+    label: t('movies.sort.voteAverage.asc'),
   },
 ];
 
