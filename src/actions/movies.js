@@ -1,5 +1,9 @@
 import movieService from 'services/movie';
-import { DISCOVER_MOVIES, GET_GENRES } from './types';
+import {
+  DISCOVER_MOVIES,
+  GET_GENRES,
+  SEARCH_KEYWORDS,
+} from './types';
 
 const discoverMovies = filters => dispatch => movieService.discover(filters)
   .then((data) => {
@@ -24,4 +28,14 @@ const getGenres = () => dispatch => movieService.getGenres()
     return data;
   });
 
-module.exports = { discoverMovies, getGenres };
+const searchKeywords = query => dispatch => movieService.searchKeywords(query)
+  .then((data) => {
+    dispatch({
+      type: SEARCH_KEYWORDS,
+      items: data.results,
+    });
+
+    return data;
+  });
+
+module.exports = { discoverMovies, getGenres, searchKeywords };

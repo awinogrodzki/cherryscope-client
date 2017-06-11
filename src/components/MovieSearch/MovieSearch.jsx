@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { t } from 'services/translate';
+import { Observable } from 'services/observable';
 import MovieSort from 'components/MovieSort';
 import Select from 'components/Select';
 import styles from './MovieSearch.css';
@@ -15,6 +16,15 @@ class MovieSearch extends React.Component {
       selected: [],
       sortBy: null,
     };
+
+    this.registerObservables();
+  }
+
+  registerObservables() {
+    this.inputChangeObservable = new Observable(value => this.onInputChangeDebounced(value))
+      .debounce(500)
+      .distinctUntilChanged()
+      .register();
   }
 
   onSortChange(value) {
@@ -85,7 +95,14 @@ class MovieSearch extends React.Component {
   }
 
   onInputChange(value) {
+    const onInputChangeDebouncedHandler = this.inputChangeObservable.getHandler();
+
     this.setState({ query: value });
+    onInputChangeDebouncedHandler(value);
+  }
+
+  onInputChangeDebounced(value) {
+    this.props.searchKeywords(value);
   }
 
   getDateOptionsFromQuery() {
@@ -242,12 +259,14 @@ MovieSearch.propTypes = {
   isLoading: PropTypes.bool,
   genres: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
+  searchKeywords: PropTypes.func,
 };
 
 MovieSearch.defaultProps = {
   isLoading: true,
   genres: [],
   onChange: () => {},
+  searchKeywords: () => {},
 };
 
 export default MovieSearch;

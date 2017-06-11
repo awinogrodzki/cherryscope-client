@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getGenres } from 'actions';
+import { getGenres, searchKeywords } from 'actions';
 import MovieSearch from './MovieSearch';
 
 class MovieSearchContainer extends React.Component {
@@ -26,6 +26,7 @@ class MovieSearchContainer extends React.Component {
 
   render() {
     return (<MovieSearch
+      searchKeywords={this.props.searchKeywords}
       genres={this.props.genres}
       onChange={values => this.props.onChange(values)}
       isLoading={this.state.isLoading}
@@ -34,6 +35,7 @@ class MovieSearchContainer extends React.Component {
 }
 
 const mapDispatchToProps = {
+  searchKeywords: value => searchKeywords(value),
   getGenres: () => getGenres(),
 };
 
@@ -44,6 +46,7 @@ const mapStateToProps = state => ({
 MovieSearchContainer.propTypes = {
   onChange: PropTypes.func,
   getGenres: PropTypes.func.isRequired,
+  searchKeywords: PropTypes.func.isRequired,
   genres: PropTypes.arrayOf(PropTypes.object),
 };
 
