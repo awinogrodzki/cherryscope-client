@@ -117,6 +117,7 @@ class MovieSearch extends React.Component {
     if (
       !this.state.query
       || !this.isNumber(this.state.query)
+      || this.state.query < 0
     ) {
       return null;
     }
