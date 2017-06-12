@@ -4,37 +4,16 @@ import PropTypes from 'prop-types';
 import { getGenres, searchKeywords, clearKeywords } from 'actions';
 import MovieSearch from './MovieSearch';
 
-class MovieSearchContainer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: true,
-    };
-  }
-
-  componentDidMount() {
-    this.getGenres();
-  }
-
-  getGenres() {
-    this.setState({ isLoading: true });
-    this.props.getGenres()
-      .then(() => this.setState({ isLoading: false }))
-      .catch(() => this.setState({ isLoading: false }));
-  }
-
-  render() {
-    return (<MovieSearch
-      searchKeywords={this.props.searchKeywords}
-      clearKeywords={this.props.clearKeywords}
-      genres={this.props.genres}
-      keywords={this.props.keywords}
-      onChange={values => this.props.onChange(values)}
-      isLoading={this.state.isLoading}
-    />);
-  }
-}
+const MovieSearchContainer = props => (
+  <MovieSearch
+    getGenres={props.getGenres}
+    searchKeywords={props.searchKeywords}
+    clearKeywords={props.clearKeywords}
+    genres={props.genres}
+    keywords={props.keywords}
+    onChange={values => props.onChange(values)}
+  />
+);
 
 const mapDispatchToProps = {
   searchKeywords: value => searchKeywords(value),

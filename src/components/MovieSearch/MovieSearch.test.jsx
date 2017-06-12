@@ -1,10 +1,30 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import Select from 'components/Select';
 import MovieSearch from './MovieSearch';
 
 jest.mock('services/translate', () => ({
   t: label => label,
+}));
+
+jest.mock('services/observable', () => ({
+  Observable: class {
+    constructor(callback) {
+      this.callback = callback;
+    }
+
+    debounce() {
+      return this;
+    }
+
+    register() {
+      return this;
+    }
+
+    getHandler() {
+      return this.callback;
+    }
+  },
 }));
 
 describe('MovieSearch', () => {
@@ -232,5 +252,29 @@ describe('MovieSearch', () => {
         ]),
       })
     );
+  });
+
+  it('should get genres on mount', () => {
+    const mockGetGenres = jest.fn();
+    mockGetGenres.mockReturnValue(Promise.resolve());
+    mount(<MovieSearch getGenres={mockGetGenres} />);
+
+    expect(mockGetGenres).toBeCalled();
+  });
+
+  it('should search keywords if input value is provided', () => {
+    const mockSearchKeywords = jest.fn();
+    const wrapper = shallow(<MovieSearch searchKeywords={mockSearchKeywords} />);
+
+    wrapper.find(Select).simulate('inputChange', 'abc');
+    expect(mockSearchKeywords).toBeCalledWith('abc');
+  });
+
+  it('should clear keywords if input value is empty', () => {
+    const mockClearKeywords = jest.fn();
+    const wrapper = shallow(<MovieSearch clearKeywords={mockClearKeywords} />);
+
+    wrapper.find(Select).simulate('inputChange', '');
+    expect(mockClearKeywords).toBeCalled();
   });
 });

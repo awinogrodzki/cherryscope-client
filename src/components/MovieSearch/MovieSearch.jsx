@@ -15,9 +15,21 @@ class MovieSearch extends React.Component {
       query: null,
       selected: [],
       sortBy: null,
+      isLoading: false,
     };
 
     this.registerObservables();
+  }
+
+  componentDidMount() {
+    this.getGenres();
+  }
+
+  getGenres() {
+    this.setState({ isLoading: true });
+    this.props.getGenres()
+      .then(() => this.setState({ isLoading: false }))
+      .catch(() => this.setState({ isLoading: false }));
   }
 
   registerObservables() {
@@ -262,7 +274,7 @@ class MovieSearch extends React.Component {
           getValueClass={option => styles[`${option.type}Value`]}
           onInputChange={value => this.onInputChange(value)}
           optionGroups={this.getOptionGroups()}
-          isLoading={this.props.isLoading}
+          isLoading={this.state.isLoading}
         />
       </div>
     );
@@ -270,19 +282,19 @@ class MovieSearch extends React.Component {
 }
 
 MovieSearch.propTypes = {
-  isLoading: PropTypes.bool,
   genres: PropTypes.arrayOf(PropTypes.object),
   keywords: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
+  getGenres: PropTypes.func,
   searchKeywords: PropTypes.func,
   clearKeywords: PropTypes.func,
 };
 
 MovieSearch.defaultProps = {
-  isLoading: true,
   genres: [],
   keywords: [],
   onChange: () => {},
+  getGenres: () => {},
   searchKeywords: () => {},
   clearKeywords: () => {},
 };
