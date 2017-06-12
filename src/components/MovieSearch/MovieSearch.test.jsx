@@ -254,6 +254,41 @@ describe('MovieSearch', () => {
     );
   });
 
+  it('should find lanugage options by search query', () => {
+    const wrapper = shallow(<MovieSearch />);
+    const input = 'pol';
+
+    wrapper.find(Select).simulate('inputChange', input);
+
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: expect.arrayContaining([
+          expect.objectContaining({
+            value: 'pl',
+            type: 'language',
+          }),
+        ]),
+      })
+    );
+  });
+
+  it('should not find invalid lanugage options by search query', () => {
+    const wrapper = shallow(<MovieSearch />);
+    const input = '';
+
+    wrapper.find(Select).simulate('inputChange', input);
+
+    expect(wrapper.find(Select).props().optionGroups).not.toContainEqual(
+      expect.objectContaining({
+        options: expect.arrayContaining([
+          expect.objectContaining({
+            type: 'language',
+          }),
+        ]),
+      })
+    );
+  });
+
   it('should get genres on mount', () => {
     const mockGetGenres = jest.fn();
     mockGetGenres.mockReturnValue(Promise.resolve());

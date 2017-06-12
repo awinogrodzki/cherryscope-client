@@ -5,12 +5,16 @@ import {
   getGenres,
   searchKeywords,
   clearKeywords,
+  searchPeople,
+  clearPeople,
 } from './movies';
 import {
   DISCOVER_MOVIES,
   GET_GENRES,
   SEARCH_KEYWORDS,
   CLEAR_KEYWORDS,
+  SEARCH_PEOPLE,
+  CLEAR_PEOPLE,
 } from './types';
 
 const middlewares = [thunk];
@@ -27,6 +31,9 @@ jest.mock('services/movie', () => ({
     genres: [1, 2, 3],
   }),
   searchKeywords: () => Promise.resolve({
+    results: [1, 2, 3],
+  }),
+  searchPeople: () => Promise.resolve({
     results: [1, 2, 3],
   }),
 }));
@@ -89,6 +96,33 @@ describe('movies actions', () => {
     const store = mockStore({ movies: {} });
 
     store.dispatch(clearKeywords());
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('should create search people action', () => {
+    const expectedActions = [
+      {
+        type: SEARCH_PEOPLE,
+        people: [1, 2, 3],
+      },
+    ];
+    const store = mockStore({ movies: {} });
+
+    return store.dispatch(searchPeople())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should be able clear people', () => {
+    const expectedActions = [
+      {
+        type: CLEAR_PEOPLE,
+      },
+    ];
+    const store = mockStore({ movies: {} });
+
+    store.dispatch(clearPeople());
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

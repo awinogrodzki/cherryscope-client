@@ -30,52 +30,42 @@ class Movies extends React.PureComponent {
       .catch(() => this.setState({ isLoading: false }));
   }
 
-  getFilters() {
-    const filters = {
-      with_keywords: this.state.keywords
+  mapFilters(filters) {
+    const mappedFilters = {
+      with_people: filters.people
+        .map(person => person.value)
+        .join(','),
+      with_keywords: filters.keywords
+        .map(keyword => keyword.value)
+        .join(','),
+      with_genres: filters.genres
         .map(genre => genre.value)
         .join(','),
-      with_genres: this.state.genres
-        .map(genre => genre.value)
-        .join(','),
-      sort_by: this.state.sortBy,
+      sort_by: filters.sortBy,
+      with_original_language: filters.language && filters.language.value || '',
     };
 
-    this.state.dates.forEach((date) => {
+    filters.dates.forEach((date) => {
       if (!date || !date.value || !date.date) {
         return;
       }
 
-      filters[date.value] = date.date;
+      mappedFilters[date.value] = date.date;
     });
 
-    this.state.votes.forEach((vote) => {
+    filters.votes.forEach((vote) => {
       if (!vote || !vote.value || !vote.data) {
         return;
       }
 
-      filters[vote.value] = vote.data;
+      mappedFilters[vote.value] = vote.data;
     });
 
-    return filters;
+    return mappedFilters;
   }
 
-  onMovieSearchChange({
-    dates,
-    genres,
-    keywords,
-    votes,
-    sortBy,
-  }) {
-    this.setState({
-      dates,
-      genres,
-      keywords,
-      votes,
-      sortBy,
-    }, () => {
-      this.discoverMovies(this.getFilters());
-    });
+  onMovieSearchChange(filters) {
+    this.discoverMovies(this.mapFilters(filters));
   }
 
   render() {

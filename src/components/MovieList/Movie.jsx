@@ -32,7 +32,7 @@ const Movie = ({
     </div>
     <div className={styles.content}>
       <h4 className={styles.originalTitle}>{ originalTitle }</h4>
-      <h6 className={styles.title}>{ title }</h6>
+      { originalTitle !== title && <h6 className={styles.title}>{ title }</h6> }
       <ul className={styles.data}>
         <li className={styles.dataItem}>{`${t('movie.voteAverage')}: ${voteAverage}`}</li>
         <li className={styles.dataItem}>{`${t('movie.voteCount')}: ${voteCount}`}</li>

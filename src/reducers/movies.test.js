@@ -4,6 +4,8 @@ import {
   GET_GENRES,
   SEARCH_KEYWORDS,
   CLEAR_KEYWORDS,
+  SEARCH_PEOPLE,
+  CLEAR_PEOPLE,
 } from '../actions/types';
 
 const initialState = {
@@ -65,6 +67,30 @@ describe('movies reducer', () => {
 
     expect(reducer(initialStateWithKeywords, action)).toEqual({
       keywords: [],
+    });
+  });
+
+  it('should be able to search people', () => {
+    const action = {
+      type: SEARCH_PEOPLE,
+      people: [7, 8, 9],
+    };
+
+    expect(reducer(initialState, action)).toEqual(expect.objectContaining({
+      people: [7, 8, 9],
+    }));
+  });
+
+  it('should be able to clear people', () => {
+    const initialStateWithPeople = {
+      people: [1, 2, 3],
+    };
+    const action = {
+      type: CLEAR_PEOPLE,
+    };
+
+    expect(reducer(initialStateWithPeople, action)).toEqual({
+      people: [],
     });
   });
 

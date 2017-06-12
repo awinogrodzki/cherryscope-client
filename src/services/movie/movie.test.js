@@ -9,6 +9,10 @@ jest.mock('services/config', () => {
         discover_uri: '/discover/movie',
         genres_uri: '/genre/movie/list',
         image_url: 'https://image.tmdb.org/t/p/w500',
+        search: {
+          keywords_uri: '/search/keyword',
+          people_uri: '/search/person',
+        },
       },
     },
   };
@@ -43,6 +47,16 @@ describe('movie service', () => {
 
   it('should be able to get genres', () => movieService.getGenres().then((response) => {
     expect(response.url).toBe('https://api.themoviedb.org/3/genre/movie/list?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
+  }));
+
+  it('should be able to search keywords', () => movieService.searchKeywords('queryValue').then((response) => {
+    expect(response.url).toBe('https://api.themoviedb.org/3/search/keyword?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
+    expect(response.options.params.query).toBe('queryValue');
+  }));
+
+  it('should be able to search people', () => movieService.searchPeople('queryValue').then((response) => {
+    expect(response.url).toBe('https://api.themoviedb.org/3/search/person?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
+    expect(response.options.params.query).toBe('queryValue');
   }));
 
   it('should be able to generate image url', () => {

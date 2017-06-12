@@ -26,6 +26,8 @@ export default {
     },
     genres: 'Genres',
     keywords: 'Keywords',
+    language: 'Original language',
+    people: 'People',
     sortBy: 'Sort by',
     sort: {
       popularity: {

@@ -20,10 +20,20 @@
   background-color: var(--color-green);
 }
 
+.languageValue {
+  background-color: var(--color-orange);
+}
+
+.personValue {
+  background-color: var(--color-navy);
+}
+
 .datesLabel,
 .genresLabel,
 .votesLabel,
-.keywordsLabel {
+.keywordsLabel,
+.peopleLabel,
+.languageLabel {
   vertical-align: middle;
 
   &::before {
@@ -52,5 +62,17 @@
 .keywordsLabel {
   &::before {
     background-color: var(--color-green);
+  }
+}
+
+.languageLabel {
+  &::before {
+    background-color: var(--color-orange);
+  }
+}
+
+.peopleLabel {
+  &::before {
+    background-color: var(--color-navy);
   }
 }

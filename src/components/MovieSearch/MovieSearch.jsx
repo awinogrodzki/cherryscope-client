@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { t } from 'services/translate';
 import { Observable } from 'services/observable';
+import languages from 'services/languages';
 import MovieSort from 'components/MovieSort';
 import Select from 'components/Select';
 import styles from './MovieSearch.css';
@@ -49,8 +51,10 @@ class MovieSearch extends React.Component {
   getOptionGroups() {
     return [
       this.getSortOptionGroup(),
+      this.getPeopleOptionGroup(),
       this.getDateOptionGroup(),
       this.getVoteOptionGroup(),
+      this.getLanguageOptionGroup(),
       this.getGenreOptionGroup(),
       this.getKeywordOptionGroup(),
     ];
@@ -67,6 +71,55 @@ class MovieSearch extends React.Component {
         />
       ),
     };
+  }
+
+  getLanguageOptionGroup() {
+    return {
+      id: 'language',
+      label: t('movies.language'),
+      isUnique: true,
+      options: this.getLanguageOptions(),
+    };
+  }
+
+  getLanguageOptions() {
+    if (!this.state.query) {
+      return [];
+    }
+    const languagesArray = languages.getLike(this.state.query);
+
+    if (!languagesArray || !languagesArray.length) {
+      return [];
+    }
+
+    return languagesArray.map(language => ({
+      value: language.code,
+      label: `${language.name} (${language.nativeName})`,
+      type: 'language',
+    }));
+  }
+
+  getPeopleOptionGroup() {
+    return {
+      id: 'people',
+      label: t('movies.people'),
+      options: this.getPeopleOptions(),
+    };
+  }
+
+  getPeopleOptions() {
+    if (!this.props.people || !this.props.people.length) {
+      return [];
+    }
+
+    const limit = 5;
+
+    return this.props.people.map(person => ({
+      value: person.id,
+      label: person.name,
+      type: 'person',
+    }))
+    .filter((option, index) => index < limit);
   }
 
   getDateOptionGroup() {
@@ -124,10 +177,13 @@ class MovieSearch extends React.Component {
 
   onInputChangeDebounced(value) {
     if (!value) {
-      return this.props.clearKeywords();
+      this.props.clearKeywords();
+      this.props.clearPeople();
+      return;
     }
 
-    return this.props.searchKeywords(value);
+    this.props.searchPeople(value);
+    this.props.searchKeywords(value);
   }
 
   getDateOptionsFromQuery() {
@@ -221,10 +277,23 @@ class MovieSearch extends React.Component {
   }
 
   isDate(value) {
-    const date = new Date(value);
+    if (typeof value !== 'string' || value.length < 4) {
+      return false;
+    }
 
-    return !isNaN(date.valueOf())
-      && String(value).length >= 4;
+    const date = moment(value, [
+      'MMMM-DD-YYYY',
+      'YYYY-MM-DD',
+      'MMMM DD YYYY',
+      'MMMM Do YYYY',
+      'YYYY-DD-MM',
+      'DD MMMM YYYY',
+      'Do MMMM YYYY',
+      'MMMM DD YYYY',
+      'MMMM Do YYYY',
+    ]);
+
+    return date.isValid();
   }
 
   isNumber(value) {
@@ -260,6 +329,8 @@ class MovieSearch extends React.Component {
       genres: this.state.selected.filter(value => value.type === 'genre'),
       votes: this.state.selected.filter(value => value.type === 'vote'),
       keywords: this.state.selected.filter(value => value.type === 'keyword'),
+      people: this.state.selected.filter(value => value.type === 'person'),
+      language: this.state.selected.find(value => value.type === 'language'),
       sortBy: this.state.sortBy,
     };
   }
@@ -283,20 +354,26 @@ class MovieSearch extends React.Component {
 
 MovieSearch.propTypes = {
   genres: PropTypes.arrayOf(PropTypes.object),
+  people: PropTypes.arrayOf(PropTypes.object),
   keywords: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
   getGenres: PropTypes.func,
   searchKeywords: PropTypes.func,
   clearKeywords: PropTypes.func,
+  searchPeople: PropTypes.func,
+  clearPeople: PropTypes.func,
 };
 
 MovieSearch.defaultProps = {
   genres: [],
+  people: [],
   keywords: [],
   onChange: () => {},
   getGenres: () => {},
   searchKeywords: () => {},
   clearKeywords: () => {},
+  searchPeople: () => {},
+  clearPeople: () => {},
 };
 
 export default MovieSearch;
