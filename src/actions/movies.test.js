@@ -1,7 +1,17 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { discoverMovies, getGenres } from './movies';
-import { DISCOVER_MOVIES, GET_GENRES } from './types';
+import {
+  discoverMovies,
+  getGenres,
+  searchKeywords,
+  clearKeywords,
+} from './movies';
+import {
+  DISCOVER_MOVIES,
+  GET_GENRES,
+  SEARCH_KEYWORDS,
+  CLEAR_KEYWORDS,
+} from './types';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -15,6 +25,9 @@ jest.mock('services/movie', () => ({
   }),
   getGenres: () => Promise.resolve({
     genres: [1, 2, 3],
+  }),
+  searchKeywords: () => Promise.resolve({
+    results: [1, 2, 3],
   }),
 }));
 
@@ -50,5 +63,32 @@ describe('movies actions', () => {
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
+  });
+
+  it('should create search keywords action', () => {
+    const expectedActions = [
+      {
+        type: SEARCH_KEYWORDS,
+        keywords: [1, 2, 3],
+      },
+    ];
+    const store = mockStore({ movies: {} });
+
+    return store.dispatch(searchKeywords())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should be able clear keywords', () => {
+    const expectedActions = [
+      {
+        type: CLEAR_KEYWORDS,
+      },
+    ];
+    const store = mockStore({ movies: {} });
+
+    store.dispatch(clearKeywords());
+    expect(store.getActions()).toEqual(expectedActions);
   });
 });

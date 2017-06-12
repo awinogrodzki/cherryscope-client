@@ -25,6 +25,7 @@ export default {
       },
     },
     genres: 'Genres',
+    keywords: 'Keywords',
     sortBy: 'Sort by',
     sort: {
       popularity: {

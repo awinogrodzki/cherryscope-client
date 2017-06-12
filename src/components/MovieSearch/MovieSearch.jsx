@@ -23,7 +23,6 @@ class MovieSearch extends React.Component {
   registerObservables() {
     this.inputChangeObservable = new Observable(value => this.onInputChangeDebounced(value))
       .debounce(500)
-      .distinctUntilChanged()
       .register();
   }
 
@@ -41,6 +40,7 @@ class MovieSearch extends React.Component {
       this.getDateOptionGroup(),
       this.getVoteOptionGroup(),
       this.getGenreOptionGroup(),
+      this.getKeywordOptionGroup(),
     ];
   }
 
@@ -85,11 +85,20 @@ class MovieSearch extends React.Component {
     };
   }
 
+  getKeywordOptionGroup() {
+    return {
+      id: 'keywords',
+      label: t('movies.keywords'),
+      options: this.props.keywords.map(item => ({ value: item.id, label: item.name, type: 'keyword' })),
+    };
+  }
+
   onChange(values) {
     this.setState({
       selected: values,
       query: null,
     }, () => {
+      this.props.clearKeywords();
       this.props.onChange(this.getValues());
     });
   }
@@ -102,7 +111,11 @@ class MovieSearch extends React.Component {
   }
 
   onInputChangeDebounced(value) {
-    this.props.searchKeywords(value);
+    if (!value) {
+      return this.props.clearKeywords();
+    }
+
+    return this.props.searchKeywords(value);
   }
 
   getDateOptionsFromQuery() {
@@ -234,6 +247,7 @@ class MovieSearch extends React.Component {
       dates: this.state.selected.filter(value => value.type === 'date'),
       genres: this.state.selected.filter(value => value.type === 'genre'),
       votes: this.state.selected.filter(value => value.type === 'vote'),
+      keywords: this.state.selected.filter(value => value.type === 'keyword'),
       sortBy: this.state.sortBy,
     };
   }
@@ -258,15 +272,19 @@ class MovieSearch extends React.Component {
 MovieSearch.propTypes = {
   isLoading: PropTypes.bool,
   genres: PropTypes.arrayOf(PropTypes.object),
+  keywords: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
   searchKeywords: PropTypes.func,
+  clearKeywords: PropTypes.func,
 };
 
 MovieSearch.defaultProps = {
   isLoading: true,
   genres: [],
+  keywords: [],
   onChange: () => {},
   searchKeywords: () => {},
+  clearKeywords: () => {},
 };
 
 export default MovieSearch;

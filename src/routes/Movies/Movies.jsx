@@ -11,6 +11,7 @@ class Movies extends React.PureComponent {
     this.state = {
       dates: [],
       genres: [],
+      keywords: [],
       votes: [],
       sortBy: null,
       isLoading: false,
@@ -31,6 +32,9 @@ class Movies extends React.PureComponent {
 
   getFilters() {
     const filters = {
+      with_keywords: this.state.keywords
+        .map(genre => genre.value)
+        .join(','),
       with_genres: this.state.genres
         .map(genre => genre.value)
         .join(','),
@@ -56,12 +60,19 @@ class Movies extends React.PureComponent {
     return filters;
   }
 
-  onMovieSearchChange(data) {
+  onMovieSearchChange({
+    dates,
+    genres,
+    keywords,
+    votes,
+    sortBy,
+  }) {
     this.setState({
-      dates: data.dates,
-      genres: data.genres,
-      votes: data.votes,
-      sortBy: data.sortBy,
+      dates,
+      genres,
+      keywords,
+      votes,
+      sortBy,
     }, () => {
       this.discoverMovies(this.getFilters());
     });

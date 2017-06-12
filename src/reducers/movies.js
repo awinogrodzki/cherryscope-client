@@ -1,4 +1,9 @@
-import { DISCOVER_MOVIES, GET_GENRES } from '../actions/types';
+import {
+  DISCOVER_MOVIES,
+  GET_GENRES,
+  SEARCH_KEYWORDS,
+  CLEAR_KEYWORDS,
+} from '../actions/types';
 
 const initialState = {
   items: [],
@@ -6,9 +11,10 @@ const initialState = {
   pageCount: null,
   itemCount: null,
   genres: [],
+  keywords: [],
 };
 
-export default function userReducer(state = initialState, action) {
+export default function moviesReducer(state = initialState, action) {
   switch (action.type) {
     case DISCOVER_MOVIES:
       return Object.assign({}, state, {
@@ -20,6 +26,14 @@ export default function userReducer(state = initialState, action) {
     case GET_GENRES:
       return Object.assign({}, state, {
         genres: action.genres,
+      });
+    case SEARCH_KEYWORDS:
+      return Object.assign({}, state, {
+        keywords: action.keywords,
+      });
+    case CLEAR_KEYWORDS:
+      return Object.assign({}, state, {
+        keywords: [],
       });
     default:
       return state;

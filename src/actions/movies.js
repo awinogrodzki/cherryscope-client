@@ -3,6 +3,7 @@ import {
   DISCOVER_MOVIES,
   GET_GENRES,
   SEARCH_KEYWORDS,
+  CLEAR_KEYWORDS,
 } from './types';
 
 const discoverMovies = filters => dispatch => movieService.discover(filters)
@@ -32,10 +33,14 @@ const searchKeywords = query => dispatch => movieService.searchKeywords(query)
   .then((data) => {
     dispatch({
       type: SEARCH_KEYWORDS,
-      items: data.results,
+      keywords: data.results,
     });
 
     return data;
   });
 
-module.exports = { discoverMovies, getGenres, searchKeywords };
+const clearKeywords = () => ({
+  type: CLEAR_KEYWORDS,
+});
+
+module.exports = { discoverMovies, getGenres, searchKeywords, clearKeywords };
