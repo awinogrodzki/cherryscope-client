@@ -4,8 +4,10 @@ import moment from 'moment';
 import { t } from 'services/translate';
 import { Observable } from 'services/observable';
 import languages from 'services/languages';
+import movieService from 'services/movie';
 import MovieSort from 'components/MovieSort';
 import Select from 'components/Select';
+import Person from './Person';
 import styles from './MovieSearch.css';
 
 class MovieSearch extends React.Component {
@@ -114,10 +116,16 @@ class MovieSearch extends React.Component {
 
     const limit = 5;
 
+
     return this.props.people.map(person => ({
       value: person.id,
       label: person.name,
       type: 'person',
+      customComponent: <Person
+        name={person.name}
+        image={movieService.getImageUrl(person.profile_path, 320)}
+        tags={person.known_for.map(item => ({ label: item.original_title }))}
+      />,
     }))
     .filter((option, index) => index < limit);
   }

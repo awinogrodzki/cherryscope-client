@@ -9,7 +9,7 @@ const SEARCH_KEYWORDS_URI = config.get('services.movie.search.keywords_uri');
 const SEARCH_PEOPLE_URI = config.get('services.movie.search.people_uri');
 const IMAGE_URL = config.get('services.movie.image_url');
 
-const getImageUrl = image => (image ? `${IMAGE_URL}${image}` : null);
+const getImageUrl = (image, size = 500) => (image ? `${IMAGE_URL}${size}${image}` : null);
 const getUrl = uri => `${API_URL}${uri}?api_key=${API_KEY}`;
 
 const mapResponse = (response) => {

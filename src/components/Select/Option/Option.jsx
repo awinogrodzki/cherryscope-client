@@ -11,7 +11,7 @@ const Option = ({ index, option, onClick, getClass, getRef }) => (
     onTouchStart={() => onClick(option)}
     role={'button'}
   >
-    <span className={styles.label}>{option.label}</span>
+    {option && option.customComponent || <span className={styles.label}>{option.label}</span>}
   </div>
   );
 
@@ -23,6 +23,7 @@ Option.propTypes = {
   option: PropTypes.shape({
     value: PropTypes.any.isRequired,
     label: PropTypes.string.isRequired,
+    customComponent: PropTypes.node,
   }).isRequired,
 };
 

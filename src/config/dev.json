@@ -5,7 +5,7 @@
       "api_url": "https://api.themoviedb.org/3",
       "discover_uri": "/discover/movie",
       "genres_uri": "/genre/movie/list",
-      "image_url": "https://image.tmdb.org/t/p/w500",
+      "image_url": "https://image.tmdb.org/t/p/w",
       "search": {
         "keywords_uri": "/search/keyword",
         "people_uri": "/search/person"

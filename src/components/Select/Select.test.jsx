@@ -557,4 +557,18 @@ describe('Select', () => {
     expect(wrapper.find('.test')).toHaveLength(1);
     expect(wrapper.find('.test').text()).toBe('Value3');
   });
+
+  it('should be able to display custom component as option', () => {
+    const CustomComponent = () => <div />;
+    const options = [
+      { value: 1, label: 'Value', type: 'genre', customComponent: <CustomComponent /> },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(
+      <Select isExpanded options={options} />
+    );
+
+    expect(wrapper.find(CustomComponent)).toHaveLength(1);
+  });
 });
