@@ -8,6 +8,7 @@ import movieService from 'services/movie';
 import MovieSort from 'components/MovieSort';
 import Select from 'components/Select';
 import Person from './Person';
+import Company from './Company';
 import styles from './MovieSearch.css';
 
 class MovieSearch extends React.Component {
@@ -149,6 +150,9 @@ class MovieSearch extends React.Component {
       value: company.id,
       label: company.name,
       type: 'company',
+      customComponent: <Company
+        name={company.name}
+      />,
     }))
     .filter((option, index) => index < limit);
   }
