@@ -7,6 +7,8 @@ import {
   clearKeywords,
   searchPeople,
   clearPeople,
+  searchCompanies,
+  clearCompanies,
 } from 'actions';
 import MovieSearch from './MovieSearch';
 
@@ -17,6 +19,9 @@ const MovieSearchContainer = props => (
     clearKeywords={props.clearKeywords}
     searchPeople={props.searchPeople}
     clearPeople={props.clearPeople}
+    searchCompanies={props.searchCompanies}
+    clearCompanies={props.clearCompanies}
+    companies={props.companies}
     genres={props.genres}
     people={props.people}
     keywords={props.keywords}
@@ -30,12 +35,15 @@ const mapDispatchToProps = {
   clearKeywords: () => clearKeywords(),
   searchPeople: value => searchPeople(value),
   clearPeople: () => clearPeople(),
+  searchCompanies: value => searchCompanies(value),
+  clearCompanies: () => clearCompanies(),
 };
 
 const mapStateToProps = state => ({
   people: state.movies.people,
   genres: state.movies.genres,
   keywords: state.movies.keywords,
+  companies: state.movies.companies,
 });
 
 MovieSearchContainer.propTypes = {
@@ -45,8 +53,11 @@ MovieSearchContainer.propTypes = {
   clearKeywords: PropTypes.func.isRequired,
   searchPeople: PropTypes.func.isRequired,
   clearPeople: PropTypes.func.isRequired,
+  searchCompanies: PropTypes.func.isRequired,
+  clearCompanies: PropTypes.func.isRequired,
   people: PropTypes.arrayOf(PropTypes.object),
   genres: PropTypes.arrayOf(PropTypes.object),
+  companies: PropTypes.arrayOf(PropTypes.object),
   keywords: PropTypes.arrayOf(PropTypes.object),
 };
 
@@ -55,6 +66,7 @@ MovieSearchContainer.defaultProps = {
   genres: [],
   people: [],
   keywords: [],
+  companies: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieSearchContainer);

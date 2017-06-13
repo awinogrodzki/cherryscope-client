@@ -28,12 +28,17 @@
   background-color: var(--color-navy);
 }
 
+.companyValue {
+  background-color: var(--color-gold);
+}
+
 .datesLabel,
 .genresLabel,
 .votesLabel,
 .keywordsLabel,
 .peopleLabel,
-.languageLabel {
+.languageLabel,
+.companiesLabel {
   vertical-align: middle;
 
   &::before {
@@ -74,5 +79,11 @@
 .peopleLabel {
   &::before {
     background-color: var(--color-navy);
+  }
+}
+
+.companiesLabel {
+  &::before {
+    background-color: var(--color-gold);
   }
 }

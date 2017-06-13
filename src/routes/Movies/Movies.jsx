@@ -32,6 +32,9 @@ class Movies extends React.PureComponent {
 
   mapFilters(filters) {
     const mappedFilters = {
+      with_companies: filters.companies
+        .map(company => company.value)
+        .join(','),
       with_people: filters.people
         .map(person => person.value)
         .join(','),

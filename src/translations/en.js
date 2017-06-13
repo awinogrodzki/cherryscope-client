@@ -28,6 +28,7 @@ export default {
     keywords: 'Keywords',
     language: 'Original language',
     people: 'People',
+    companies: 'Companies',
     sortBy: 'Sort by',
     sort: {
       popularity: {

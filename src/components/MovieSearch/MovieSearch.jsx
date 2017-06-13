@@ -53,6 +53,7 @@ class MovieSearch extends React.Component {
   getOptionGroups() {
     return [
       this.getSortOptionGroup(),
+      this.getCompaniesOptionGroup(),
       this.getPeopleOptionGroup(),
       this.getDateOptionGroup(),
       this.getVoteOptionGroup(),
@@ -116,7 +117,6 @@ class MovieSearch extends React.Component {
 
     const limit = 5;
 
-
     return this.props.people.map(person => ({
       value: person.id,
       label: person.name,
@@ -126,6 +126,29 @@ class MovieSearch extends React.Component {
         image={movieService.getImageUrl(person.profile_path, 160)}
         tags={person.known_for.map(item => ({ label: item.original_title }))}
       />,
+    }))
+    .filter((option, index) => index < limit);
+  }
+
+  getCompaniesOptionGroup() {
+    return {
+      id: 'companies',
+      label: t('movies.companies'),
+      options: this.getCompaniesOptions(),
+    };
+  }
+
+  getCompaniesOptions() {
+    if (!this.props.companies || !this.props.companies.length) {
+      return [];
+    }
+
+    const limit = 5;
+
+    return this.props.companies.map(company => ({
+      value: company.id,
+      label: company.name,
+      type: 'company',
     }))
     .filter((option, index) => index < limit);
   }
@@ -171,7 +194,9 @@ class MovieSearch extends React.Component {
       selected: values,
       query: null,
     }, () => {
+      this.props.clearCompanies();
       this.props.clearKeywords();
+      this.props.clearPeople();
       this.props.onChange(this.getValues());
     });
   }
@@ -185,11 +210,13 @@ class MovieSearch extends React.Component {
 
   onInputChangeDebounced(value) {
     if (!value) {
+      this.props.clearCompanies();
       this.props.clearKeywords();
       this.props.clearPeople();
       return;
     }
 
+    this.props.searchCompanies(value);
     this.props.searchPeople(value);
     this.props.searchKeywords(value);
   }
@@ -338,6 +365,7 @@ class MovieSearch extends React.Component {
       votes: this.state.selected.filter(value => value.type === 'vote'),
       keywords: this.state.selected.filter(value => value.type === 'keyword'),
       people: this.state.selected.filter(value => value.type === 'person'),
+      companies: this.state.selected.filter(value => value.type === 'company'),
       language: this.state.selected.find(value => value.type === 'language'),
       sortBy: this.state.sortBy,
     };
@@ -363,6 +391,7 @@ class MovieSearch extends React.Component {
 MovieSearch.propTypes = {
   genres: PropTypes.arrayOf(PropTypes.object),
   people: PropTypes.arrayOf(PropTypes.object),
+  companies: PropTypes.arrayOf(PropTypes.object),
   keywords: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
   getGenres: PropTypes.func,
@@ -370,11 +399,14 @@ MovieSearch.propTypes = {
   clearKeywords: PropTypes.func,
   searchPeople: PropTypes.func,
   clearPeople: PropTypes.func,
+  searchCompanies: PropTypes.func,
+  clearCompanies: PropTypes.func,
 };
 
 MovieSearch.defaultProps = {
   genres: [],
   people: [],
+  companies: [],
   keywords: [],
   onChange: () => {},
   getGenres: () => {},
@@ -382,6 +414,8 @@ MovieSearch.defaultProps = {
   clearKeywords: () => {},
   searchPeople: () => {},
   clearPeople: () => {},
+  searchCompanies: () => {},
+  clearCompanies: () => {},
 };
 
 export default MovieSearch;
