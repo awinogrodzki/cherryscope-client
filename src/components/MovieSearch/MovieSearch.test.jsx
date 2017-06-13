@@ -312,4 +312,135 @@ describe('MovieSearch', () => {
     wrapper.find(Select).simulate('inputChange', '');
     expect(mockClearKeywords).toBeCalled();
   });
+
+  it('should clear keywords if input value has changed', () => {
+    const mockClearKeywords = jest.fn();
+    const wrapper = shallow(<MovieSearch clearKeywords={mockClearKeywords} />);
+
+    wrapper.find(Select).simulate('change', []);
+    expect(mockClearKeywords).toBeCalled();
+  });
+
+  it('should search people if input value is provided', () => {
+    const mockSearchPeople = jest.fn();
+    const wrapper = shallow(<MovieSearch searchPeople={mockSearchPeople} />);
+
+    wrapper.find(Select).simulate('inputChange', 'abc');
+    expect(mockSearchPeople).toBeCalledWith('abc');
+  });
+
+  it('should clear people if input value is empty', () => {
+    const mockClearPeople = jest.fn();
+    const wrapper = shallow(<MovieSearch clearPeople={mockClearPeople} />);
+
+    wrapper.find(Select).simulate('inputChange', '');
+    expect(mockClearPeople).toBeCalled();
+  });
+
+  it('should clear people if input value has changed', () => {
+    const mockClearPeople = jest.fn();
+    const wrapper = shallow(<MovieSearch clearPeople={mockClearPeople} />);
+
+    wrapper.find(Select).simulate('change', []);
+    expect(mockClearPeople).toBeCalled();
+  });
+
+  it('should search companies if input value is provided', () => {
+    const mockSearchCompanies = jest.fn();
+    const wrapper = shallow(<MovieSearch searchCompanies={mockSearchCompanies} />);
+
+    wrapper.find(Select).simulate('inputChange', 'abc');
+    expect(mockSearchCompanies).toBeCalledWith('abc');
+  });
+
+  it('should clear companies if input value is empty', () => {
+    const mockClearCompanies = jest.fn();
+    const wrapper = shallow(<MovieSearch clearCompanies={mockClearCompanies} />);
+
+    wrapper.find(Select).simulate('inputChange', '');
+    expect(mockClearCompanies).toBeCalled();
+  });
+
+  it('should clear companies if input value has changed', () => {
+    const mockClearCompanies = jest.fn();
+    const wrapper = shallow(<MovieSearch clearCompanies={mockClearCompanies} />);
+
+    wrapper.find(Select).simulate('change', []);
+    expect(mockClearCompanies).toBeCalled();
+  });
+
+  it('should show keyword options if provided', () => {
+    const keywords = [
+      { id: 123, name: 'Keyword1' },
+      { id: 234, name: 'Keyword2' },
+    ];
+    const wrapper = shallow(<MovieSearch keywords={keywords} />);
+
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: expect.arrayContaining([
+          expect.objectContaining({
+            value: 123,
+            label: 'Keyword1',
+            type: 'keyword',
+          }),
+          expect.objectContaining({
+            value: 234,
+            label: 'Keyword2',
+            type: 'keyword',
+          }),
+        ]),
+      })
+    );
+  });
+
+  it('should show people options if provided', () => {
+    const people = [
+      { id: 123, name: 'Person1' },
+      { id: 234, name: 'Person2' },
+    ];
+    const wrapper = shallow(<MovieSearch people={people} />);
+
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: expect.arrayContaining([
+          expect.objectContaining({
+            value: 123,
+            label: 'Person1',
+            type: 'person',
+          }),
+          expect.objectContaining({
+            value: 234,
+            label: 'Person2',
+            type: 'person',
+          }),
+        ]),
+      })
+    );
+  });
+
+  it('should show companies options if provided', () => {
+    const companies = [
+      { id: 123, name: 'Company1' },
+      { id: 234, name: 'Company2' },
+    ];
+    const wrapper = shallow(<MovieSearch companies={companies} />);
+
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: expect.arrayContaining([
+          expect.objectContaining({
+            value: 123,
+            label: 'Company1',
+            type: 'company',
+          }),
+          expect.objectContaining({
+            value: 234,
+            label: 'Company2',
+            type: 'company',
+          }),
+        ]),
+      })
+    );
+  });
 });
