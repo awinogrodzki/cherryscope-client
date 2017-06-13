@@ -1,3 +1,5 @@
+@import 'resources/styles/variables.css';
+
 .container {
   display: flex;
 }
@@ -5,17 +7,20 @@
 .option {
   &.isSelected {
     & .button {
-      color: #7ce3ff;
-      border-color: #7ce3ff;
+      border: none;
+      color: var(--color-white);
+      background-color: var(--color-black);
     }
   }
 }
 
 .button {
+  color: var(--color-black);
   border-radius: none;
-  background: transparent;
+  background: color(var(--color-black) alpha(10%));
+  padding: 10px;
   font-size: 12px;
-  border: 1px solid #000;
   margin: 0 5px 0 5px;
   cursor: pointer;
+  border: none;
 }

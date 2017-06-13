@@ -51,6 +51,13 @@
   max-height: 360px;
 }
 
+:global @keyframes borderAnimation {
+  to {
+    border-color: color(var(--color-black) alpha(50%));
+  }
+}
+
 .container .activeOption {
-  border: 1px solid black;
+  border: 1px dashed var(--color-white);
+  animation: .5s 'borderAnimation' ease infinite alternate;
 }
