@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isDev = (process.env.NODE_ENV || 'dev') === 'dev';
 
@@ -11,7 +12,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/dist/',
+    publicPath: '/',
     filename: '[name].js',
   },
   devServer: {
@@ -60,6 +61,9 @@ module.exports = {
       },
     }),
     new ExtractTextPlugin('global.css'),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+    }),
   ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
