@@ -21,6 +21,14 @@ const initialState = {
 };
 
 describe('movies reducer', () => {
+  it('should be able to return initial state on unknown action', () => {
+    const action = {
+      type: 'UNKNOWN_ACTION',
+    };
+
+    expect(reducer(initialState, action)).toEqual(initialState);
+  });
+
   it('should be able to discover movies', () => {
     const action = {
       type: DISCOVER_MOVIES,
@@ -119,13 +127,5 @@ describe('movies reducer', () => {
     expect(reducer(initialStateWithCompanies, action)).toEqual({
       companies: [],
     });
-  });
-
-  it('should be able to return initial state on unknown action', () => {
-    const action = {
-      type: 'UNKNOWN_ACTION',
-    };
-
-    expect(reducer(initialState, action)).toEqual(initialState);
   });
 });
