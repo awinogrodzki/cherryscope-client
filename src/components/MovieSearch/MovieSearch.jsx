@@ -152,6 +152,7 @@ class MovieSearch extends React.Component {
       type: 'company',
       customComponent: <Company
         name={company.name}
+        image={movieService.getImageUrl(company.logo_path, 160)}
       />,
     }))
     .filter((option, index) => index < limit);
