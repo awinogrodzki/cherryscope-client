@@ -54,12 +54,12 @@ class MovieSearch extends React.Component {
   getOptionGroups() {
     return [
       this.getSortOptionGroup(),
-      this.getCompaniesOptionGroup(),
-      this.getPeopleOptionGroup(),
       this.getDateOptionGroup(),
       this.getVoteOptionGroup(),
       this.getLanguageOptionGroup(),
       this.getGenreOptionGroup(),
+      this.getPeopleOptionGroup(),
+      this.getCompaniesOptionGroup(),
       this.getKeywordOptionGroup(),
     ];
   }
