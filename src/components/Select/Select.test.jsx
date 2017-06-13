@@ -386,8 +386,6 @@ describe('Select', () => {
 
     expandableWrapper.simulate('mousedown');
     inputWrapper.simulate('blur');
-    expandableWrapper.simulate('touchstart');
-    inputWrapper.simulate('blur');
 
     expect(wrapper.find(Option)).toHaveLength(2);
   });
