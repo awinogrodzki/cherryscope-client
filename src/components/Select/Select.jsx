@@ -234,7 +234,7 @@ class Select extends React.Component {
             data-test="Select.expandable"
             className={styles.expandable}
             onMouseDown={() => this.ignoreBlurOnce()}
-            onTouchEnd={() => this.ignoreBlurOnce()}
+            onTouchStart={() => this.ignoreBlurOnce()}
           >
             { !!this.state.isExpanded &&
             <div data-test="Select.optionContainer" className={styles.optionContainer}>

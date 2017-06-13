@@ -9,7 +9,7 @@ const Value = ({ option, onDelete, getClass }) => (
       data-test="Value.deleteButton"
       className={styles.deleteButton}
       onMouseDown={() => onDelete(option)}
-      onTouchEnd={() => onDelete(option)}
+      onTouchStart={() => onDelete(option)}
     />
     <span className={styles.label}>{option.label}</span>
   </div>
