@@ -7,6 +7,8 @@ import {
   clearKeywords,
   searchPeople,
   clearPeople,
+  searchCompanies,
+  clearCompanies,
 } from './movies';
 import {
   DISCOVER_MOVIES,
@@ -15,6 +17,8 @@ import {
   CLEAR_KEYWORDS,
   SEARCH_PEOPLE,
   CLEAR_PEOPLE,
+  SEARCH_COMPANIES,
+  CLEAR_COMPANIES,
 } from './types';
 
 const middlewares = [thunk];
@@ -34,6 +38,9 @@ jest.mock('services/movie', () => ({
     results: [1, 2, 3],
   }),
   searchPeople: () => Promise.resolve({
+    results: [1, 2, 3],
+  }),
+  searchCompanies: () => Promise.resolve({
     results: [1, 2, 3],
   }),
 }));
@@ -123,6 +130,33 @@ describe('movies actions', () => {
     const store = mockStore({ movies: {} });
 
     store.dispatch(clearPeople());
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('should create search companies action', () => {
+    const expectedActions = [
+      {
+        type: SEARCH_COMPANIES,
+        companies: [1, 2, 3],
+      },
+    ];
+    const store = mockStore({ movies: {} });
+
+    return store.dispatch(searchCompanies())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('should be able clear companies', () => {
+    const expectedActions = [
+      {
+        type: CLEAR_COMPANIES,
+      },
+    ];
+    const store = mockStore({ movies: {} });
+
+    store.dispatch(clearCompanies());
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

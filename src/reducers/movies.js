@@ -5,6 +5,8 @@ import {
   CLEAR_KEYWORDS,
   SEARCH_PEOPLE,
   CLEAR_PEOPLE,
+  SEARCH_COMPANIES,
+  CLEAR_COMPANIES,
 } from '../actions/types';
 
 const initialState = {
@@ -38,6 +40,10 @@ export default function moviesReducer(state = initialState, action) {
       return Object.assign({}, state, {
         people: action.people,
       });
+    case SEARCH_COMPANIES:
+      return Object.assign({}, state, {
+        companies: action.companies,
+      });
     case CLEAR_KEYWORDS:
       return Object.assign({}, state, {
         keywords: [],
@@ -45,6 +51,10 @@ export default function moviesReducer(state = initialState, action) {
     case CLEAR_PEOPLE:
       return Object.assign({}, state, {
         people: [],
+      });
+    case CLEAR_COMPANIES:
+      return Object.assign({}, state, {
+        companies: [],
       });
     default:
       return state;

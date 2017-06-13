@@ -6,6 +6,8 @@ import {
   CLEAR_KEYWORDS,
   SEARCH_PEOPLE,
   CLEAR_PEOPLE,
+  SEARCH_COMPANIES,
+  CLEAR_COMPANIES,
 } from './types';
 
 const discoverMovies = filters => dispatch => movieService.discover(filters)
@@ -59,6 +61,20 @@ const clearPeople = () => ({
   type: CLEAR_PEOPLE,
 });
 
+const searchCompanies = query => dispatch => movieService.searchCompanies(query)
+  .then((data) => {
+    dispatch({
+      type: SEARCH_COMPANIES,
+      companies: data.results,
+    });
+
+    return data;
+  });
+
+const clearCompanies = () => ({
+  type: CLEAR_COMPANIES,
+});
+
 module.exports = {
   discoverMovies,
   getGenres,
@@ -66,4 +82,6 @@ module.exports = {
   clearKeywords,
   searchPeople,
   clearPeople,
+  searchCompanies,
+  clearCompanies,
 };
