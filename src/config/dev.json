@@ -8,7 +8,8 @@
       "image_url": "https://image.tmdb.org/t/p/w",
       "search": {
         "keywords_uri": "/search/keyword",
-        "people_uri": "/search/person"
+        "people_uri": "/search/person",
+        "companies_uri": "/search/company"
       }
     }
   }

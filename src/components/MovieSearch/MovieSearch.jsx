@@ -123,7 +123,7 @@ class MovieSearch extends React.Component {
       type: 'person',
       customComponent: <Person
         name={person.name}
-        image={movieService.getImageUrl(person.profile_path, 320)}
+        image={movieService.getImageUrl(person.profile_path, 160)}
         tags={person.known_for.map(item => ({ label: item.original_title }))}
       />,
     }))
