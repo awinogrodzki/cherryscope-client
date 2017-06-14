@@ -42,6 +42,10 @@ class Movies extends React.PureComponent {
 
     this.props.discoverMovies(filters)
       .then(() => {
+        if (!this.props.movies || !this.props.movies.length) {
+          return;
+        }
+
         this.setState({
           moviePages: this.state.moviePages.concat([this.props.movies]),
           isLoading: false,
