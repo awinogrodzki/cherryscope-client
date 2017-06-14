@@ -4,10 +4,7 @@ import styles from './Header.css';
 
 const Header = () => (
   <div className={styles.container}>
-    <h1>Header</h1>
-    <Link to="/">Home</Link>
-    {' '}
-    <Link to="/about">About</Link>
+    <Link to="/"><h1 className={styles.title}>cherryscope</h1></Link>
   </div>
 );
 

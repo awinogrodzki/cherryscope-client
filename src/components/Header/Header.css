@@ -1,3 +1,13 @@
+@import 'resources/styles/variables';
+
 .container {
-  padding: 20px;
+  padding: var(--default-padding);
+}
+
+.title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--color-maroon);
+  margin: 0;
 }
