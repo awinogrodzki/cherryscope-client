@@ -9,6 +9,7 @@
   background-color: var(--color-light-grey2);
   margin: 0 1px 1px 0;
   cursor: pointer;
+  box-sizing: border-box;
 
   &:nth-child(2n) {
     background-color: var(--color-light-grey);
