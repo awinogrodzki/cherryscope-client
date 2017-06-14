@@ -4,13 +4,14 @@
   --color-grey: rgb(79, 89, 85);
   --color-light-grey: #f9f9f9;
   --color-light-grey2: #fcfcfc;
-  --color-blue: lightblue;
-  --color-red: lightpink;
-  --color-purple: rgb(180, 145, 255);
-  --color-green: #bbffa0;
-  --color-orange: rgb(255, 172, 105);
-  --color-navy: rgb(134, 184, 242);
-  --color-gold: #e5d072;
+  --color-blue: #4E598C;
+  --color-maroon: #A54558;
+  --color-red: #D496A7;
+  --color-mint: #DAFFED;
+  --color-orange: #E28F71;
+  --color-yellow: #F9C784;
+  --color-turquoise: #C0F9EE;
+  --color-purple: #C6CAED;
 
   --value-color: #c4c7f9;
   --input-color: #c4c7f9;
