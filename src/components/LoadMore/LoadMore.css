@@ -1,0 +1,17 @@
+@import 'resources/styles/variables';
+
+.container {
+  text-align: center;
+  margin: 0 0 var(--default-margin);
+}
+
+.button {
+  border: none;
+  background: var(--color-blue);
+  color: var(--color-white);
+  outline: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 300;
+  padding: var(--default-padding);
+}

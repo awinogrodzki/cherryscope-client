@@ -46,22 +46,24 @@ jest.mock('services/movie', () => ({
 }));
 
 describe('movies actions', () => {
-  it('should create discover movies action', () => {
-    const expectedActions = [
-      {
-        type: DISCOVER_MOVIES,
-        items: [1, 2, 3],
-        page: 1,
-        pageCount: 10,
-        itemCount: 20,
-      },
-    ];
-    const store = mockStore({ movies: {} });
+  describe('discoverMovies', () => {
+    it('should create discover movies action', () => {
+      const expectedActions = [
+        {
+          type: DISCOVER_MOVIES,
+          items: [1, 2, 3],
+          page: 1,
+          pageCount: 10,
+          itemCount: 20,
+        },
+      ];
+      const store = mockStore({ movies: {} });
 
-    return store.dispatch(discoverMovies())
-      .then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
+      return store.dispatch(discoverMovies())
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
   });
 
   it('should create get genres action', () => {

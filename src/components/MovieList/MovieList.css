@@ -5,4 +5,8 @@
   margin: var(--default-padding) 0;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
+}
+
+.loading {
 }

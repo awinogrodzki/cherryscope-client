@@ -5,6 +5,7 @@ export default {
     releaseDate: 'Released',
   },
   movies: {
+    loadMore: 'Load more movies',
     dates: 'Dates',
     votes: 'Votes',
     date: {
