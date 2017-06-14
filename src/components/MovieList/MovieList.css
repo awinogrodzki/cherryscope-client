@@ -1,4 +1,8 @@
+@import 'resources/styles/variables';
+
 .container {
+  padding: 0 var(--default-padding);
+  margin: var(--default-padding) 0;
   display: flex;
   flex-wrap: wrap;
 }
