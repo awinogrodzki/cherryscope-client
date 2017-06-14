@@ -13,7 +13,7 @@ class Movies extends React.PureComponent {
     super(props);
 
     this.state = {
-      moviePages: [this.props.movies],
+      moviePages: [],
       filters: {},
       dates: [],
       genres: [],
@@ -148,19 +148,23 @@ class Movies extends React.PureComponent {
         <MovieSearch
           onChange={data => this.onMovieSearchChange(data)}
         />
-        { this.state.moviePages.map(movies => (
-          <div className={styles.page}>
+        { this.state.moviePages.map((movies, index) => (
+          <div key={index} className={styles.page}>
             <MovieList
               movies={movies}
               isLoading={this.state.isLoading}
             />
           </div>
         )) }
-        <LoadMore
-          label={t('movies.loadMore')}
-          page={this.state.page}
-          onChange={page => this.onLoadMoreChange(page)}
-        />
+        {
+          this.state.page < this.props.pageCount
+          && !!this.state.moviePages.length
+          && <LoadMore
+            label={t('movies.loadMore')}
+            page={this.state.page}
+            onChange={page => this.onLoadMoreChange(page)}
+          />
+        }
       </div>
     );
   }
@@ -172,11 +176,17 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => ({
   movies: state.movies.items,
+  pageCount: state.movies.pageCount,
 });
 
 Movies.propTypes = {
   discoverMovies: PropTypes.func.isRequired,
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  pageCount: PropTypes.number,
+};
+
+Movies.defaultProps = {
+  pageCount: 0,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Movies);
