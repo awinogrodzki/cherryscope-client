@@ -7,11 +7,21 @@
 
 .button {
   border: none;
-  background: var(--color-blue);
-  color: var(--color-white);
+  border: 1px solid color(var(--color-blue) alpha(100%));
+  background: transparent;
+  color: color(var(--color-blue) alpha(100%));
   outline: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 300;
-  padding: var(--default-padding);
+  padding: 15px 20px;
+  transition: background .15s ease-in-out;
+
+  &:hover {
+    background-color: color(var(--color-blue) alpha(10%));
+
+    &:active {
+      background-color: color(var(--color-blue) alpha(20%));
+    }
+  }
 }
