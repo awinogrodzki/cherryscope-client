@@ -1,7 +1,7 @@
 @import 'resources/styles/variables';
 
 .container {
-  margin-right: 5px;
+  margin: 0 5px 5px 0;
   font-size: 12px;
   background-color: var(--value-color);
 }

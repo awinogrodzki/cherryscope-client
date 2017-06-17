@@ -203,16 +203,14 @@ class Select extends React.Component {
         <div
           className={styles.inputContainer}
         >
-          <div className={styles.valueContainer}>
-            { !!this.state.values.length && this.state.values.map((option, index) => (
-              <Value
-                key={index}
-                option={option}
-                getClass={this.props.getValueClass}
-                onDelete={optionToDelete => this.onValueDelete(optionToDelete)}
-              />
-            )) }
-          </div>
+          { !!this.state.values.length && this.state.values.map((option, index) => (
+            <Value
+              key={index}
+              option={option}
+              getClass={this.props.getValueClass}
+              onDelete={optionToDelete => this.onValueDelete(optionToDelete)}
+            />
+          )) }
           <input
             ref={input => this.setInput(input)}
             data-test="Select.input"
