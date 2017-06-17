@@ -10,3 +10,12 @@
   color: var(--color-black);
   margin: 0;
 }
+
+.logo {
+  width: 240px;
+  height: auto;
+}
+
+.logoContainer > a {
+  display: inline-block;
+}

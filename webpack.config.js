@@ -47,6 +47,10 @@ module.exports = {
           'postcss-loader'
         ]
       },
+      {
+        test: /\.svg$/,
+        loader: 'svg-react-loader',
+      },
     ]
   },
   plugins: [

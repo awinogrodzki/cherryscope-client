@@ -88,6 +88,29 @@ describe('MovieSearch', () => {
     );
   });
 
+  it('should not show date option with invalid date', () => {
+    const wrapper = shallow(<MovieSearch />);
+    const input = 'japanese horror 90';
+    wrapper.find(Select).simulate('inputChange', input);
+
+    expect(wrapper.find(Select).props().optionGroups).not.toContainEqual(
+      expect.objectContaining({
+        options: [
+          expect.objectContaining({
+            value: 'primary_release_date.lte',
+            type: 'date',
+            date: new Date(input),
+          }),
+          expect.objectContaining({
+            value: 'primary_release_date.gte',
+            type: 'date',
+            date: new Date(input),
+          }),
+        ],
+      })
+    );
+  });
+
   it('should recognize a year on input change and pass according value to select', () => {
     const wrapper = shallow(<MovieSearch />);
     const input = '2017';

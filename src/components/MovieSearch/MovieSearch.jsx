@@ -10,6 +10,7 @@ import Select from 'components/Select';
 import Person from './Person';
 import Company from './Company';
 import styles from './MovieSearch.css';
+import validDateStrings from './validDateStrings';
 
 class MovieSearch extends React.Component {
 
@@ -321,17 +322,7 @@ class MovieSearch extends React.Component {
       return false;
     }
 
-    const date = moment(value, [
-      'MMMM-DD-YYYY',
-      'YYYY-MM-DD',
-      'MMMM DD YYYY',
-      'MMMM Do YYYY',
-      'YYYY-DD-MM',
-      'DD MMMM YYYY',
-      'Do MMMM YYYY',
-      'MMMM DD YYYY',
-      'MMMM Do YYYY',
-    ]);
+    const date = moment(value, validDateStrings, true);
 
     return date.isValid();
   }
