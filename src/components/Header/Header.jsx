@@ -4,7 +4,7 @@ import styles from './Header.css';
 
 const Header = () => (
   <div className={styles.container}>
-    <Link to="/"><h1 className={styles.title}>cherryscope</h1></Link>
+    <h1 className={styles.title}><Link to="/">cherryscope</Link></h1>
   </div>
 );
 

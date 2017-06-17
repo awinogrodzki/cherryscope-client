@@ -1,7 +1,11 @@
+@import 'variables';
+
 body {
   font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
+  background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+  background-attachment: fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {

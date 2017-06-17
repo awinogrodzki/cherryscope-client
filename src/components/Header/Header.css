@@ -5,9 +5,8 @@
 }
 
 .title {
-  text-align: center;
   font-size: 36px;
   font-weight: 300;
-  color: var(--color-maroon);
+  color: var(--color-black);
   margin: 0;
 }

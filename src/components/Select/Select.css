@@ -6,15 +6,14 @@
 }
 
 .inputContainer {
-  background: #fff;
-  border: 1px solid color(var(--input-color) alpha(-50%));
-  box-shadow: 0 1px 2px 0 color(var(--input-color) alpha(-80%));
+  background: color(var(--color-white) alpha(60%));
+  border: 1px solid color(var(--color-blue) alpha(20%));
   display: flex;
   padding: 10px;
 }
 
 .optionContainer {
-  border: 1px solid color(var(--input-color) alpha(-50%));
+  border: 1px solid color(var(--color-blue) alpha(20%));
   border-width: 0 1px 1px 1px;
   background-color: #fff;
 }
