@@ -3,8 +3,7 @@
 .labelContainer {
   padding: 10px;
   font-size: 14px;
-  background: var(--color-light-grey);
-  border-bottom: 1px solid color(var(--input-color) alpha(-75%));
+  background: color(var(--color-blue) alpha(5%));
 }
 
 .label {

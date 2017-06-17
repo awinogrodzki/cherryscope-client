@@ -7,7 +7,7 @@
 
 .inputContainer {
   background: transparent;
-  border: 1px solid var(--color-black);
+  border: 1px solid var(--color-blue);
   border-width: 0 0 1px 0;
   display: flex;
   padding: var(--default-padding) 0 0;
@@ -15,16 +15,14 @@
 }
 
 .optionContainer {
-  border: 1px solid color(var(--color-blue) alpha(20%));
-  border-width: 0 1px 1px 1px;
-  background-color: #fff;
+  background-color: color(var(--color-white) alpha(99%));
 }
 
 .input {
   flex: 1;
   height: 1.2em;
   line-height: 1.2em;
-  font-size: 18px;
+  font-size: 24px;
   outline: none;
   padding: 0;
   margin: 0 0 5px;
@@ -50,13 +48,14 @@
 
 :global @keyframes borderAnimation {
   to {
-    outline-color: color(var(--color-blue) alpha(50%));
+    box-shadow: 0 0 8px -2px color(var(--color-blue) alpha(50%));
   }
 }
 
 .container .activeOption {
   position: relative;
   z-index: 1;
-  outline: 1px solid var(--color-blue);
+  border: 1px solid color(var(--color-blue) alpha(25%));
+  box-shadow: 0 0 8px -2px var(--color-blue);
   animation: 1s 'borderAnimation' ease infinite alternate;
 }

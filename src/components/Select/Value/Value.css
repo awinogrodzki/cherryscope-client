@@ -2,7 +2,7 @@
 
 .container {
   margin: 0 5px 5px 0;
-  font-size: 12px;
+  padding: 5px 7px 5px 2px;
   background-color: var(--value-color);
 }
 
@@ -12,10 +12,10 @@
   border: none;
   background: none;
   border-radius: none;
-  padding: 5px 0 5px 5px;
   margin: 0;
   cursor: pointer;
   outline: none;
+  vertical-align: -1px;
 
   &::before {
     content: '×';
@@ -24,6 +24,6 @@
 
 .label {
   line-height: 1em;
-  padding: 5px;
   white-space: nowrap;
+  vertical-align: -1px;
 }

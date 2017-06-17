@@ -2,8 +2,6 @@
   --color-black: #424242;
   --color-white: #fff;
   --color-grey: rgb(79, 89, 85);
-  --color-light-grey: #f9f9f9;
-  --color-light-grey2: #fcfcfc;
   --color-blue: #4E598C;
   --color-maroon: #A54558;
   --color-red: #D496A7;
@@ -13,12 +11,12 @@
   --color-turquoise: #C0F9EE;
   --color-purple: #C6CAED;
 
-  --value-color: #c4c7f9;
-  --input-color: #c4c7f9;
+  --value-color: var(--color-blue);
+  --input-color: var(--color-blue);
   --input-text-color: #000;
 
   --default-padding: 20px;
   --small-padding: 10px;
 
-    --default-margin: 20px;
+  --default-margin: 20px;
 }

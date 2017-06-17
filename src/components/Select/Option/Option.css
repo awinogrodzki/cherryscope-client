@@ -6,20 +6,19 @@
   width: 100%;
   padding: 10px;
   font-size: 12px;
-  background-color: var(--color-light-grey2);
   margin: 0 1px 1px 0;
   cursor: pointer;
   box-sizing: border-box;
 
   &:nth-child(2n) {
-    background-color: var(--color-light-grey);
+    background-color: color(var(--color-blue) alpha(2.5%));
 
     &:hover {
-      background-color: color(var(--color-light-grey2) blackness(5%));
+      background-color: color(var(--color-blue) alpha(5%));
     }
   }
 
   &:hover {
-    background-color: color(var(--color-light-grey2) blackness(5%));
+    background-color: color(var(--color-blue) alpha(5%));
   }
 }
