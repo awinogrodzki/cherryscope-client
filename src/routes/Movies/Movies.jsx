@@ -144,7 +144,7 @@ class Movies extends React.PureComponent {
 
   render() {
     return (
-      <div>
+      <div className={styles.container}>
         <MovieSearch
           onChange={data => this.onMovieSearchChange(data)}
         />
