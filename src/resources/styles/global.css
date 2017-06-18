@@ -4,7 +4,7 @@ body {
   font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
-  background-image: linear-gradient(to top, #fff1eb 0%, #fff 100%);
+  background-image: #fff;
   background-attachment: fixed;
 }
 
