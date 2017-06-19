@@ -1,8 +1,9 @@
-@import 'resources/styles/variables.css';
+@import 'resources/styles/variables';
 
 .container {
   display: flex;
-  padding: 10px 10px 7px;
+  padding: 10px 10px 5px;
+  overflow-x: auto;
 }
 
 .option {
@@ -10,18 +11,19 @@
     & .button {
       border: none;
       color: var(--color-white);
-      background-color: var(--color-blue);
+      background-color: var(--color-black);
     }
   }
 }
 
 .button {
-  color: var(--color-blue);
+  color: var(--color-black);
   border-radius: none;
-  background: color(var(--color-blue) alpha(10%));
+  background: color(var(--color-black) alpha(10%));
   padding: 6px;
   font-size: 12px;
-  margin: 0 3px 3px 0;
+  margin: 0 5px 5px 0;
   cursor: pointer;
   border: none;
+  white-space: nowrap;
 }

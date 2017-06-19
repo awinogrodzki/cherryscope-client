@@ -10,3 +10,15 @@
 
 .loading {
 }
+
+.movie {
+  width: 20%;
+
+  @media (--only-tablet) {
+    width: 50%;
+  }
+
+  @media (--only-mobile) {
+    width: 100%;
+  }
+}

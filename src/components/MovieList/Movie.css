@@ -1,7 +1,6 @@
 @import 'resources/styles/variables';
 
 .container {
-  width: 20%;
   padding: 1px;
   box-sizing: border-box;
   position: relative;
@@ -34,19 +33,22 @@
 }
 
 .originalTitle, .title {
-  font-weight: 300;
+  font-weight: 500;
 }
 
 .originalTitle {
+  font-size: 14px;
   margin-bottom: 10px;
 }
 
 .data {
+  color: var(--color-grey);
   margin: 0;
   padding: 0;
   list-style: none;
   font-size: 12px;
   margin-top: auto;
+  font-weight: 300;
 }
 
 .dataItem {

@@ -1,8 +1,8 @@
 export default {
   movie: {
-    voteCount: 'Vote count',
+    voteCount: 'votes',
     voteAverage: 'Vote average',
-    releaseDate: 'Released',
+    releaseDate: 'Released on',
   },
   movies: {
     loadMore: 'Load more movies',

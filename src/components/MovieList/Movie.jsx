@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { t } from 'services/translate';
 import styles from './Movie.css';
 
@@ -25,8 +26,14 @@ const Movie = ({
   voteAverage,
   voteCount,
   releaseDate,
+  className,
 }) => (
-  <div className={styles.container}>
+  <div
+    className={classNames(
+    styles.container,
+    className
+  )}
+  >
     <div className={styles.image}>
       { renderImage(imageUrl) }
     </div>
@@ -34,11 +41,11 @@ const Movie = ({
       <h4 className={styles.originalTitle}>{ originalTitle }</h4>
       { originalTitle !== title && <h6 className={styles.title}>{ title }</h6> }
       <ul className={styles.data}>
-        <li className={styles.dataItem}>{`${t('movie.voteAverage')}: ${voteAverage}`}</li>
-        <li className={styles.dataItem}>{`${t('movie.voteCount')}: ${voteCount}`}</li>
+        <li className={styles.dataItem}>{`${t('movie.voteAverage')}:`} <strong>{voteAverage}</strong></li>
+        <li className={styles.dataItem}><strong>{voteCount}</strong> {t('movie.voteCount')}</li>
         {
           releaseDate !== null &&
-          <li className={styles.dataItem}>{`${t('movie.releaseDate')}: ${releaseDate.toLocaleDateString()}`}</li>
+          <li className={styles.dataItem}>{t('movie.releaseDate')} <strong>{releaseDate.toLocaleDateString()}</strong></li>
         }
       </ul>
     </div>
@@ -52,6 +59,7 @@ Movie.propTypes = {
   voteAverage: PropTypes.number,
   voteCount: PropTypes.number,
   releaseDate: PropTypes.instanceOf(Date),
+  className: PropTypes.string,
 };
 
 Movie.defaultProps = {
@@ -61,6 +69,7 @@ Movie.defaultProps = {
   voteAverage: null,
   voteCount: null,
   releaseDate: null,
+  className: null,
 };
 
 export default Movie;

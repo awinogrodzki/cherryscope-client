@@ -7,7 +7,7 @@
 
 .inputContainer {
   background: transparent;
-  border: 1px solid var(--color-blue);
+  border: 1px solid var(--color-black);
   border-width: 0 0 1px 0;
   display: flex;
   padding: var(--default-padding) 0 0;
@@ -44,18 +44,19 @@
   right: 0;
   z-index: 1;
   max-height: 360px;
+  box-shadow: 0 10px 30px 0px color(var(--color-black) alpha(25%));
 }
 
 :global @keyframes borderAnimation {
   to {
-    box-shadow: 0 0 8px -2px color(var(--color-blue) alpha(50%));
+    box-shadow: 0 0 8px -2px color(var(--color-black) alpha(50%));
   }
 }
 
 .container .activeOption {
   position: relative;
   z-index: 1;
-  border: 1px solid color(var(--color-blue) alpha(25%));
-  box-shadow: 0 0 8px -2px var(--color-blue);
+  border: 1px solid color(var(--color-black) alpha(25%));
+  box-shadow: 0 0 8px -2px var(--color-black);
   animation: 1s 'borderAnimation' ease infinite alternate;
 }

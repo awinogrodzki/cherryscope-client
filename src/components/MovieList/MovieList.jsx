@@ -16,6 +16,7 @@ const renderLoading = (isLoading) => {
 
 const renderMovies = movies => movies.map(item => (
   <Movie
+    className={styles.movie}
     key={item.id}
     title={item.title}
     originalTitle={item.original_title}

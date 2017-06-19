@@ -19,4 +19,7 @@
   --small-padding: 10px;
 
   --default-margin: 20px;
+
+  @custom-media --only-tablet (max-width: 1024px);
+  @custom-media --only-mobile (max-width: 420px);
 }
