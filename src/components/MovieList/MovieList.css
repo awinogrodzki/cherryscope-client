@@ -2,7 +2,12 @@
 
 .container {
   padding: 0 var(--default-padding);
-  margin: var(--default-padding) calc(var(--small-padding)*-1);
+  margin: var(--default-padding) 0;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  margin: 0 calc(var(--small-padding)*-1);
   display: flex;
   flex-wrap: wrap;
   position: relative;

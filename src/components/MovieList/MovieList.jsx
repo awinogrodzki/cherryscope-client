@@ -30,7 +30,9 @@ const renderMovies = movies => movies.map(item => (
 const MovieList = ({ movies, isLoading }) => (
   <div className={styles.container}>
     { renderLoading(isLoading) }
-    { renderMovies(movies) }
+    <div className={styles.wrapper}>
+      { renderMovies(movies) }
+    </div>
   </div>
 );
 

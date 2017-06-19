@@ -1,21 +1,23 @@
 @import 'resources/styles/variables';
 
 .container {
+  font-size: 12px;
   margin: 0 5px 5px 0;
-  padding: 5px 7px 5px 2px;
+  padding: 3px 7px 3px 2px;
   background-color: var(--value-color);
+  white-space: nowrap;
 }
 
 .deleteButton {
+  padding: 5px;
   font-size: 1em;
   line-height: 1em;
   border: none;
   background: none;
-  border-radius: none;
+  border-radius: 0;
   margin: 0;
   cursor: pointer;
   outline: none;
-  vertical-align: -1px;
 
   &::before {
     content: '×';
@@ -24,6 +26,4 @@
 
 .label {
   line-height: 1em;
-  white-space: nowrap;
-  vertical-align: -1px;
 }

@@ -1,11 +1,14 @@
 @import 'variables';
 
+body, html {
+  min-height: 100%;
+  height: 100%;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
-  background-image: #fff;
-  background-attachment: fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {
