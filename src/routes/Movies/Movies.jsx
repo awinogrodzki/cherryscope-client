@@ -13,7 +13,6 @@ class Movies extends React.PureComponent {
     super(props);
 
     this.state = {
-      moviePages: [],
       filters: {},
       dates: [],
       genres: [],
@@ -29,28 +28,11 @@ class Movies extends React.PureComponent {
     this.discoverMovies();
   }
 
-  discoverMovies(filters = {}) {
+  discoverMovies(filters = {}, append = false) {
     this.setState({ isLoading: true });
 
-    this.props.discoverMovies(filters)
-      .then(() => this.setState({ moviePages: [this.props.movies], isLoading: false }))
-      .catch(() => this.setState({ isLoading: false }));
-  }
-
-  discoverAndAppendMovies(filters = {}) {
-    this.setState({ isLoading: true });
-
-    this.props.discoverMovies(filters)
-      .then(() => {
-        if (!this.props.movies || !this.props.movies.length) {
-          return;
-        }
-
-        this.setState({
-          moviePages: this.state.moviePages.concat([this.props.movies]),
-          isLoading: false,
-        });
-      })
+    this.props.discoverMovies(filters, append)
+      .then(() => this.setState({ isLoading: false }))
       .catch(() => this.setState({ isLoading: false }));
   }
 
@@ -139,7 +121,7 @@ class Movies extends React.PureComponent {
   }
 
   onLoadMoreChange(page) {
-    this.setState({ page }, () => this.discoverAndAppendMovies(this.mapFilters()));
+    this.setState({ page }, () => this.discoverMovies(this.mapFilters(), true));
   }
 
   render() {
@@ -148,17 +130,12 @@ class Movies extends React.PureComponent {
         <MovieSearch
           onChange={data => this.onMovieSearchChange(data)}
         />
-        { this.state.moviePages.map((movies, index) => (
-          <div key={index} className={styles.page}>
-            <MovieList
-              movies={movies}
-              isLoading={this.state.isLoading}
-            />
-          </div>
-        )) }
+        <MovieList
+          movies={this.props.movies}
+          isLoading={this.state.isLoading}
+        />
         {
           this.state.page < this.props.pageCount
-          && !!this.state.moviePages.length
           && <LoadMore
             label={t('movies.loadMore')}
             page={this.state.page}
@@ -171,7 +148,7 @@ class Movies extends React.PureComponent {
 }
 
 const mapDispatchToProps = {
-  discoverMovies: filters => discoverMovies(filters),
+  discoverMovies: (filters, append) => discoverMovies(filters, append),
 };
 
 const mapStateToProps = state => ({

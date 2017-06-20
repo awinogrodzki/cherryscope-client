@@ -64,6 +64,24 @@ describe('movies actions', () => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });
+
+    it('should be able to discover and add movies to current list', () => {
+      const expectedActions = [
+        {
+          type: DISCOVER_MOVIES,
+          items: [3, 4, 5, 1, 2, 3],
+          page: 1,
+          pageCount: 10,
+          itemCount: 20,
+        },
+      ];
+      const store = mockStore({ movies: { items: [3, 4, 5] } });
+
+      return store.dispatch(discoverMovies({}, true))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
   });
 
   it('should create get genres action', () => {

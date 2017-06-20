@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import movieService from 'services/movie';
 import {
   DISCOVER_MOVIES,
@@ -10,18 +11,21 @@ import {
   CLEAR_COMPANIES,
 } from './types';
 
-const discoverMovies = filters => dispatch => movieService.discover(filters)
-  .then((data) => {
-    dispatch({
-      type: DISCOVER_MOVIES,
-      items: data.results,
-      page: data.page,
-      pageCount: data.total_pages,
-      itemCount: data.total_results,
-    });
+const discoverMovies = (filters, append = false) =>
+  (dispatch, getState) => movieService.discover(filters)
+    .then((data) => {
+      const currentMovies = get(getState(), 'movies.items');
 
-    return data;
-  });
+      dispatch({
+        type: DISCOVER_MOVIES,
+        items: append ? currentMovies.concat(data.results) : data.results,
+        page: data.page,
+        pageCount: data.total_pages,
+        itemCount: data.total_results,
+      });
+
+      return data;
+    });
 
 const getGenres = () => dispatch => movieService.getGenres()
   .then((data) => {
