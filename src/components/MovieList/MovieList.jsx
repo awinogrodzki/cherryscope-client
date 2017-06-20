@@ -10,7 +10,9 @@ const renderLoading = (isLoading) => {
   }
 
   return (
-    <div className={styles.loading} />
+    <div className={styles.loading}>
+      Loading...
+    </div>
   );
 };
 
