@@ -13,7 +13,7 @@
 }
 
 .genreValue {
-  background-color: var(--color-red);
+  background-color: var(--color-pink);
 }
 
 .dateValue {
@@ -72,7 +72,7 @@
 
 .genresLabel {
   &::before {
-    background-color: var(--color-red);
+    background-color: var(--color-pink);
   }
 }
 
