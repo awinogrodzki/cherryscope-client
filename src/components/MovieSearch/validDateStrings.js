@@ -1,4 +1,6 @@
 export default [
+  'YYYY-MM',
+  'MM-YYYY',
   'MM-DD-YYYY',
   'YYYY-MM-DD',
   'MMMM DD YYYY',
