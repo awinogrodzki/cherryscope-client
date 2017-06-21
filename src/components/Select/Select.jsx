@@ -449,7 +449,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
   className: null,
-  inputValue: null,
+  inputValue: '',
   onInputChange: () => {},
   values: [],
   onChange: () => {},
