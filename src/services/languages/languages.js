@@ -30,7 +30,7 @@ class Languages {
   }
 
   isLike(value, fullString) {
-    return fullString.toLowerCase().indexOf(value.toLowerCase()) >= 0;
+    return fullString.toLowerCase().indexOf(value.toLowerCase()) === 0;
   }
 }
 

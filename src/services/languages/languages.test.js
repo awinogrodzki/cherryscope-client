@@ -11,6 +11,7 @@ describe('languages service', () => {
       expect(languages.getLike(null).length).toBe(0);
       expect(languages.getLike('231').length).toBe(0);
       expect(languages.getLike(123).length).toBe(0);
+      expect(languages.getLike('ac').length).toBe(0);
     });
   });
 });
