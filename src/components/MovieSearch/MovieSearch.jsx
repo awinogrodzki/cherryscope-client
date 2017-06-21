@@ -378,6 +378,7 @@ class MovieSearch extends React.Component {
           onInputChange={value => this.onInputChange(value)}
           optionGroups={this.getOptionGroups()}
           isLoading={this.state.isLoading}
+          inputPlaceholder={t('movieSearch.inputPlaceholder')}
         />
       </div>
     );

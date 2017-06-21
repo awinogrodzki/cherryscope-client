@@ -221,7 +221,7 @@ class Select extends React.Component {
             onFocus={e => this.onInputFocus(e)}
             onBlur={e => this.onInputBlur(e)}
             className={styles.input}
-            placeholder={this.props.isLoading ? 'Loading' : ''}
+            placeholder={this.props.inputPlaceholder}
           />
         </div>
         <div
@@ -438,6 +438,7 @@ Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
   isExpanded: PropTypes.bool,
+  inputPlaceholder: PropTypes.string,
 };
 
 Select.defaultProps = {
@@ -451,6 +452,7 @@ Select.defaultProps = {
   options: [],
   isLoading: false,
   isExpanded: false,
+  inputPlaceholder: '',
 };
 
 export default Select;

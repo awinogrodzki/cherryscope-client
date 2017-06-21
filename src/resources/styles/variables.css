@@ -13,7 +13,8 @@
 
   --value-color: var(--color-blue);
   --input-color: var(--color-blue);
-  --input-text-color: #000;
+  --input-text-color: var(--color-black);
+  --input-placeholder-color: var(--color-grey);
 
   --default-padding: 20px;
   --small-padding: 10px;

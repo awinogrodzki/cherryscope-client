@@ -1,8 +1,14 @@
 export default {
+  header: {
+    headline: 'movie search engine for those who think they\'ve watched everything',
+  },
   movie: {
     voteCount: 'votes',
     voteAverage: 'Vote average',
     releaseDate: 'Released on',
+  },
+  movieSearch: {
+    inputPlaceholder: 'Enter genre, name, date or a number. Search by anything.',
   },
   movies: {
     loadMore: 'Load more movies',
