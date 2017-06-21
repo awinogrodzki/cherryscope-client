@@ -1,0 +1,9 @@
+@import 'resources/styles/variables';
+
+.container {
+  margin-bottom: var(--large-margin);
+}
+
+.page {
+
+}
