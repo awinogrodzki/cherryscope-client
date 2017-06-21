@@ -221,7 +221,7 @@ class Select extends React.Component {
             onFocus={e => this.onInputFocus(e)}
             onBlur={e => this.onInputBlur(e)}
             className={styles.input}
-            placeholder={this.props.inputPlaceholder}
+            placeholder={this.props.isLoading ? 'Loading...' : this.props.inputPlaceholder}
           />
         </div>
         <div
