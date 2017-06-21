@@ -1,7 +1,7 @@
 @import 'resources/styles/variables';
 
 .container {
-  padding: var(--default-padding);
+  padding: var(--large-padding);
 }
 
 .logo {

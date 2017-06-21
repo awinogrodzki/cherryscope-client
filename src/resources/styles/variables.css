@@ -16,10 +16,13 @@
   --input-text-color: var(--color-black);
   --input-placeholder-color: var(--color-grey);
 
+  --large-padding: 40px;
   --default-padding: 20px;
   --small-padding: 10px;
 
+  --large-margin: 40px;
   --default-margin: 20px;
+  --small-margin: 10px;
 
   @custom-media --only-small-desktop (max-width: 1280px);
   @custom-media --only-tablet (max-width: 1024px);

@@ -57,8 +57,8 @@ class MovieSearch extends React.Component {
       this.getSortOptionGroup(),
       this.getDateOptionGroup(),
       this.getVoteOptionGroup(),
-      this.getLanguageOptionGroup(),
       this.getGenreOptionGroup(),
+      this.getLanguageOptionGroup(),
       this.getPeopleOptionGroup(),
       this.getCompaniesOptionGroup(),
       this.getKeywordOptionGroup(),
@@ -371,6 +371,7 @@ class MovieSearch extends React.Component {
     return (
       <div className={styles.container}>
         <Select
+          className={styles.select}
           values={this.state.selected}
           onChange={values => this.onChange(values)}
           getLabelClass={group => styles[`${group.id}Label`]}
@@ -378,8 +379,10 @@ class MovieSearch extends React.Component {
           onInputChange={value => this.onInputChange(value)}
           optionGroups={this.getOptionGroups()}
           isLoading={this.state.isLoading}
-          inputPlaceholder={t('movieSearch.inputPlaceholder')}
         />
+        <div className={styles.inputLabel}>
+          <span>{t('movieSearch.inputLabel')}</span>
+        </div>
       </div>
     );
   }

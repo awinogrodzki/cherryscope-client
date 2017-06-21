@@ -4,6 +4,7 @@
   padding: 1px;
   box-sizing: border-box;
   position: relative;
+  margin-bottom: var(--default-margin);
 
   & * {
     box-sizing: border-box;

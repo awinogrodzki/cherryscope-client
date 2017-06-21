@@ -1,14 +1,14 @@
 @import 'resources/styles/variables';
 
 .container {
-  padding: 0 var(--default-padding);
-  margin: var(--default-padding) 0;
+  padding: 0 var(--large-padding);
+  margin: var(--large-margin) 0 var(--large-margin);
   overflow-x: hidden;
   position: relative;
 }
 
 .wrapper {
-  margin: 0 calc(var(--small-padding)*-1);
+  margin: 0 calc(var(--small-margin)*-1);
   display: flex;
   flex-wrap: wrap;
   position: relative;

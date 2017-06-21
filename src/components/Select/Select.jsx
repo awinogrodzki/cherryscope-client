@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { find, isEqual, get } from 'lodash';
 import OptionGroup from './OptionGroup';
 import Value from './Value';
@@ -199,7 +200,12 @@ class Select extends React.Component {
   /* eslint-disable react/no-array-index-key */
   render() {
     return (
-      <div className={styles.container}>
+      <div
+        className={classNames(
+        styles.container,
+        this.props.className
+      )}
+      >
         <div
           className={styles.inputContainer}
         >
@@ -221,7 +227,7 @@ class Select extends React.Component {
             onFocus={e => this.onInputFocus(e)}
             onBlur={e => this.onInputBlur(e)}
             className={styles.input}
-            placeholder={this.props.isLoading ? 'Loading...' : this.props.inputPlaceholder}
+            placeholder={this.props.isLoading ? 'Loading...' : ''}
           />
         </div>
         <div
@@ -415,6 +421,7 @@ class Select extends React.Component {
 }
 
 Select.propTypes = {
+  className: PropTypes.string,
   inputValue: PropTypes.string,
   onInputChange: PropTypes.func,
   values: PropTypes.arrayOf(PropTypes.object),
@@ -438,11 +445,11 @@ Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
   isExpanded: PropTypes.bool,
-  inputPlaceholder: PropTypes.string,
 };
 
 Select.defaultProps = {
-  inputValue: '',
+  className: null,
+  inputValue: null,
   onInputChange: () => {},
   values: [],
   onChange: () => {},
@@ -452,7 +459,6 @@ Select.defaultProps = {
   options: [],
   isLoading: false,
   isExpanded: false,
-  inputPlaceholder: '',
 };
 
 export default Select;

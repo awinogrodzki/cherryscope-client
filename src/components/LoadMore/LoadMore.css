@@ -7,21 +7,21 @@
 
 .button {
   border: none;
-  border: 1px solid color(var(--color-blue) alpha(100%));
+  border: 1px solid color(var(--color-black) alpha(100%));
   background: transparent;
-  color: color(var(--color-blue) alpha(100%));
+  color: color(var(--color-black) alpha(100%));
   outline: none;
   cursor: pointer;
   font-size: 12px;
   font-weight: 300;
-  padding: 12px 20px;
+  padding: 10px 20px;
   transition: background .15s ease-in-out;
 
   &:hover {
-    background-color: color(var(--color-blue) alpha(10%));
+    background-color: color(var(--color-black) alpha(10%));
 
     &:active {
-      background-color: color(var(--color-blue) alpha(20%));
+      background-color: color(var(--color-black) alpha(20%));
     }
   }
 }

@@ -1,7 +1,16 @@
 @import 'resources/styles/variables';
 
 .container {
+  padding: 0 var(--large-padding);
+  margin: var(--default-margin) 0;
+}
 
+.select {
+  margin-bottom: 5px;
+}
+
+.inputLabel {
+  font-size: 12px;
 }
 
 .genreValue {
