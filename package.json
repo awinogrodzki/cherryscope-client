@@ -11,7 +11,8 @@
     "lint:fix": "eslint --ext .jsx --ext .js --fix src",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "deploy": "npm run build && firebase deploy && npm run clean"
   },
   "author": "",
   "license": "ISC",
