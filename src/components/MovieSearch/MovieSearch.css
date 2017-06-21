@@ -1,7 +1,6 @@
 @import 'resources/styles/variables';
 
 .container {
-  padding: 0 var(--large-padding);
   margin: var(--default-margin) 0;
 }
 

@@ -60,4 +60,8 @@ export default {
       },
     },
   },
+  footer: {
+    infoPrefix: 'This project is possible thanks to ',
+    infoSuffix: 'Feel free to contribute!',
+  },
 };

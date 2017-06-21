@@ -1,7 +1,6 @@
 @import 'resources/styles/variables';
 
 .container {
-  padding: 0 var(--large-padding);
   margin: var(--large-margin) 0 var(--large-margin);
   overflow-x: hidden;
   position: relative;

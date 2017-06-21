@@ -1,6 +1,6 @@
-import Root from './Root';
-import Movies from './Movies';
-import NotFound from './NotFound';
+import Root from 'pages/Root';
+import Movies from 'pages/Movies';
+import NotFound from 'pages/NotFound';
 
 const routes = [
   {
