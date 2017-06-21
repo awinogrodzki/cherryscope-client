@@ -4,13 +4,6 @@
   padding: var(--default-padding);
 }
 
-.headline {
-  display: block;
-  font-weight: 300;
-  color: var(--color-grey);
-  font-size: 12px;
-}
-
 .logo {
   width: 240px;
   height: auto;
