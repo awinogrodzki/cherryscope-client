@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import movieService from 'services/movie';
+import Movie from 'components/Movie';
 import styles from './MovieList.css';
-import Movie from './Movie';
 
 const renderLoading = (isLoading) => {
   if (!isLoading) {

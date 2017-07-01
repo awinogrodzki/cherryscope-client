@@ -34,20 +34,22 @@ const Movie = ({
     className
   )}
   >
-    <div className={styles.image}>
-      { renderImage(imageUrl) }
-    </div>
-    <div className={styles.content}>
-      <h4 className={styles.originalTitle}>{ originalTitle }</h4>
-      { originalTitle !== title && <h6 className={styles.title}>{ title }</h6> }
-      <ul className={styles.data}>
-        <li className={styles.dataItem}>{`${t('movie.voteAverage')}:`} <strong>{voteAverage}</strong></li>
-        <li className={styles.dataItem}><strong>{voteCount}</strong> {t('movie.voteCount')}</li>
-        {
-          releaseDate !== null &&
-          <li className={styles.dataItem}>{t('movie.releaseDate')} <strong>{releaseDate.toLocaleDateString()}</strong></li>
-        }
-      </ul>
+    <div className={styles.wrapper}>
+      <div className={styles.image}>
+        { renderImage(imageUrl) }
+      </div>
+      <div className={styles.content}>
+        <h4 className={styles.originalTitle}>{ originalTitle }</h4>
+        { originalTitle !== title && <h6 className={styles.title}>{ title }</h6> }
+        <ul className={styles.data}>
+          <li className={styles.dataItem}>{`${t('movie.voteAverage')}:`} <strong>{voteAverage}</strong></li>
+          <li className={styles.dataItem}><strong>{voteCount}</strong> {t('movie.voteCount')}</li>
+          {
+            releaseDate !== null &&
+            <li className={styles.dataItem}>{t('movie.releaseDate')} <strong>{releaseDate.toLocaleDateString()}</strong></li>
+          }
+        </ul>
+      </div>
     </div>
   </div>
 );

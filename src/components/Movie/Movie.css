@@ -1,19 +1,22 @@
 @import 'resources/styles/variables';
 
 .container {
-  padding: 1px;
   box-sizing: border-box;
   position: relative;
   margin-bottom: var(--default-margin);
+  padding: 1px var(--small-padding);
 
   & * {
     box-sizing: border-box;
   }
 }
 
+.wrapper {
+  cursor: pointer;
+}
+
 .image {
   width: 100%;
-  padding: 0 var(--small-padding);
 
   & > img {
     width: 100%;
@@ -30,10 +33,6 @@
     margin-top: 150%;
     display: block;
   }
-}
-
-.content {
-  padding: var(--small-padding);
 }
 
 .originalTitle, .title {
