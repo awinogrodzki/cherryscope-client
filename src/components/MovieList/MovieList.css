@@ -30,6 +30,10 @@
 .movie {
   width: 16.666666667%;
 
+  &.isExpanded {
+
+  }
+
   @media (--only-small-desktop) {
     width: 20%;
   }
