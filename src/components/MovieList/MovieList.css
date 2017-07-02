@@ -2,7 +2,6 @@
 
 .container {
   margin: var(--large-margin) 0 var(--large-margin);
-  overflow-x: hidden;
   position: relative;
 }
 

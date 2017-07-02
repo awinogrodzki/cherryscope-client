@@ -67,6 +67,11 @@ class Movie extends React.Component {
               }
             </ul>
           </div>
+          <div className={styles.details}>
+            <div className={styles.detailsWrapper}>
+              {this.props.detailsComponent}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -83,6 +88,7 @@ Movie.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   isExpanded: PropTypes.bool,
+  detailsComponent: PropTypes.node,
 };
 
 Movie.defaultProps = {
@@ -95,6 +101,7 @@ Movie.defaultProps = {
   className: null,
   onClick: () => {},
   isExpanded: false,
+  detailsComponent: null,
 };
 
 export default Movie;

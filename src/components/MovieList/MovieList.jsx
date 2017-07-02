@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import movieService from 'services/movie';
 import Movie from 'components/Movie';
+import MovieDetails from 'components/MovieDetails';
 import styles from './MovieList.css';
 
 class MovieList extends React.Component {
@@ -14,6 +15,18 @@ class MovieList extends React.Component {
     };
   }
 
+  isMovieExpanded(id) {
+    return this.state.expandedMovieId === id;
+  }
+
+  getMovieDetails(id) {
+    if (!this.isMovieExpanded(id)) {
+      return null;
+    }
+
+    return <MovieDetails id={id} />;
+  }
+
   renderMovies() {
     return this.props.movies.map(item => (
       <Movie
@@ -21,7 +34,6 @@ class MovieList extends React.Component {
           [styles.movie]: true,
           [styles.isExpanded]: this.state.expandedMovieId === item.id,
         })}
-        id={item.id}
         key={item.id}
         title={item.title}
         originalTitle={item.original_title}
@@ -36,7 +48,8 @@ class MovieList extends React.Component {
             this.setState({ expandedMovieId: null });
           }
         }}
-        isExpanded={this.state.expandedMovieId === item.id}
+        isExpanded={this.isMovieExpanded(item.id)}
+        detailsComponent={this.getMovieDetails(item.id)}
       />
     ));
   }

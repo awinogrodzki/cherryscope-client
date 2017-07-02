@@ -3,6 +3,7 @@
     "movie": {
       "api_key": "1ef3f71a318d8d8ed927fdcf2fb90670",
       "api_url": "https://api.themoviedb.org/3",
+      "uri": "/movie",
       "discover_uri": "/discover/movie",
       "genres_uri": "/genre/movie/list",
       "image_url": "https://image.tmdb.org/t/p/w",

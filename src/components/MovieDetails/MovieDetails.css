@@ -1,0 +1,7 @@
+@import 'resources/styles/variables';
+
+.container {
+  padding: var(--default-padding);
+  line-height: 1.5em;
+  font-size: 14px;
+}

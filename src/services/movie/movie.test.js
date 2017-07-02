@@ -6,6 +6,7 @@ jest.mock('services/config', () => {
       movie: {
         api_key: '1ef3f71a318d8d8ed927fdcf2fb90670',
         api_url: 'https://api.themoviedb.org/3',
+        uri: '/movie',
         discover_uri: '/discover/movie',
         genres_uri: '/genre/movie/list',
         image_url: 'https://image.tmdb.org/t/p/w',
@@ -34,6 +35,10 @@ describe('movie service', () => {
 
   it('should be able to discover movies', () => movieService.discover().then((response) => {
     expect(response.url).toBe('https://api.themoviedb.org/3/discover/movie?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
+  }));
+
+  it('should be able to get movie details by id', () => movieService.getMovie(123).then((response) => {
+    expect(response.url).toBe('https://api.themoviedb.org/3/movie/123?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
   }));
 
   it('should be able to discover movies with parameters', () => {

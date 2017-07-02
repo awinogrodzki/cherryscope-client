@@ -8,3 +8,4 @@ export const SEARCH_KEYWORDS_URI = config.get('services.movie.search.keywords_ur
 export const SEARCH_PEOPLE_URI = config.get('services.movie.search.people_uri');
 export const SEARCH_COMPANIES_URI = config.get('services.movie.search.companies_uri');
 export const IMAGE_URL = config.get('services.movie.image_url');
+export const MOVIE_URI = config.get('services.movie.uri');

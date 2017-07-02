@@ -8,6 +8,7 @@ import {
   SEARCH_KEYWORDS_URI,
   SEARCH_PEOPLE_URI,
   SEARCH_COMPANIES_URI,
+  MOVIE_URI,
   IMAGE_URL,
 } from './constants';
 
@@ -22,6 +23,11 @@ const mapResponse = (response) => {
 export default {
   discover(filters = {}) {
     return axios.get(getUrl(DISCOVER_URI), { params: filters })
+      .then(response => mapResponse(response));
+  },
+
+  getMovie(id) {
+    return axios.get(getUrl(`${MOVIE_URI}/${id}`))
       .then(response => mapResponse(response));
   },
 
