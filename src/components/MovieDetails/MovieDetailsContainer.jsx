@@ -10,6 +10,7 @@ class MovieDetailsContainer extends React.Component {
     this.state = {
       isLoading: true,
       overview: null,
+      imdbId: null,
     };
   }
 
@@ -18,6 +19,7 @@ class MovieDetailsContainer extends React.Component {
       .then(response => this.setState({
         isLoading: false,
         overview: response.overview,
+        imdbId: response.imdb_id,
       }))
       .catch(() => this.setState({
         isLoading: false,
@@ -29,6 +31,7 @@ class MovieDetailsContainer extends React.Component {
       <MovieDetails
         isLoading={this.state.isLoading}
         overview={this.state.overview}
+        imdbUrl={this.state.imdbId && `http://www.imdb.com/title/${this.state.imdbId}`}
       />
     );
   }

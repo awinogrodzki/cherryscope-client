@@ -4,4 +4,14 @@
   padding: var(--default-padding);
   line-height: 1.5em;
   font-size: 14px;
+  background-color: var(--color-white);
+}
+
+.iconLink {
+  display: inline-block;
+  width: 48px;
+}
+
+.row {
+  margin-bottom: var(--small-margin);
 }

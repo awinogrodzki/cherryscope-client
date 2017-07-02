@@ -8,15 +8,15 @@ class Movie extends React.Component {
   constructor(props) {
     super(props);
 
-    this.container = null;
-  }
-
-  setContainer(container) {
-    this.container = container;
+    this.containerRef = null;
   }
 
   onClick() {
-    this.container && this.props.onClick(this.container);
+    this.containerRef && this.props.onClick(this.containerRef);
+  }
+
+  setContainerRef(ref) {
+    this.containerRef = ref;
   }
 
   renderImage(url) {
@@ -37,21 +37,20 @@ class Movie extends React.Component {
   render() {
     return (
       <div
-        data-test="Movie.container"
-        ref={container => this.setContainer(container)}
+        ref={ref => this.setContainerRef(ref)}
         className={classNames({
           [styles.container]: true,
-          [styles.isExpanded]: !!this.props.isExpanded,
           [this.props.className]: !!this.props.className,
         })}
       >
         <div
-          data-test="Movie.wrapper"
           className={styles.wrapper}
-          onClick={() => this.onClick()}
-          role="button"
         >
-          <div className={styles.image}>
+          <div
+            className={styles.image}
+            onClick={() => this.onClick()}
+            role="button"
+          >
             { this.renderImage(this.props.imageUrl) }
           </div>
           <div className={styles.content}>
@@ -66,11 +65,6 @@ class Movie extends React.Component {
                 <li className={styles.dataItem}>{t('movie.releaseDate')} <strong>{this.props.releaseDate.toLocaleDateString()}</strong></li>
               }
             </ul>
-          </div>
-          <div className={styles.details}>
-            <div className={styles.detailsWrapper}>
-              {this.props.detailsComponent}
-            </div>
           </div>
         </div>
       </div>
@@ -87,8 +81,6 @@ Movie.propTypes = {
   releaseDate: PropTypes.instanceOf(Date),
   className: PropTypes.string,
   onClick: PropTypes.func,
-  isExpanded: PropTypes.bool,
-  detailsComponent: PropTypes.node,
 };
 
 Movie.defaultProps = {
@@ -100,8 +92,6 @@ Movie.defaultProps = {
   releaseDate: null,
   className: null,
   onClick: () => {},
-  isExpanded: false,
-  detailsComponent: null,
 };
 
 export default Movie;

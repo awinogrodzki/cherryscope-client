@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { discoverMovies } from 'actions';
 import { t } from 'services/translate';
+import modalService from 'services/modal';
 import MovieSearch from 'components/MovieSearch';
 import MovieList from 'components/MovieList';
+import MovieDetails from 'components/MovieDetails';
 import LoadMore from 'components/LoadMore';
 import styles from './Movies.css';
 
@@ -21,6 +23,7 @@ class Movies extends React.PureComponent {
       sortBy: null,
       isLoading: false,
       page: 1,
+      movieModal: null,
     };
   }
 
@@ -124,6 +127,20 @@ class Movies extends React.PureComponent {
     this.setState({ page }, () => this.discoverMovies(this.mapFilters(), true));
   }
 
+  selectMovie(id) {
+    if (this.state.movieModal) {
+      modalService.removeModal(this.state.movieModal);
+    }
+
+    const movieModal = modalService.createModal(() => (
+      <MovieDetails id={id} />
+    ));
+
+    this.setState({
+      movieModal,
+    });
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -133,6 +150,7 @@ class Movies extends React.PureComponent {
         <MovieList
           movies={this.props.movies}
           isLoading={this.state.isLoading}
+          onMovieSelect={(id, element) => this.selectMovie(id, element)}
         />
         {
           this.state.page < this.props.pageCount
