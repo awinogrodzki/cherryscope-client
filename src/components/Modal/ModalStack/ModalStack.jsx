@@ -1,4 +1,5 @@
 import React from 'react';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import modalService from 'services/modal';
 import Modal from 'components/Modal';
 
@@ -14,14 +15,16 @@ class ModalStack extends React.Component {
   }
 
   render() {
+    const modals = this.state.modals.map(modal => (
+      <Modal key={modal.getId()} onClose={() => modalService.removeModal(modal)}>
+        {modal.getComponent()}
+      </Modal>
+    ));
+
     return (
-      <div>
-        { this.state.modals.map(modal => (
-          <Modal key={modal.getId()} onClose={() => modalService.removeModal(modal)}>
-            {modal.getComponent()}
-          </Modal>
-        )) }
-      </div>
+      <TransitionGroup component="div">
+        { modals }
+      </TransitionGroup>
     );
   }
 }
