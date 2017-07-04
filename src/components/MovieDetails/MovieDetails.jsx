@@ -21,16 +21,18 @@ const MovieDetails = ({
   isLoading,
 }) => (
   <div className={styles.container}>
-    { renderLoading(isLoading) }
-    <div className={styles.row}>
-      {overview}
+    <div className={styles.wrapper}>
+      { renderLoading(isLoading) }
+      <div className={styles.row}>
+        {overview}
+      </div>
+      {
+        imdbUrl &&
+        <a rel="noopener noreferrer" href={imdbUrl} target="_blank" className={styles.iconLink}>
+          <IMDBLogo />
+        </a>
+      }
     </div>
-    {
-      imdbUrl &&
-      <a rel="noopener noreferrer" href={imdbUrl} target="_blank" className={styles.iconLink}>
-        <IMDBLogo />
-      </a>
-    }
   </div>
 );
 

@@ -22,14 +22,14 @@ class ModalService {
     this.eventEmitter.emit(CHANGE_EVENT, this.getModals());
   }
 
-  createModal(getComponent) {
+  createModal(getComponent, options) {
     let component = null;
 
     if (typeof getComponent === 'function') {
       component = getComponent();
     }
 
-    const modal = new Modal(uuid(), component);
+    const modal = new Modal(uuid(), component, options);
 
     this.modals.push(modal);
     this.onChange();

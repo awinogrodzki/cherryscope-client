@@ -14,20 +14,33 @@ class ModalWindow extends React.Component {
         ref={this.props.getContainer}
         className={styles.container}
       >
-        <button className={styles.closeButton} onClick={() => this.props.onClose()}>×</button>
-        { this.props.children }
+        <div
+          ref={this.props.getWrapper}
+          className={styles.wrapper}
+        >
+          <div
+            ref={this.props.getContentWrapper}
+          >
+            <button className={styles.closeButton} onClick={() => this.props.onClose()}>×</button>
+            { this.props.children }
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 ModalWindow.propTypes = {
+  getContentWrapper: PropTypes.func,
+  getWrapper: PropTypes.func,
   getContainer: PropTypes.func,
   onClose: PropTypes.func,
   children: PropTypes.node,
 };
 
 ModalWindow.defaultProps = {
+  getContentWrapper: () => {},
+  getWrapper: () => {},
   getContainer: () => {},
   onClose: () => {},
   children: null,

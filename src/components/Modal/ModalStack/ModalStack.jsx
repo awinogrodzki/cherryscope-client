@@ -16,7 +16,11 @@ class ModalStack extends React.Component {
 
   render() {
     const modals = this.state.modals.map(modal => (
-      <Modal key={modal.getId()} onClose={() => modalService.removeModal(modal)}>
+      <Modal
+        {...modal.getOptions()}
+        key={modal.getId()}
+        onClose={() => modalService.removeModal(modal)}
+      >
         {modal.getComponent()}
       </Modal>
     ));

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { discoverMovies } from 'actions';
 import { t } from 'services/translate';
 import modalService from 'services/modal';
+import movieService from 'services/movie';
 import MovieSearch from 'components/MovieSearch';
 import MovieList from 'components/MovieList';
 import MovieDetails from 'components/MovieDetails';
@@ -127,17 +128,24 @@ class Movies extends React.PureComponent {
     this.setState({ page }, () => this.discoverMovies(this.mapFilters(), true));
   }
 
-  selectMovie(id) {
+  selectMovie(id, element) {
     if (this.state.movieModal) {
       modalService.removeModal(this.state.movieModal);
     }
 
-    const movieModal = modalService.createModal(() => (
-      <MovieDetails id={id} />
-    ));
+    movieService.getMovie(id).then((response) => {
+      const movieModal = modalService.createModal(() => (
+        <MovieDetails
+          overview={response.overview}
+          imdbUrl={response.imdb_id && `http://www.imdb.com/title/${response.imdb_id}`}
+        />
+      ), {
+        animateFromElement: element,
+      });
 
-    this.setState({
-      movieModal,
+      this.setState({
+        movieModal,
+      });
     });
   }
 

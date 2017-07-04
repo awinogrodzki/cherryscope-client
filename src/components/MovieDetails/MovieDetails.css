@@ -1,10 +1,22 @@
 @import 'resources/styles/variables';
 
+:root {
+  --width: 720px;
+}
+
 .container {
-  padding: var(--default-padding);
+  width: var(--width);
+  max-width: 100%;
   line-height: 1.5em;
   font-size: 14px;
   background-color: var(--color-white);
+}
+
+.wrapper {
+  box-sizing: border-box;
+  padding: var(--default-padding);
+  width: var(--width);
+  max-width: 100%;
 }
 
 .iconLink {

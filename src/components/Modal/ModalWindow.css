@@ -1,9 +1,9 @@
 @import 'resources/styles/variables';
 
 .container {
-  width: 720px;
+  min-width: 100px;
   max-width: 100%;
-  box-shadow: 0 0 40px 0 color(var(--color-black) alpha(33%));
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -26,4 +26,11 @@
   &:hover {
     background-color: color(var(--color-black) alpha(20%));
   }
+}
+
+.wrapper {
+  max-width: 100%;
+  position: relative;
+  background-color: var(--color-white);
+  box-shadow: 0 0 40px 0 color(var(--color-black) alpha(33%));
 }
