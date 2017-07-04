@@ -11,7 +11,7 @@ class ModalStack extends React.Component {
       modals: [],
     };
 
-    modalService.setChangeListener(modals => this.setState({ modals }));
+    modalService.addChangeListener(modals => this.setState({ modals }));
   }
 
   render() {

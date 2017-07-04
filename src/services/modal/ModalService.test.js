@@ -36,9 +36,25 @@ describe('ModalService', () => {
     const modalService = new ModalService();
     const listenerSpy = jest.fn();
 
-    modalService.setChangeListener(listenerSpy);
+    modalService.addChangeListener(listenerSpy);
     const modal = modalService.createModal();
     modalService.removeModal(modal);
+
+    expect(listenerSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('should be able to remove change listener', () => {
+    const modalService = new ModalService();
+    const listenerSpy = jest.fn();
+
+    modalService.addChangeListener(listenerSpy);
+    const modal = modalService.createModal();
+    modalService.removeModal(modal);
+
+    modalService.removeAllListeners();
+
+    const secondModal = modalService.createModal();
+    modalService.removeModal(secondModal);
 
     expect(listenerSpy).toHaveBeenCalledTimes(2);
   });

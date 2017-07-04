@@ -1,3 +1,5 @@
-import modalServiceFactory from './modalServiceFactory';
+import ModalService from './ModalService';
 
-export default modalServiceFactory();
+const modalService = new ModalService();
+
+export default modalService;

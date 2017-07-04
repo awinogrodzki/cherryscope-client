@@ -1,20 +1,25 @@
+import { EventEmitter } from 'fbemitter';
 import uuid from 'uuid/v4';
 import Modal from './Modal';
 
+const CHANGE_EVENT = 'change';
+
 class ModalService {
   constructor() {
-    this.listener = null;
+    this.eventEmitter = new EventEmitter();
     this.modals = [];
   }
 
-  setChangeListener(listener) {
-    this.listener = listener;
+  addChangeListener(callback) {
+    this.eventEmitter.addListener(CHANGE_EVENT, callback);
+  }
+
+  removeAllListeners() {
+    this.eventEmitter.removeAllListeners();
   }
 
   onChange() {
-    if (typeof this.listener === 'function') {
-      this.listener(this.getModals());
-    }
+    this.eventEmitter.emit(CHANGE_EVENT, this.getModals());
   }
 
   createModal(getComponent) {
