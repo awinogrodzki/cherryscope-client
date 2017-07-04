@@ -5,6 +5,8 @@ import Power2 from 'gsap/EasePack';
 import ModalWindow from './ModalWindow';
 import styles from './Modal.css';
 
+const ANIMATION_TIME = 0.5;
+
 class Modal extends React.Component {
   constructor(props) {
     super(props);
@@ -24,13 +26,17 @@ class Modal extends React.Component {
 
     TweenMax.fromTo(
       this.modalWindow,
-      1,
+      ANIMATION_TIME,
       { x, y, opacity: 0, scale: 1 },
       { x: 0, y: 0, opacity: 1, scale: 1, ease: Power2.easeOut, onComplete: callback }
     );
   }
 
   animateModalWrapperEnter() {
+    if (!this.props.animateFromElement) {
+      return;
+    }
+
     TweenMax.set(
       this.modalWindow,
       { ...this.getFinalSize() }
@@ -43,7 +49,7 @@ class Modal extends React.Component {
 
     TweenMax.fromTo(
       this.modalWrapper,
-      1,
+      ANIMATION_TIME,
       { ...this.getInitialSize() },
       { ...this.getFinalSize(),
         clearProps: 'all',
@@ -56,6 +62,10 @@ class Modal extends React.Component {
   }
 
   animateModalWrapperLeave() {
+    if (!this.props.animateFromElement) {
+      return;
+    }
+
     TweenMax.set(
       this.modalWindow,
       { ...this.getFinalSize() }
@@ -63,7 +73,7 @@ class Modal extends React.Component {
 
     TweenMax.fromTo(
       this.modalWrapper,
-      1,
+      ANIMATION_TIME,
       { ...this.getFinalSize() },
       { ...this.getInitialSize(),
         clearProps: 'all',
@@ -77,15 +87,20 @@ class Modal extends React.Component {
   animateModalContentWrapperEnter() {
     TweenMax.to(
       this.modalContentWrapper,
-      0.3,
+      ANIMATION_TIME,
       { opacity: 1 }
     );
   }
 
   animateModalContentWrapperLeave(callback) {
+    if (!this.props.animateFromElement) {
+      callback();
+      return;
+    }
+
     TweenMax.to(
       this.modalContentWrapper,
-      0.3,
+      ANIMATION_TIME,
       { opacity: 0, onComplete: callback }
     );
   }
@@ -111,7 +126,7 @@ class Modal extends React.Component {
 
     TweenMax.fromTo(
       this.modalWindow,
-      1,
+      ANIMATION_TIME,
       { x: 0, y: 0, opacity: 1, scale: 1 },
       { x, y, opacity: 0, scale: 1, ease: Power2.easeOut, onComplete: callback }
     );
