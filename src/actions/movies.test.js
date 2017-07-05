@@ -49,7 +49,7 @@ jest.mock('services/movie', () => ({
     id,
     imdb_id: 54321,
     overview: 'Lorem ipsum',
-    backdrop_path: 'test_image_url',
+    poster_path: 'test_image_url',
   }),
   getImageUrl: image => image,
 }));

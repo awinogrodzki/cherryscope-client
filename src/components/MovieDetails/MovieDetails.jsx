@@ -19,8 +19,14 @@ const MovieDetails = ({
   imdbUrl,
   overview,
   isLoading,
+  image,
 }) => (
   <div className={styles.container}>
+    { image &&
+      <div className={styles.image}>
+        <img src={image} />
+      </div>
+    }
     <div className={styles.wrapper}>
       { renderLoading(isLoading) }
       <div className={styles.row}>
@@ -40,12 +46,14 @@ MovieDetails.propTypes = {
   imdbUrl: PropTypes.string,
   overview: PropTypes.string,
   isLoading: PropTypes.bool,
+  image: PropTypes.string,
 };
 
 MovieDetails.defaultProps = {
   imdbUrl: null,
   overview: null,
   isLoading: false,
+  image: null,
 };
 
 export default MovieDetails;

@@ -20,7 +20,7 @@
   background-color: transparent;
   outline: none;
   cursor: pointer;
-  padding: 0px 2px 1px;
+  padding: 0px 3px 1px;
   margin: 0;
 
   &:hover {

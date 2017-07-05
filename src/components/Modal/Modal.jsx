@@ -6,18 +6,22 @@ import ModalWindow from './ModalWindow';
 import styles from './Modal.css';
 
 const WINDOW_ANIMATION_TIME = 0.5;
-const CONTENT_ANIMATION_TIME = 0.15;
+const CONTENT_ANIMATION_TIME = 0.3;
 
 class Modal extends React.Component {
   constructor(props) {
     super(props);
 
+    this.container = null;
     this.modalWindow = null;
     this.modalWrapper = null;
     this.modalContentWrapper = null;
   }
 
   componentWillEnter(callback) {
+    this.container.classList.add(styles.isAnimated);
+    setTimeout(() => this.container.classList.add(styles.didEnter), 0);
+
     if (!this.props.animateFromElement) {
       const initialCoords = { x: 0, y: 100 };
 
@@ -35,6 +39,8 @@ class Modal extends React.Component {
   }
 
   componentWillLeave(callback) {
+    this.container.classList.add(styles.willLeave);
+
     if (!this.props.animateFromElement) {
       const finalCoords = { x: 0, y: -100 };
 
@@ -152,6 +158,7 @@ class Modal extends React.Component {
   render() {
     return (
       <div
+        ref={element => this.container = element}
         className={styles.container}
       >
         <ModalWindow

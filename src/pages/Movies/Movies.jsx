@@ -217,6 +217,7 @@ Movies.propTypes = {
     ]),
     imdbId: PropTypes.string,
     overview: PropTypes.string,
+    image: PropTypes.string,
   }).isRequired,
   discoverMovies: PropTypes.func.isRequired,
   getMovie: PropTypes.func.isRequired,

@@ -12,4 +12,18 @@
   justify-content: center;
   align-items: center;
   padding: var(--default-padding);
+  background-color: color(var(--color-black) alpha(25%));
+  transition: background var(--default-animation);
+
+  &.isAnimated {
+    background-color: transparent;
+
+    &.willLeave {
+       background-color: transparent;
+    }
+
+    &.didEnter {
+       background-color: color(var(--color-black) alpha(50%));
+    }
+  }
 }
