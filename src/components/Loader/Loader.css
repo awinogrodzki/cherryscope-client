@@ -1,0 +1,8 @@
+.container {
+  font-size: 0;
+
+  & svg path,
+  & svg rect {
+    fill: #fff;
+  }
+}

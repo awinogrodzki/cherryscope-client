@@ -134,10 +134,8 @@
 }
 
 .loader {
-  top: 10px;
+  top: 8px;
   right: 10px;
-  padding: 5px;
   border-radius: 50%;
   position: absolute;
-  background-color: color(var(--color-black) alpha(50%));
 }

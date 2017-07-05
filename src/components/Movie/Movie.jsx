@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Loader from 'halogen/BounceLoader';
+import Loader from 'components/Loader';
 import { t } from 'services/translate';
 import styles from './Movie.css';
 
@@ -47,7 +47,7 @@ class Movie extends React.Component {
         <div
           className={styles.wrapper}
         >
-          { this.props.isLoading && <Loader color="#fff" size="25px" className={styles.loader} /> }
+          { this.props.isLoading && <Loader className={styles.loader} /> }
           <div
             className={styles.image}
             onClick={() => this.onClick()}

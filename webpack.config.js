@@ -68,6 +68,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './index.html',
     }),
+    new webpack.IgnorePlugin(/(locale)/, /node_modules.+(moment)/),
   ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
