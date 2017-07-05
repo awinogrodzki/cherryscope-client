@@ -24,7 +24,6 @@ class Movies extends React.PureComponent {
       sortBy: null,
       isLoading: false,
       page: 1,
-      movieModal: null,
     };
   }
 
@@ -129,22 +128,14 @@ class Movies extends React.PureComponent {
   }
 
   selectMovie(id, element) {
-    if (this.state.movieModal) {
-      modalService.removeModal(this.state.movieModal);
-    }
-
     movieService.getMovie(id).then((response) => {
-      const movieModal = modalService.createModal(() => (
+      modalService.createModal(() => (
         <MovieDetails
           overview={response.overview}
           imdbUrl={response.imdb_id && `http://www.imdb.com/title/${response.imdb_id}`}
         />
       ), {
         animateFromElement: element,
-      });
-
-      this.setState({
-        movieModal,
       });
     });
   }

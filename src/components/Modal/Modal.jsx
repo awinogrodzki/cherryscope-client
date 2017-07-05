@@ -17,8 +17,24 @@ class Modal extends React.Component {
   }
 
   componentWillEnter(callback) {
+    TweenMax.set(
+      this.modalContentWrapper,
+      { opacity: 0 }
+    );
+
+    this.animateModalWrapper(
+      this.getInitialSize(),
+      this.getFinalSize(),
+      () => this.animateModalContentWrapperEnter()
+    );
     this.animateModalWindowEnter(callback);
-    this.animateModalWrapperEnter();
+  }
+
+  componentWillLeave(callback) {
+    this.animateModalContentWrapperLeave(() => {
+      this.animateModalWrapper(this.getFinalSize(), this.getInitialSize());
+      this.animateModalWindowLeave(callback);
+    });
   }
 
   animateModalWindowEnter(callback) {
@@ -27,41 +43,12 @@ class Modal extends React.Component {
     TweenMax.fromTo(
       this.modalWindow,
       ANIMATION_TIME,
-      { x, y, opacity: 0, scale: 1 },
-      { x: 0, y: 0, opacity: 1, scale: 1, ease: Power2.easeOut, onComplete: callback }
+      { x, y, opacity: 0 },
+      { x: 0, y: 0, opacity: 1, ease: Power2.easeOut, onComplete: callback }
     );
   }
 
-  animateModalWrapperEnter() {
-    if (!this.props.animateFromElement) {
-      return;
-    }
-
-    TweenMax.set(
-      this.modalWindow,
-      { ...this.getFinalSize() }
-    );
-
-    TweenMax.set(
-      this.modalContentWrapper,
-      { opacity: 0 }
-    );
-
-    TweenMax.fromTo(
-      this.modalWrapper,
-      ANIMATION_TIME,
-      { ...this.getInitialSize() },
-      { ...this.getFinalSize(),
-        clearProps: 'all',
-        onComplete: () => {
-          this.animateModalContentWrapperEnter();
-          this.resetModalWindow();
-        },
-      }
-    );
-  }
-
-  animateModalWrapperLeave() {
+  animateModalWrapper(initialSize, finalSize, callback) {
     if (!this.props.animateFromElement) {
       return;
     }
@@ -74,10 +61,14 @@ class Modal extends React.Component {
     TweenMax.fromTo(
       this.modalWrapper,
       ANIMATION_TIME,
-      { ...this.getFinalSize() },
-      { ...this.getInitialSize(),
+      { ...initialSize },
+      { ...finalSize,
         clearProps: 'all',
         onComplete: () => {
+          if (typeof callback === 'function') {
+            callback();
+          }
+
           this.resetModalWindow();
         },
       }
@@ -110,15 +101,6 @@ class Modal extends React.Component {
       this.modalWindow,
       { width: '', height: '' }
     );
-  }
-
-  componentWillLeave(callback) {
-    TweenMax.killAll();
-
-    this.animateModalContentWrapperLeave(() => {
-      this.animateModalWrapperLeave();
-      this.animateModalWindowLeave(callback);
-    });
   }
 
   animateModalWindowLeave(callback) {
