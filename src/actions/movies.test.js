@@ -49,6 +49,7 @@ jest.mock('services/movie', () => ({
     id,
     imdb_id: 54321,
     overview: 'Lorem ipsum',
+    backdrop_path: 'test_image_url',
   }),
 }));
 
@@ -195,6 +196,7 @@ describe('movies actions', () => {
           id: 12345,
           imdbId: 54321,
           overview: 'Lorem ipsum',
+          image: 'test_image_url',
         },
       },
     ];

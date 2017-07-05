@@ -22,6 +22,7 @@ const initialState = {
     id: null,
     imdbId: null,
     overview: null,
+    image: null,
   },
 };
 

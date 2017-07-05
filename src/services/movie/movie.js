@@ -27,7 +27,7 @@ export default {
   },
 
   getMovie(id) {
-    return axios.get(getUrl(`${MOVIE_URI}/${id}`))
+    return axios.get(getUrl(`${MOVIE_URI}/${id}`), { params: { append_to_response: 'videos,images' } })
       .then(response => mapResponse(response));
   },
 
