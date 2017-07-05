@@ -20,7 +20,6 @@ class Modal extends React.Component {
 
   componentWillEnter(callback) {
     this.container.classList.add(styles.isAnimated);
-    setTimeout(() => this.container.classList.add(styles.didEnter), 0);
 
     if (!this.props.animateFromElement) {
       const initialCoords = { x: 0, y: 100 };
@@ -36,6 +35,10 @@ class Modal extends React.Component {
       () => this.animateModalContentWrapperOpacity(1)
     );
     this.animateModalWindowEnter(this.getInitialCoords(), callback);
+  }
+
+  componentDidEnter() {
+    this.container.classList.add(styles.didEnter);
   }
 
   componentWillLeave(callback) {
