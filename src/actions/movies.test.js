@@ -51,6 +51,7 @@ jest.mock('services/movie', () => ({
     overview: 'Lorem ipsum',
     backdrop_path: 'test_image_url',
   }),
+  getImageUrl: image => image,
 }));
 
 describe('movies actions', () => {

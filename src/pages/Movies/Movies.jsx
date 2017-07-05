@@ -153,12 +153,14 @@ class Movies extends React.PureComponent {
           const {
             overview,
             imdbId,
+            image,
           } = this.props.movieDetails;
 
           return (
             <MovieDetails
               overview={overview}
               imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
+              image={image}
             />
           );
         }, {

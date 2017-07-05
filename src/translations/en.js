@@ -3,7 +3,7 @@ export default {
     headline: 'movie search engine for those who think they\'ve watched everything',
   },
   movie: {
-    voteCount: 'votes',
+    voteCount: 'Vote count',
     voteAverage: 'Vote average',
     releaseDate: 'Released on',
   },

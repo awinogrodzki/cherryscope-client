@@ -41,6 +41,7 @@
 .image {
   cursor: pointer;
   width: 100%;
+  font-size: 0;
 
   & > img {
     width: 100%;
@@ -64,8 +65,8 @@
 }
 
 .originalTitle {
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: 16px;
+  margin-bottom: 1em;
 }
 
 .content {
@@ -73,54 +74,8 @@
   transition: padding var(--default-animation);
 }
 
-.details {
-  opacity: 0;
-  background-color: var(--color-white);
-  position: absolute;
-  left: 100%;
-  top: 0;
-  width: 0%;
-  height: 100%;
-  z-index: -1;
-  box-shadow: none;
-  transform: scale(1.1);
-  transform-origin: left;
-  transition:
-    width var(--default-animation),
-    box-shadow var(--default-animation),
-    opacity var(--default-animation);
-  overflow: hidden;
-}
-
-.detailsWrapper {
-  width: var(--details-width);
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.isExpanded {
-  & .content {
-    padding: var(--default-padding);
-  }
-
-  & .wrapper {
-    transform: scale(1.1);
-    transition-delay: var(--default-animation-time);
-    box-shadow: var(--box-shadow);
-  }
-
-  & .details {
-    opacity: 1;
-    transition-delay: var(--default-animation-time);
-    box-shadow: var(--box-shadow);
-    width: var(--details-width);
-  }
-}
-
 .data {
-  color: var(--color-grey);
+  color: var(--color-black);
   margin: 0;
   padding: 0;
   list-style: none;

@@ -62,7 +62,7 @@ class Movie extends React.Component {
                 && <h6 className={styles.title}>{ this.props.title }</h6> }
             <ul className={styles.data}>
               <li className={styles.dataItem}>{`${t('movie.voteAverage')}:`} <strong>{this.props.voteAverage}</strong></li>
-              <li className={styles.dataItem}><strong>{this.props.voteCount}</strong> {t('movie.voteCount')}</li>
+              <li className={styles.dataItem}>{`${t('movie.voteCount')}:`} <strong>{this.props.voteCount}</strong></li>
               {
                 this.props.releaseDate !== null &&
                 <li className={styles.dataItem}>{t('movie.releaseDate')} <strong>{this.props.releaseDate.toLocaleDateString()}</strong></li>

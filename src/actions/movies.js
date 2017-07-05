@@ -88,7 +88,7 @@ const getMovie = id => dispatch => movieService.getMovie(id)
         id: data.id,
         overview: data.overview,
         imdbId: data.imdb_id,
-        image: data.backdrop_path,
+        image: movieService.getImageUrl(data.backdrop_path),
       },
     });
 
