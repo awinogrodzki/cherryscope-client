@@ -17,29 +17,37 @@ class Modal extends React.Component {
   }
 
   componentWillEnter(callback) {
-    TweenMax.set(
-      this.modalContentWrapper,
-      { opacity: 0 }
-    );
+    if (!this.props.animateFromElement) {
+      const initialCoords = { x: 0, y: 100 };
 
-    this.animateModalWrapper(
+      this.animateModalWindowEnter(initialCoords, callback);
+      return;
+    }
+
+    this.setModalContentWrapperOpacity(0);
+    this.animateModalWrapperSize(
       this.getInitialSize(),
       this.getFinalSize(),
-      () => this.animateModalContentWrapperEnter()
+      () => this.animateModalContentWrapperOpacity(1)
     );
-    this.animateModalWindowEnter(callback);
+    this.animateModalWindowEnter(this.getInitialCoords(), callback);
   }
 
   componentWillLeave(callback) {
-    this.animateModalContentWrapperLeave(() => {
-      this.animateModalWrapper(this.getFinalSize(), this.getInitialSize());
-      this.animateModalWindowLeave(callback);
+    if (!this.props.animateFromElement) {
+      const finalCoords = { x: 0, y: -100 };
+
+      this.animateModalWindowLeave(finalCoords, callback);
+      return;
+    }
+
+    this.animateModalContentWrapperOpacity(0, () => {
+      this.animateModalWrapperSize(this.getFinalSize(), this.getInitialSize());
+      this.animateModalWindowLeave(this.getInitialCoords(), callback);
     });
   }
 
-  animateModalWindowEnter(callback) {
-    const { x, y } = this.getInitialCoords();
-
+  animateModalWindowEnter({ x, y }, callback) {
     TweenMax.fromTo(
       this.modalWindow,
       ANIMATION_TIME,
@@ -48,11 +56,7 @@ class Modal extends React.Component {
     );
   }
 
-  animateModalWrapper(initialSize, finalSize, callback) {
-    if (!this.props.animateFromElement) {
-      return;
-    }
-
+  animateModalWrapperSize(initialSize, finalSize, callback) {
     TweenMax.set(
       this.modalWindow,
       { ...this.getFinalSize() }
@@ -75,24 +79,18 @@ class Modal extends React.Component {
     );
   }
 
-  animateModalContentWrapperEnter() {
+  animateModalContentWrapperOpacity(opacity, callback) {
     TweenMax.to(
       this.modalContentWrapper,
       ANIMATION_TIME,
-      { opacity: 1 }
+      { opacity, onComplete: callback }
     );
   }
 
-  animateModalContentWrapperLeave(callback) {
-    if (!this.props.animateFromElement) {
-      callback();
-      return;
-    }
-
-    TweenMax.to(
+  setModalContentWrapperOpacity(opacity) {
+    TweenMax.set(
       this.modalContentWrapper,
-      ANIMATION_TIME,
-      { opacity: 0, onComplete: callback }
+      { opacity }
     );
   }
 
@@ -103,25 +101,18 @@ class Modal extends React.Component {
     );
   }
 
-  animateModalWindowLeave(callback) {
-    const { x, y } = this.getInitialCoords();
-
+  animateModalWindowLeave({ x, y }, callback) {
     TweenMax.fromTo(
       this.modalWindow,
       ANIMATION_TIME,
-      { x: 0, y: 0, opacity: 1, scale: 1 },
-      { x, y, opacity: 0, scale: 1, ease: Power2.easeOut, onComplete: callback }
+      { x: 0, y: 0, opacity: 1 },
+      { x, y, opacity: 0, ease: Power2.easeOut, onComplete: callback }
     );
   }
 
   getInitialCoords() {
-    if (!this.props.animateFromElement) {
-      return { x: 0, y: 100 };
-    }
-
     const elementCoords = this.getElementCoords(this.props.animateFromElement);
     const modalWindowCoords = this.getElementCoords(this.modalWindow);
-
 
     return {
       x: elementCoords.x - modalWindowCoords.x,
@@ -139,10 +130,6 @@ class Modal extends React.Component {
   }
 
   getInitialSize() {
-    if (!this.props.animateFromElement) {
-      return {};
-    }
-
     const { width, height } = this.props.animateFromElement.getBoundingClientRect();
 
     return {
@@ -152,10 +139,6 @@ class Modal extends React.Component {
   }
 
   getFinalSize() {
-    if (!this.props.animateFromElement) {
-      return {};
-    }
-
     const { width, height } = this.modalWindow.getBoundingClientRect();
 
     return {
