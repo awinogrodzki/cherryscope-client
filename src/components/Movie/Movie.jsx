@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Loader from 'halogen/BounceLoader';
 import { t } from 'services/translate';
 import styles from './Movie.css';
 
@@ -46,6 +47,7 @@ class Movie extends React.Component {
         <div
           className={styles.wrapper}
         >
+          { this.props.isLoading && <Loader color="#fff" size="25px" className={styles.loader} /> }
           <div
             className={styles.image}
             onClick={() => this.onClick()}
@@ -81,6 +83,7 @@ Movie.propTypes = {
   releaseDate: PropTypes.instanceOf(Date),
   className: PropTypes.string,
   onClick: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 Movie.defaultProps = {
@@ -91,6 +94,7 @@ Movie.defaultProps = {
   voteCount: null,
   releaseDate: null,
   className: null,
+  isLoading: false,
   onClick: () => {},
 };
 

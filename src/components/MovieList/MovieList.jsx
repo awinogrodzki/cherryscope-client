@@ -10,6 +10,7 @@ class MovieList extends React.Component {
     return this.props.movies.map(item => (
       <Movie
         className={styles.movie}
+        isLoading={item.id === this.props.loadingMovieId}
         key={item.id}
         title={item.title}
         originalTitle={item.original_title}
@@ -53,12 +54,14 @@ class MovieList extends React.Component {
 MovieList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
+  loadingMovieId: PropTypes.number,
   onMovieSelect: PropTypes.func,
 };
 
 MovieList.defaultProps = {
   movies: [],
   isLoading: false,
+  loadingMovieId: null,
   onMovieSelect: () => {},
 };
 

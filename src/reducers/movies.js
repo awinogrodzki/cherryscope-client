@@ -18,7 +18,11 @@ const initialState = {
   genres: [],
   keywords: [],
   people: [],
-  movieDetails: {},
+  movieDetails: {
+    id: null,
+    imdbId: null,
+    overview: null,
+  },
 };
 
 export default function moviesReducer(state = initialState, action) {

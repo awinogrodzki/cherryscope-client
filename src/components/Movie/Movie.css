@@ -132,3 +132,12 @@
 .dataItem {
   margin-bottom: 5px;
 }
+
+.loader {
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: color(var(--color-black) alpha(50%));
+}

@@ -7,6 +7,6 @@ module.exports = {
       path: [ path.resolve(__dirname + "/src") ],
       addDependencyTo: webpack,
     }),
-    require("postcss-cssnext")
-  ]
-}
+    require("postcss-cssnext"),
+  ],
+};
