@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { discoverMovies } from 'actions';
+import { discoverMovies, getMovie } from 'actions';
 import { t } from 'services/translate';
 import modalService from 'services/modal';
-import movieService from 'services/movie';
 import MovieSearch from 'components/MovieSearch';
 import MovieList from 'components/MovieList';
 import MovieDetails from 'components/MovieDetails';
@@ -22,7 +21,8 @@ class Movies extends React.PureComponent {
       keywords: [],
       votes: [],
       sortBy: null,
-      isLoading: false,
+      isListLoading: false,
+      isMovieLoading: false,
       page: 1,
     };
   }
@@ -32,11 +32,11 @@ class Movies extends React.PureComponent {
   }
 
   discoverMovies(filters = {}, append = false) {
-    this.setState({ isLoading: true });
+    this.setState({ isListLoading: true });
 
     this.props.discoverMovies(filters, append)
-      .then(() => this.setState({ isLoading: false }))
-      .catch(() => this.setState({ isLoading: false }));
+      .then(() => this.setState({ isListLoading: false }))
+      .catch(() => this.setState({ isListLoading: false }));
   }
 
   mapFilters() {
@@ -128,15 +128,31 @@ class Movies extends React.PureComponent {
   }
 
   selectMovie(id, element) {
-    movieService.getMovie(id).then((response) => {
-      modalService.createModal(() => (
-        <MovieDetails
-          overview={response.overview}
-          imdbUrl={response.imdb_id && `http://www.imdb.com/title/${response.imdb_id}`}
-        />
-      ), {
-        animateFromElement: element,
-      });
+    if (this.state.isMovieLoading) {
+      return;
+    }
+
+    this.setState({ isMovieLoading: true }, () => {
+      this.props.getMovie(id).then(() => {
+        modalService.createModal(() => {
+          const {
+            overview,
+            imdbId,
+          } = this.props.movieDetails;
+
+          return (
+            <MovieDetails
+              overview={overview}
+              imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
+            />
+          );
+        }, {
+          animateFromElement: element,
+        });
+
+        this.setState({ isMovieLoading: false });
+      })
+      .catch(() => this.setState({ isMovieLoading: false }));
     });
   }
 
@@ -148,7 +164,7 @@ class Movies extends React.PureComponent {
         />
         <MovieList
           movies={this.props.movies}
-          isLoading={this.state.isLoading}
+          isLoading={this.state.isListLoading}
           onMovieSelect={(id, element) => this.selectMovie(id, element)}
         />
         {
@@ -166,15 +182,26 @@ class Movies extends React.PureComponent {
 
 const mapDispatchToProps = {
   discoverMovies: (filters, append) => discoverMovies(filters, append),
+  getMovie: id => getMovie(id),
 };
 
 const mapStateToProps = state => ({
   movies: state.movies.items,
   pageCount: state.movies.pageCount,
+  movieDetails: state.movies.movieDetails,
 });
 
 Movies.propTypes = {
+  movieDetails: PropTypes.shape({
+    id: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    imdbId: PropTypes.string,
+    overview: PropTypes.string,
+  }).isRequired,
   discoverMovies: PropTypes.func.isRequired,
+  getMovie: PropTypes.func.isRequired,
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
   pageCount: PropTypes.number,
 };

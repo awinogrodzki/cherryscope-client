@@ -9,6 +9,7 @@ import {
   CLEAR_PEOPLE,
   SEARCH_COMPANIES,
   CLEAR_COMPANIES,
+  GET_MOVIE,
 } from './types';
 
 const discoverMovies = (filters, append = false) =>
@@ -79,6 +80,20 @@ const clearCompanies = () => ({
   type: CLEAR_COMPANIES,
 });
 
+const getMovie = id => dispatch => movieService.getMovie(id)
+  .then((data) => {
+    dispatch({
+      type: GET_MOVIE,
+      details: {
+        id: data.id,
+        overview: data.overview,
+        imdbId: data.imdb_id,
+      },
+    });
+
+    return data;
+  });
+
 module.exports = {
   discoverMovies,
   getGenres,
@@ -88,4 +103,5 @@ module.exports = {
   clearPeople,
   searchCompanies,
   clearCompanies,
+  getMovie,
 };

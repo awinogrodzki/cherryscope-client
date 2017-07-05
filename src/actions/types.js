@@ -6,3 +6,4 @@ export const SEARCH_PEOPLE = 'SEARCH_PEOPLE';
 export const CLEAR_PEOPLE = 'CLEAR_PEOPLE';
 export const SEARCH_COMPANIES = 'SEARCH_COMPANIES';
 export const CLEAR_COMPANIES = 'CLEAR_COMPANIES';
+export const GET_MOVIE = 'GET_MOVIE';

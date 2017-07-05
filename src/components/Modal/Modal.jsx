@@ -5,7 +5,8 @@ import Power2 from 'gsap/EasePack';
 import ModalWindow from './ModalWindow';
 import styles from './Modal.css';
 
-const ANIMATION_TIME = 0.5;
+const WINDOW_ANIMATION_TIME = 0.5;
+const CONTENT_ANIMATION_TIME = 0.15;
 
 class Modal extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class Modal extends React.Component {
   animateModalWindowEnter({ x, y }, callback) {
     TweenMax.fromTo(
       this.modalWindow,
-      ANIMATION_TIME,
+      WINDOW_ANIMATION_TIME,
       { x, y, opacity: 0 },
       { x: 0, y: 0, opacity: 1, ease: Power2.easeOut, onComplete: callback }
     );
@@ -64,7 +65,7 @@ class Modal extends React.Component {
 
     TweenMax.fromTo(
       this.modalWrapper,
-      ANIMATION_TIME,
+      WINDOW_ANIMATION_TIME,
       { ...initialSize },
       { ...finalSize,
         clearProps: 'all',
@@ -82,7 +83,7 @@ class Modal extends React.Component {
   animateModalContentWrapperOpacity(opacity, callback) {
     TweenMax.to(
       this.modalContentWrapper,
-      ANIMATION_TIME,
+      CONTENT_ANIMATION_TIME,
       { opacity, onComplete: callback }
     );
   }
@@ -104,7 +105,7 @@ class Modal extends React.Component {
   animateModalWindowLeave({ x, y }, callback) {
     TweenMax.fromTo(
       this.modalWindow,
-      ANIMATION_TIME,
+      WINDOW_ANIMATION_TIME,
       { x: 0, y: 0, opacity: 1 },
       { x, y, opacity: 0, ease: Power2.easeOut, onComplete: callback }
     );

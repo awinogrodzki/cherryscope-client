@@ -9,6 +9,7 @@ import {
   clearPeople,
   searchCompanies,
   clearCompanies,
+  getMovie,
 } from './movies';
 import {
   DISCOVER_MOVIES,
@@ -19,6 +20,7 @@ import {
   CLEAR_PEOPLE,
   SEARCH_COMPANIES,
   CLEAR_COMPANIES,
+  GET_MOVIE,
 } from './types';
 
 const middlewares = [thunk];
@@ -42,6 +44,11 @@ jest.mock('services/movie', () => ({
   }),
   searchCompanies: () => Promise.resolve({
     results: [1, 2, 3],
+  }),
+  getMovie: id => Promise.resolve({
+    id,
+    imdb_id: 54321,
+    overview: 'Lorem ipsum',
   }),
 }));
 
@@ -178,5 +185,24 @@ describe('movies actions', () => {
 
     store.dispatch(clearCompanies());
     expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('should be able to get movie details', () => {
+    const expectedActions = [
+      {
+        type: GET_MOVIE,
+        details: {
+          id: 12345,
+          imdbId: 54321,
+          overview: 'Lorem ipsum',
+        },
+      },
+    ];
+    const store = mockStore({ movies: {} });
+
+    return store.dispatch(getMovie(12345))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 });

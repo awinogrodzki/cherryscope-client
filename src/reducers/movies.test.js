@@ -8,6 +8,7 @@ import {
   CLEAR_PEOPLE,
   SEARCH_COMPANIES,
   CLEAR_COMPANIES,
+  GET_MOVIE,
 } from '../actions/types';
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   genres: [],
   keywords: [],
   companies: [],
+  movieDetails: {},
 };
 
 describe('movies reducer', () => {
@@ -127,5 +129,16 @@ describe('movies reducer', () => {
     expect(reducer(initialStateWithCompanies, action)).toEqual({
       companies: [],
     });
+  });
+
+  it('should be able to get movie details', () => {
+    const action = {
+      type: GET_MOVIE,
+      details: { id: 12345 },
+    };
+
+    expect(reducer(initialState, action)).toEqual(expect.objectContaining({
+      movieDetails: { id: 12345 },
+    }));
   });
 });
