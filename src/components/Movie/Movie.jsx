@@ -49,6 +49,7 @@ class Movie extends React.Component {
         >
           { this.props.isLoading && <Loader className={styles.loader} /> }
           <div
+            data-test="Movie.imageContainer"
             className={styles.image}
             onClick={() => this.onClick()}
             role="button"
