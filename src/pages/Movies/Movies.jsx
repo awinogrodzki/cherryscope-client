@@ -47,26 +47,12 @@ class Movies extends React.PureComponent {
       ...this.mapPeople(filters.people),
       ...this.mapKeywords(filters.keywords),
       ...this.mapGenres(filters.genres),
+      ...this.mapDateFilters(filters.dates),
+      ...this.mapVoteFilters(filters.votes),
       sort_by: filters.sortBy,
       with_original_language: filters.language && filters.language.value || '',
       page: this.state.page,
     };
-
-    filters.dates && filters.dates.forEach((date) => {
-      if (!date || !date.value || !date.date) {
-        return;
-      }
-
-      mappedFilters[date.value] = date.date;
-    });
-
-    filters.votes && filters.votes.forEach((vote) => {
-      if (!vote || !vote.value || !vote.data) {
-        return;
-      }
-
-      mappedFilters[vote.value] = vote.data;
-    });
 
     return mappedFilters;
   }
@@ -117,6 +103,34 @@ class Movies extends React.PureComponent {
         .map(genre => genre.value)
         .join(','),
     };
+  }
+
+  mapDateFilters(dates = []) {
+    const mappedFilters = {};
+
+    dates.forEach((date) => {
+      if (!date || !date.value || !date.date) {
+        return;
+      }
+
+      mappedFilters[date.value] = date.date;
+    });
+
+    return mappedFilters;
+  }
+
+  mapVoteFilters(votes = []) {
+    const mappedFilters = {};
+
+    votes.forEach((vote) => {
+      if (!vote || !vote.value || !vote.data) {
+        return;
+      }
+
+      mappedFilters[vote.value] = vote.data;
+    });
+
+    return mappedFilters;
   }
 
   onMovieSearchChange(filters) {
