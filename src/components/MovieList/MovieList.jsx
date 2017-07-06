@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import movieService from 'services/movie';
 import Movie from 'components/Movie';
+import Loader from 'components/Loader';
 import styles from './MovieList.css';
 
 class MovieList extends React.Component {
@@ -30,7 +31,7 @@ class MovieList extends React.Component {
 
     return (
       <div className={styles.loading}>
-        Loading...
+        <Loader className={styles.loader} />
       </div>
     );
   }

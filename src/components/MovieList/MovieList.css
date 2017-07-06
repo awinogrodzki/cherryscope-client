@@ -17,13 +17,20 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -40px;
   z-index: 1;
   background-color: color(var(--color-white) alpha(50%));
   padding: var(--default-padding);
   display: flex;
   justify-content: center;
   align-items: flex-end;
+}
+
+.loader {
+  & svg path,
+  & svg rect {
+    fill: #000;
+  }
 }
 
 .movie {
