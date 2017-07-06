@@ -2,6 +2,7 @@
 
 .container {
   margin: var(--large-margin) 0 var(--large-margin);
+  padding-bottom: 40px;
   position: relative;
 }
 
