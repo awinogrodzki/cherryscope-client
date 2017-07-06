@@ -47,7 +47,7 @@
   right: 0;
   z-index: 2;
   max-height: 360px;
-  box-shadow: 0 10px 30px 0px color(var(--color-black) alpha(25%));
+  box-shadow: 0 0 40px 0 color(var(--color-black) alpha(33%));
 }
 
 :global @keyframes borderAnimation {
@@ -60,6 +60,6 @@
   position: relative;
   z-index: 1;
   border: 1px solid color(var(--color-black) alpha(25%));
-  box-shadow: 0 0 8px -2px var(--color-black);
+  box-shadow: 0 0 16 -2px var(--color-black);
   animation: 1s 'borderAnimation' ease infinite alternate;
 }
