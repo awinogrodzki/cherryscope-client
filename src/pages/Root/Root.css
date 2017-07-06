@@ -2,4 +2,8 @@
 
 .container {
   padding: 0 var(--large-padding);
+
+  @media (--only-tablet) {
+    padding: 0 var(--default-padding);
+  }
 }
