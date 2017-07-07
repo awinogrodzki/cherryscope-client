@@ -78,6 +78,7 @@
 .content {
   padding: var(--default-padding) 0;
   transition: padding var(--default-animation);
+  transform: translate3d(0, 0, 0);
 }
 
 .data {
