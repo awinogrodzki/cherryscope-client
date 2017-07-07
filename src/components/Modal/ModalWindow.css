@@ -32,5 +32,5 @@
   max-width: 100%;
   position: relative;
   background-color: var(--color-white);
-  box-shadow: 0 0 40px 0 color(var(--color-black) alpha(33%));
+  box-shadow: var(--default-box-shadow);
 }

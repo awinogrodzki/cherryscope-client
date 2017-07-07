@@ -1,5 +1,7 @@
 .container {
   font-size: 0;
+  position: relative;
+  z-index: 1;
 
   & svg {
     max-width: 100%;

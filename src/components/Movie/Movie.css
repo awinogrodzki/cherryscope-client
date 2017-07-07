@@ -2,7 +2,7 @@
 
 :root {
   --details-width: 520px;
-  --box-shadow: 0 0 40px 0 color(var(--color-black) alpha(33%));
+  --box-shadow: var(--default-box-shadow);
 }
 
 .container {
@@ -42,6 +42,12 @@
   cursor: pointer;
   width: 100%;
   font-size: 0;
+  transition: transform var(--default-animation), box-shadow var(--default-animation);
+
+  &:hover {
+    box-shadow: var(--default-box-shadow);
+    transform: scale(1.05);
+  }
 
   & > img {
     width: 100%;
