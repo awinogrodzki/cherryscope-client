@@ -189,12 +189,12 @@ class Select extends React.Component {
     });
   }
 
-  setExpandableContainer(ref) {
-    if (!ref) {
+  setExpandableContainer(element) {
+    if (!element) {
       return;
     }
 
-    this.expandableContainer = ref;
+    this.expandableContainer = element;
   }
 
   /* eslint-disable react/no-array-index-key */
@@ -234,7 +234,7 @@ class Select extends React.Component {
           className={styles.expandableContainer}
         >
           <div
-            ref={ref => this.setExpandableContainer(ref)}
+            ref={element => this.setExpandableContainer(element)}
             data-test="Select.expandable"
             className={styles.expandable}
             onMouseDown={() => this.ignoreBlurOnce()}
@@ -347,14 +347,14 @@ class Select extends React.Component {
     return optionIndex + optionCount;
   }
 
-  handleOptionRef(ref, index) {
-    if (index === this.state.activeOptionIndex && ref !== null) {
-      this.setActiveOption(ref);
+  handleOptionElement(element, index) {
+    if (index === this.state.activeOptionIndex && element !== null) {
+      this.setActiveOption(element);
     }
   }
 
-  setActiveOption(ref) {
-    this.activeOption = ref;
+  setActiveOption(element) {
+    this.activeOption = element;
   }
 
   updateExpandableContainerScroll() {
@@ -410,7 +410,9 @@ class Select extends React.Component {
         labelClass={this.props.getLabelClass(group)}
         getOptionIndex={optionIndex => this.getOptionIndex(optionIndex, index)}
         getOptionClass={optionKey => this.getOptionClass(optionKey)}
-        getOptionRef={(ref, refIndex) => this.handleOptionRef(ref, refIndex)}
+        getOptionElement={(element, elementIndex) => (
+          this.handleOptionElement(element, elementIndex)
+        )}
         label={group.label}
         options={filteredOptions}
         onOptionClick={value => this.onOptionClick(value)}
@@ -433,7 +435,7 @@ Select.propTypes = {
     index: PropTypes.number,
     labelClass: PropTypes.string,
     getOptionClass: PropTypes.func,
-    getOptionRef: PropTypes.func,
+    getOptionElement: PropTypes.func,
     label: PropTypes.string,
     onOptionClick: PropTypes.func,
     filterByInput: PropTypes.bool,

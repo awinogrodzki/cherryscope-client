@@ -34,11 +34,11 @@ describe('Movie', () => {
     expect(loader).toHaveLength(0);
   });
 
-  it('should pass container on image click', () => {
+  it('should pass image element on image click', () => {
     const onClickSpy = jest.fn();
     const container = 'testContainer';
     const wrapper = shallow(<Movie onClick={onClickSpy} />);
-    wrapper.instance().setContainerRef(container);
+    wrapper.instance().imageContainer = container;
     wrapper.find('[data-test="Movie.imageContainer"]').simulate('click');
 
     expect(onClickSpy).toHaveBeenCalledWith(container);

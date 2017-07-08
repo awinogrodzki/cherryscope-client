@@ -11,6 +11,10 @@
   font-size: 14px;
   background-color: var(--color-white);
   display: flex;
+
+  @media (--only-mobile) {
+    flex-direction: column;
+  }
 }
 
 .wrapper {
@@ -26,7 +30,7 @@
 }
 
 .row {
-  margin-bottom: var(--small-margin);
+  margin-bottom: var(--default-margin);
 }
 
 .image {
@@ -35,11 +39,33 @@
   /* animation fix in chrome */
   transform: translate3d(0, 0, 0);
 
+  @media (--only-mobile) {
+    width: 100%;
+    height: 240px;
+  }
+
   & > img {
     object-fit:  cover;
-    object-position: 50% 50%;
+    object-position: 50% 15%;
     width: 100%;
     max-width: 100%;
     height: 100%;
   }
+}
+
+.titleContainer {
+  margin-top: var(--small-margin);
+  margin-bottom: var(--default-margin);
+}
+
+.originalTitle {
+  margin-bottom: 0;
+  font-weight: 700;
+}
+
+.title {
+  margin-top: var(--small-margin);
+  display: block;
+  font-style: italic;
+  font-weight: 500;
 }

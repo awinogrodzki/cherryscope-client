@@ -50,6 +50,8 @@ jest.mock('services/movie', () => ({
     imdb_id: 54321,
     overview: 'Lorem ipsum',
     poster_path: 'test_image_url',
+    original_title: 'Original title',
+    title: 'Title',
   }),
   getImageUrl: image => image,
 }));
@@ -198,6 +200,8 @@ describe('movies actions', () => {
           imdbId: 54321,
           overview: 'Lorem ipsum',
           image: 'test_image_url',
+          originalTitle: 'Original title',
+          title: 'Title',
         },
       },
     ];

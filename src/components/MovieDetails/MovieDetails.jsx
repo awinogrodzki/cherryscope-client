@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import IMDBLogo from 'resources/images/imdb_logo.svg';
+import { MovieDetailsPropTypes } from './types';
 import styles from './MovieDetails.css';
 
 const renderLoading = (isLoading) => {
@@ -16,12 +16,14 @@ const renderLoading = (isLoading) => {
 };
 
 const MovieDetails = ({
+  originalTitle,
+  title,
   imdbUrl,
   overview,
   isLoading,
   image,
 }) => (
-  <div className={styles.container}>
+  <article className={styles.container}>
     { image &&
       <div className={styles.image}>
         <img src={image} />
@@ -29,6 +31,10 @@ const MovieDetails = ({
     }
     <div className={styles.wrapper}>
       { renderLoading(isLoading) }
+      <div className={styles.titleContainer}>
+        <h2 className={styles.originalTitle}>{originalTitle}</h2>
+        { title !== originalTitle && <span className={styles.title}>{title}</span> }
+      </div>
       <div className={styles.row}>
         {overview}
       </div>
@@ -39,17 +45,14 @@ const MovieDetails = ({
         </a>
       }
     </div>
-  </div>
+  </article>
 );
 
-MovieDetails.propTypes = {
-  imdbUrl: PropTypes.string,
-  overview: PropTypes.string,
-  isLoading: PropTypes.bool,
-  image: PropTypes.string,
-};
+MovieDetails.propTypes = MovieDetailsPropTypes;
 
 MovieDetails.defaultProps = {
+  originalTitle: null,
+  title: null,
   imdbUrl: null,
   overview: null,
   isLoading: false,

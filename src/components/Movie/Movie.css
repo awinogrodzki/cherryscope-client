@@ -43,10 +43,16 @@
   width: 100%;
   font-size: 0;
   transition: transform var(--default-animation), box-shadow var(--default-animation);
+  box-shadow: none;
 
   &:hover {
     box-shadow: var(--default-box-shadow);
-    transform: scale(1.05);
+    transform: scale(1.01);
+
+    &:active {
+      transform: scale(1);
+      box-shadow: none;
+    }
   }
 
   & > img {
@@ -73,6 +79,7 @@
 .originalTitle {
   font-size: 16px;
   margin-bottom: 1em;
+  font-weight: 700;
 }
 
 .content {

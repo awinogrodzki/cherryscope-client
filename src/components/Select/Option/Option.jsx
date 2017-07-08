@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './Option.css';
 
-const Option = ({ index, option, onClick, getClass, getRef }) => (
+const Option = ({ index, option, onClick, getClass, getElement }) => (
   <div
-    ref={ref => ref && getRef(ref, index)}
+    ref={element => element && getElement(element, index)}
     className={classNames(styles.container, getClass(index))}
     onMouseDown={() => onClick(option)}
     role={'button'}
@@ -16,7 +16,7 @@ const Option = ({ index, option, onClick, getClass, getRef }) => (
 
 Option.propTypes = {
   index: PropTypes.number,
-  getRef: PropTypes.func,
+  getElement: PropTypes.func,
   getClass: PropTypes.func,
   onClick: PropTypes.func,
   option: PropTypes.shape({
@@ -28,7 +28,7 @@ Option.propTypes = {
 
 Option.defaultProps = {
   index: 0,
-  getRef: () => {},
+  getElement: () => {},
   getClass: () => {},
   onClick: () => {},
 };

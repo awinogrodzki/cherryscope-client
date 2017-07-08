@@ -9,15 +9,11 @@ class Movie extends React.Component {
   constructor(props) {
     super(props);
 
-    this.containerRef = null;
+    this.imageContainer = null;
   }
 
   onClick() {
-    this.containerRef && this.props.onClick(this.containerRef);
-  }
-
-  setContainerRef(ref) {
-    this.containerRef = ref;
+    this.imageContainer && this.props.onClick(this.imageContainer);
   }
 
   renderImage(url) {
@@ -38,7 +34,6 @@ class Movie extends React.Component {
   render() {
     return (
       <div
-        ref={ref => this.setContainerRef(ref)}
         className={classNames({
           [styles.container]: true,
           [this.props.className]: !!this.props.className,
@@ -48,6 +43,7 @@ class Movie extends React.Component {
           className={styles.wrapper}
         >
           <div
+            ref={element => this.imageContainer = element}
             data-test="Movie.imageContainer"
             className={styles.image}
             onClick={() => this.onClick()}

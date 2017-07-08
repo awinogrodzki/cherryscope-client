@@ -6,7 +6,7 @@ import { t } from 'services/translate';
 import modalService from 'services/modal';
 import MovieSearch from 'components/MovieSearch';
 import MovieList from 'components/MovieList';
-import MovieDetails from 'components/MovieDetails';
+import MovieDetails, { MovieDetailsPropTypes } from 'components/MovieDetails';
 import LoadMore from 'components/LoadMore';
 import styles from './Movies.css';
 
@@ -151,6 +151,8 @@ class Movies extends React.PureComponent {
       this.props.getMovie(id).then(() => {
         modalService.createModal(() => {
           const {
+            originalTitle,
+            title,
             overview,
             imdbId,
             image,
@@ -158,6 +160,8 @@ class Movies extends React.PureComponent {
 
           return (
             <MovieDetails
+              originalTitle={originalTitle}
+              title={title}
               overview={overview}
               imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
               image={image}
@@ -210,15 +214,7 @@ const mapStateToProps = state => ({
 });
 
 Movies.propTypes = {
-  movieDetails: PropTypes.shape({
-    id: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    imdbId: PropTypes.string,
-    overview: PropTypes.string,
-    image: PropTypes.string,
-  }).isRequired,
+  movieDetails: PropTypes.shape(MovieDetailsPropTypes).isRequired,
   discoverMovies: PropTypes.func.isRequired,
   getMovie: PropTypes.func.isRequired,
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
