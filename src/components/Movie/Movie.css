@@ -79,7 +79,7 @@
 .originalTitle {
   font-size: 16px;
   margin-bottom: 1em;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .content {
@@ -100,6 +100,10 @@
 
 .dataItem {
   margin-bottom: 5px;
+
+  & strong {
+    font-weight: 400;
+  }
 }
 
 .loader {
