@@ -192,6 +192,7 @@ class Movies extends React.PureComponent {
         {
           this.state.page < this.props.pageCount
           && <LoadMore
+            isLoading={this.state.isListLoading}
             label={t('movies.loadMore')}
             page={this.state.page}
             onChange={page => this.onLoadMoreChange(page)}

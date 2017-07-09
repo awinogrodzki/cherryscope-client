@@ -11,6 +11,7 @@ export default {
     inputLabel: 'Enter genre, name, language, date or a number. Search by anything.',
   },
   movies: {
+    loading: 'Loading...',
     loadMore: 'Load more movies',
     dates: 'Dates',
     votes: 'Votes',
