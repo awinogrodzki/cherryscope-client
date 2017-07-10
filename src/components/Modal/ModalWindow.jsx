@@ -21,7 +21,7 @@ class ModalWindow extends React.Component {
           <div
             ref={this.props.getContentWrapper}
           >
-            <button className={styles.closeButton} onClick={() => this.props.onClose()}>×</button>
+            <button className={styles.closeButton} onClick={() => this.props.onClose()} />
             { this.props.children }
           </div>
         </div>

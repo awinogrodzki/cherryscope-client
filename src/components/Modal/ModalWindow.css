@@ -15,14 +15,24 @@
   color: var(--color-black);
   background: none;
   font-size: 14px;
-  line-height: 1em;
   font-weight: 300;
   background-color: transparent;
   outline: none;
   cursor: pointer;
-  padding: 0px 3px 1px;
   margin: 0;
   z-index: 1;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 0;
+  padding: 0;
+  display: inline-block;
+
+  &::before {
+    content: '×';
+    line-height: 0;
+    vertical-align: 2px
+  }
 
   &:hover {
     background-color: color(var(--color-black) alpha(20%));
