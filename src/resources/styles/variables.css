@@ -29,7 +29,7 @@
 
   --default-box-shadow: 0 0 40px 0 color(var(--color-black) alpha(33%));
 
-  --default-font-family: 'Source Sans Pro', sans-serif;
+  --default-font-family: 'Palanquin', sans-serif;
 
   @custom-media --only-small-desktop (max-width: 1280px);
   @custom-media --only-tablet (max-width: 1024px);

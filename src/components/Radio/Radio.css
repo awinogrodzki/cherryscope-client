@@ -20,8 +20,8 @@
   color: var(--color-black);
   border-radius: none;
   background: color(var(--color-black) alpha(10%));
-  padding: 6px;
-  font-size: 12px;
+  padding: 3px 10px 5px;
+  font-size: 13px;
   margin: 0 5px 5px 0;
   cursor: pointer;
   border: none;
