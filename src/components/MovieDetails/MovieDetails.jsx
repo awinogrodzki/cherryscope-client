@@ -1,5 +1,6 @@
 import React from 'react';
 import IMDBLogo from 'resources/images/imdb_logo.svg';
+import { t } from 'services/translate';
 import { MovieDetailsPropTypes } from './types';
 import styles from './MovieDetails.css';
 
@@ -15,6 +16,17 @@ const renderLoading = (isLoading) => {
   );
 };
 
+const renderGenres = genres => (
+  <div className={styles.genresContainer}>
+    <h3 className={styles.rowTitle}>{t('movies.genres')}</h3>
+    { genres.map(genre => (
+      <div key={genre.id} className={styles.badge}>
+        <span>{genre.name}</span>
+      </div>
+    )) }
+  </div>
+);
+
 const MovieDetails = ({
   originalTitle,
   title,
@@ -22,6 +34,7 @@ const MovieDetails = ({
   overview,
   isLoading,
   image,
+  genres,
 }) => (
   <article className={styles.container}>
     { image &&
@@ -44,6 +57,9 @@ const MovieDetails = ({
           <IMDBLogo />
         </a>
       }
+      <div className={styles.row}>
+        {renderGenres(genres)}
+      </div>
     </div>
   </article>
 );
@@ -57,6 +73,7 @@ MovieDetails.defaultProps = {
   overview: null,
   isLoading: false,
   image: null,
+  genres: [],
 };
 
 export default MovieDetails;

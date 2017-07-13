@@ -91,6 +91,7 @@ const getMovie = id => dispatch => movieService.getMovie(id)
         image: movieService.getImageUrl(data.poster_path),
         originalTitle: data.original_title,
         title: data.title,
+        genres: data.genres,
       },
     });
 

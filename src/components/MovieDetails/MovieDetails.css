@@ -27,6 +27,7 @@
 .iconLink {
   display: inline-block;
   width: 48px;
+  margin-bottom: var(--default-margin);
 }
 
 .row {
@@ -68,4 +69,16 @@
   display: block;
   font-style: italic;
   font-weight: 500;
+}
+
+.rowTitle {
+  margin-bottom: 10px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 13px;
+  padding: 1px 8px 3px;
+  border: 1px solid var(--color-black);
+  margin: 0 5px 5px 0;
 }

@@ -7,4 +7,5 @@ export const MovieDetailsPropTypes = {
   overview: PropTypes.string,
   isLoading: PropTypes.bool,
   image: PropTypes.string,
+  genres: PropTypes.array,
 };

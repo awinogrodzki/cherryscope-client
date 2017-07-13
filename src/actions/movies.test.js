@@ -52,6 +52,7 @@ jest.mock('services/movie', () => ({
     poster_path: 'test_image_url',
     original_title: 'Original title',
     title: 'Title',
+    genres: [],
   }),
   getImageUrl: image => image,
 }));
@@ -202,6 +203,7 @@ describe('movies actions', () => {
           image: 'test_image_url',
           originalTitle: 'Original title',
           title: 'Title',
+          genres: [],
         },
       },
     ];

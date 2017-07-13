@@ -156,6 +156,7 @@ class Movies extends React.PureComponent {
             overview,
             imdbId,
             image,
+            genres,
           } = this.props.movieDetails;
 
           return (
@@ -165,6 +166,7 @@ class Movies extends React.PureComponent {
               overview={overview}
               imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
               image={image}
+              genres={genres}
             />
           );
         }, {

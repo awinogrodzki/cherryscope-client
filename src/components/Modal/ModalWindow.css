@@ -31,7 +31,7 @@
   &::before {
     content: '×';
     line-height: 0;
-    vertical-align: 3px
+    vertical-align: 2px
   }
 
   &:hover {

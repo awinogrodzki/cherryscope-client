@@ -23,6 +23,9 @@ const initialState = {
     imdbId: null,
     overview: null,
     image: null,
+    originalTitle: null,
+    title: null,
+    genres: [],
   },
 };
 
