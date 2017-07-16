@@ -24,6 +24,10 @@ class MovieSearch extends React.Component {
       isLoading: false,
     };
 
+    this.onChange = this.onChange.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onSortChange = this.onSortChange.bind(this);
+
     this.registerObservables();
   }
 
@@ -72,7 +76,7 @@ class MovieSearch extends React.Component {
       customComponent: (
         <MovieSort
           value={this.state.sortBy}
-          onChange={value => this.onSortChange(value)}
+          onChange={this.onSortChange}
         />
       ),
     };
@@ -367,16 +371,24 @@ class MovieSearch extends React.Component {
     };
   }
 
+  getLabelClass(group) {
+    return styles[`${group.id}Label`];
+  }
+
+  getValueClass(option) {
+    return styles[`${option.type}Value`];
+  }
+
   render() {
     return (
       <div className={styles.container}>
         <Select
           className={styles.select}
           values={this.state.selected}
-          onChange={values => this.onChange(values)}
-          getLabelClass={group => styles[`${group.id}Label`]}
-          getValueClass={option => styles[`${option.type}Value`]}
-          onInputChange={value => this.onInputChange(value)}
+          onChange={this.onChange}
+          getLabelClass={this.getLabelClass}
+          getValueClass={this.getValueClass}
+          onInputChange={this.onInputChange}
           optionGroups={this.getOptionGroups()}
           isLoading={this.state.isLoading}
         />
