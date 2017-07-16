@@ -14,6 +14,10 @@ class Movies extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.onLoadMoreChange = this.onLoadMoreChange.bind(this);
+    this.selectMovie = this.selectMovie.bind(this);
+    this.onMovieSearchChange = this.onMovieSearchChange.bind(this);
+
     this.state = {
       filters: {},
       dates: [],
@@ -183,13 +187,13 @@ class Movies extends React.PureComponent {
     return (
       <div className={styles.container}>
         <MovieSearch
-          onChange={data => this.onMovieSearchChange(data)}
+          onChange={this.onMovieSearchChange}
         />
         <MovieList
           movies={this.props.movies}
           isLoading={this.state.isListLoading}
           loadingMovieId={this.state.loadingMovieId}
-          onMovieSelect={(id, element) => this.selectMovie(id, element)}
+          onMovieSelect={this.selectMovie}
         />
         {
           this.state.page < this.props.pageCount
@@ -197,7 +201,7 @@ class Movies extends React.PureComponent {
             isLoading={this.state.isListLoading}
             label={t('movies.loadMore')}
             page={this.state.page}
-            onChange={page => this.onLoadMoreChange(page)}
+            onChange={this.onLoadMoreChange}
           />
         }
       </div>
