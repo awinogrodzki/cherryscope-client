@@ -392,7 +392,6 @@ class MovieSearch extends React.Component {
     return (
       <div className={styles.container}>
         <Select
-          isExpanded
           className={styles.select}
           values={this.state.selected}
           onChange={this.onChange}

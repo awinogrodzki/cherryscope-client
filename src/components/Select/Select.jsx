@@ -21,6 +21,33 @@ class Select extends React.Component {
       inputValue: props.inputValue,
       isExpanded: props.isExpanded,
     };
+
+    this.registerEventListeners();
+  }
+
+  registerEventListeners() {
+    window.addEventListener('resize', e => this.onWindowResize(e));
+  }
+
+  onWindowResize() {
+    this.adjustExpandableContainer();
+  }
+
+  adjustExpandableContainer() {
+    if (!this.expandableContainer || !window) {
+      return;
+    }
+
+    if (!this.state.isExpanded) {
+      this.expandableContainer.style.maxHeight = 0;
+      return;
+    }
+
+    const rect = this.expandableContainer.getBoundingClientRect();
+    const documentHeight = document.body.offsetHeight;
+    const targetHeight = documentHeight - rect.top - rect.left;
+
+    this.expandableContainer.style.maxHeight = `${targetHeight}px`;
   }
 
   handleValuesChange() {
@@ -195,6 +222,7 @@ class Select extends React.Component {
     }
 
     this.expandableContainer = element;
+    this.adjustExpandableContainer();
   }
 
   getInputPlaceholder() {
@@ -248,7 +276,10 @@ class Select extends React.Component {
           <div
             ref={element => this.setExpandableContainer(element)}
             data-test="Select.expandable"
-            className={styles.expandable}
+            className={classNames({
+              [styles.expandable]: true,
+              [styles.isExpanded]: this.state.isExpanded,
+            })}
             onMouseDown={() => this.ignoreBlurOnce()}
           >
             { !!this.state.isExpanded &&

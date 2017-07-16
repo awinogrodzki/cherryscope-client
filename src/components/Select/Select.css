@@ -54,8 +54,17 @@
   left: 0;
   right: 0;
   z-index: 2;
-  max-height: 360px;
+  max-height: 0px;
   box-shadow: var(--default-box-shadow);
+  transition:
+    max-height var(--default-animation),
+    opacity var(--default-animation);
+  opacity: 0;
+
+  &.isExpanded {
+    opacity: 1;
+    max-height: 360px;
+  }
 }
 
 :global @keyframes borderAnimation {
