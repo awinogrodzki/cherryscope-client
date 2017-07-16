@@ -1,6 +1,6 @@
 {
   "name": "tmdb-client",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "clean": "rm -rf dist",
-    "deploy": "npm run build && firebase deploy && npm run clean"
+    "deploy": "npm run build && firebase deploy && npm run clean",
+    "release": "standard-version"
   },
   "author": "",
   "license": "ISC",
@@ -36,6 +37,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "rxjs": "^5.4.0",
+    "standard-version": "^4.2.0",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
