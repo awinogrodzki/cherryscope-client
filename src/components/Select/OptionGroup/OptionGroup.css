@@ -3,7 +3,6 @@
 .labelContainer {
   padding: var(--small-padding);
   font-size: var(--large-font-size);
-  background: color(var(--color-black) alpha(5%));
 }
 
 .label {
