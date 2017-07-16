@@ -7,7 +7,7 @@
 
 .button {
   border: none;
-  border: 1px solid color(var(--color-black) alpha(100%));
+  border: 2px solid color(var(--color-black) alpha(100%));
   background: transparent;
   color: color(var(--color-black) alpha(100%));
   outline: none;
