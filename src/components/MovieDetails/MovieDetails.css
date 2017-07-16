@@ -8,7 +8,7 @@
   width: var(--width);
   max-width: 100%;
   line-height: 1.5em;
-  font-size: 14px;
+  font-size: var(--default-font-size);
   background-color: var(--color-white);
   display: flex;
 
