@@ -14,7 +14,7 @@
   border: 1px solid var(--color-black);
   color: var(--color-black);
   background: none;
-  font-size: 13px;
+  font-size: var(--default-font-size);
   font-weight: 300;
   background-color: transparent;
   outline: none;

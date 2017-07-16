@@ -78,7 +78,7 @@
 }
 
 .originalTitle {
-  font-size: 16px;
+  font-size: var(--default-font-size);
   margin-bottom: 1em;
   font-weight: 400;
 }

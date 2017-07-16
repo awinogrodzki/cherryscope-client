@@ -8,7 +8,7 @@ export default {
     releaseDate: 'Released on',
   },
   movieSearch: {
-    inputLabel: 'Enter genre, name, language, date or a number. Search by anything.',
+    inputLabel: 'Enter genre, name, language, date or a number. Search by anything...',
   },
   movies: {
     loading: 'Loading...',

@@ -1,15 +1,18 @@
 @import 'resources/styles/variables';
 
 .container {
-  font-size: 13px;
-  margin: 0 5px 5px 0;
-  padding: 3px 7px 3px 2px;
-  background-color: var(--value-color);
+  font-size: 18px;
+  margin: 0 10px 10px 0;
+  padding: 3px 12px 5px 7px;
+  border: 1px solid var(--value-color);
   white-space: nowrap;
+  vertical-align: middle;
+  display: inline-block;
+  border-radius: 20px;
 }
 
 .deleteButton {
-  padding: 2px 5px;
+  padding: 5px 10px 5px 5px;
   font-size: 1em;
   line-height: 1em;
   border: none;
@@ -21,6 +24,7 @@
 
   &::before {
     content: '×';
+    vertical-align: 1px;
   }
 }
 

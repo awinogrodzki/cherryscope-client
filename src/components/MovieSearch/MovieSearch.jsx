@@ -391,10 +391,8 @@ class MovieSearch extends React.Component {
           onInputChange={this.onInputChange}
           optionGroups={this.getOptionGroups()}
           isLoading={this.state.isLoading}
+          inputPlaceholder={t('movieSearch.inputLabel')}
         />
-        <div className={styles.inputLabel}>
-          <span>{t('movieSearch.inputLabel')}</span>
-        </div>
       </div>
     );
   }

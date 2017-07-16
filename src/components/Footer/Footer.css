@@ -1,7 +1,7 @@
 @import 'resources/styles/variables';
 
 .container {
-  font-size: 12px;
+  font-size: var(--default-font-size);
   border-top: 1px solid var(--color-black);
   padding: var(--default-padding);
   text-align: center;

@@ -227,7 +227,7 @@ class Select extends React.Component {
             onFocus={e => this.onInputFocus(e)}
             onBlur={e => this.onInputBlur(e)}
             className={styles.input}
-            placeholder={this.props.isLoading ? 'Loading...' : ''}
+            placeholder={this.props.isLoading ? 'Loading...' : this.props.inputPlaceholder}
           />
         </div>
         <div
@@ -424,6 +424,7 @@ class Select extends React.Component {
 
 Select.propTypes = {
   className: PropTypes.string,
+  inputPlaceholder: PropTypes.string,
   inputValue: PropTypes.string,
   onInputChange: PropTypes.func,
   values: PropTypes.arrayOf(PropTypes.object),
@@ -451,6 +452,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
   className: null,
+  inputPlaceholder: '',
   inputValue: '',
   onInputChange: () => {},
   values: [],

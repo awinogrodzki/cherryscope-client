@@ -1,7 +1,7 @@
 :root {
   --color-black: #424242;
   --color-white: #fff;
-  --color-grey: rgb(79, 89, 85);
+  --color-grey: rgb(128, 128, 128);
   --color-blue: #4E598C;
   --color-maroon: #A54558;
   --color-pink: #edb8c6;
@@ -11,10 +11,18 @@
   --color-turquoise: #C0F9EE;
   --color-purple: #C6CAED;
 
+  --color-genre: var(--color-pink);
+  --color-date: var(--color-turquoise);
+  --color-vote: var(--color-yellow);
+  --color-keyword: var(--color-mint);
+  --color-language: var(--color-orange);
+  --color-person: var(--color-blue);
+  --color-company: var(--color-purple);
+
   --value-color: var(--color-blue);
   --input-color: var(--color-blue);
   --input-text-color: var(--color-black);
-  --input-placeholder-color: var(--color-grey);
+  --input-placeholder-color: color(var(--color-grey) alpha(50%));
 
   --large-padding: 40px;
   --default-padding: 20px;
@@ -30,6 +38,9 @@
   --default-box-shadow: 0 0 40px 0 color(var(--color-black) alpha(33%));
 
   --default-font-family: 'Palanquin', sans-serif;
+  --default-font-size: 16px;
+  --large-font-size: 18px;
+  --medium-font-size: 14px;
 
   @custom-media --only-small-desktop (max-width: 1280px);
   @custom-media --only-tablet (max-width: 1024px);
