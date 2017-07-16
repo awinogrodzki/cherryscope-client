@@ -197,6 +197,18 @@ class Select extends React.Component {
     this.expandableContainer = element;
   }
 
+  getInputPlaceholder() {
+    if (this.props.isLoading) {
+      return 'Loading...';
+    }
+
+    if (this.state.values.length) {
+      return '';
+    }
+
+    return this.props.inputPlaceholder;
+  }
+
   /* eslint-disable react/no-array-index-key */
   render() {
     return (
@@ -227,7 +239,7 @@ class Select extends React.Component {
             onFocus={e => this.onInputFocus(e)}
             onBlur={e => this.onInputBlur(e)}
             className={styles.input}
-            placeholder={this.props.isLoading ? 'Loading...' : this.props.inputPlaceholder}
+            placeholder={this.getInputPlaceholder()}
           />
         </div>
         <div
