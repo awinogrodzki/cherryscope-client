@@ -4,21 +4,22 @@
   box-sizing: border-box;
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 10px 8px;
   font-size: var(--medium-font-size);
   margin: 0 1px 1px 0;
   cursor: pointer;
   box-sizing: border-box;
+  border: 2px solid transparent;
 
   &:nth-child(2n) {
-    background-color: color(var(--color-blue) alpha(2.5%));
+    background-color: color(var(--color-black) alpha(2.5%));
 
     &:hover {
-      background-color: color(var(--color-blue) alpha(5%));
+      background-color: color(var(--color-black) alpha(5%));
     }
   }
 
   &:hover {
-    background-color: color(var(--color-blue) alpha(5%));
+    background-color: color(var(--color-black) alpha(5%));
   }
 }

@@ -337,12 +337,12 @@ class Select extends React.Component {
     });
   }
 
-  getOptionClass(key) {
-    if (key === this.state.activeOptionIndex) {
-      return styles.activeOption;
-    }
-
-    return '';
+  getOptionClass(key, group) {
+    const isActive = key === this.state.activeOptionIndex;
+    return classNames({
+      [styles.activeOption]: isActive,
+      [this.props.getOptionClass(isActive, group)]: true,
+    });
   }
 
   getOptionIndex(optionIndex, groupIndex) {
@@ -421,7 +421,7 @@ class Select extends React.Component {
         index={index}
         labelClass={this.props.getLabelClass(group)}
         getOptionIndex={optionIndex => this.getOptionIndex(optionIndex, index)}
-        getOptionClass={optionKey => this.getOptionClass(optionKey)}
+        getOptionClass={optionKey => this.getOptionClass(optionKey, group)}
         getOptionElement={(element, elementIndex) => (
           this.handleOptionElement(element, elementIndex)
         )}
@@ -443,6 +443,7 @@ Select.propTypes = {
   onChange: PropTypes.func,
   getLabelClass: PropTypes.func,
   getValueClass: PropTypes.func,
+  getOptionClass: PropTypes.func,
   optionGroups: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.any,
     index: PropTypes.number,
@@ -471,6 +472,7 @@ Select.defaultProps = {
   onChange: () => {},
   getLabelClass: () => {},
   getValueClass: () => {},
+  getOptionClass: () => {},
   optionGroups: [],
   options: [],
   isLoading: false,

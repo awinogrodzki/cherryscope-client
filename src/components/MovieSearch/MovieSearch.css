@@ -135,3 +135,108 @@
     background-color: var(--color-company);
   }
 }
+
+.option {
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.genresOption.isActive {
+  border: 2px solid color(var(--color-genre) alpha(30%));
+  background-color: color(var(--color-genre) alpha(5%));
+  background-color: transparent;
+  animation-name: genresBorderAnimation;
+}
+
+@keyframes genresBorderAnimation {
+  to {
+    border-color: color(var(--color-genre) alpha(60%));
+    background-color: color(var(--color-genre) alpha(15%));
+  }
+}
+
+.votesOption.isActive {
+  border: 2px solid color(var(--color-vote) alpha(30%));
+  background-color: color(var(--color-vote) alpha(5%));
+  background-color: transparent;
+  animation-name: votesBorderAnimation;
+}
+
+@keyframes votesBorderAnimation {
+  to {
+    border-color: color(var(--color-vote) alpha(60%));
+    background-color: color(var(--color-vote) alpha(15%));
+  }
+}
+
+.datesOption.isActive {
+  border: 2px solid color(var(--color-date) alpha(30%));
+  background-color: color(var(--color-date) alpha(5%));
+  background-color: transparent;
+  animation-name: datesBorderAnimation;
+}
+
+@keyframes datesBorderAnimation {
+  to {
+    border-color: color(var(--color-date) alpha(60%));
+    background-color: color(var(--color-date) alpha(15%));
+  }
+}
+
+.keywordsOption.isActive {
+  border: 2px solid color(var(--color-keyword) alpha(30%));
+  background-color: color(var(--color-keyword) alpha(5%));
+  background-color: transparent;
+  animation-name: keywordsBorderAnimation;
+}
+
+@keyframes keywordsBorderAnimation {
+  to {
+    border-color: color(var(--color-keyword) alpha(60%));
+    background-color: color(var(--color-keyword) alpha(15%));
+  }
+}
+
+.languageOption.isActive {
+  border: 2px solid color(var(--color-language) alpha(30%));
+  background-color: color(var(--color-language) alpha(5%));
+  background-color: transparent;
+  animation-name: languageBorderAnimation;
+}
+
+@keyframes languageBorderAnimation {
+  to {
+    border-color: color(var(--color-language) alpha(60%));
+    background-color: color(var(--color-language) alpha(15%));
+  }
+}
+
+.peopleOption.isActive {
+  border: 2px solid color(var(--color-person) alpha(30%));
+  background-color: color(var(--color-person) alpha(5%));
+  background-color: transparent;
+  animation-name: peopleBorderAnimation;
+}
+
+@keyframes peopleBorderAnimation {
+  to {
+    border-color: color(var(--color-person) alpha(60%));
+    background-color: color(var(--color-person) alpha(15%));
+  }
+}
+
+.companiesOption.isActive {
+  border: 2px solid color(var(--color-company) alpha(30%));
+  background-color: color(var(--color-company) alpha(5%));
+  background-color: transparent;
+  animation-name: companiesBorderAnimation;
+}
+
+@keyframes companiesBorderAnimation {
+  to {
+    border-color: color(var(--color-company) alpha(60%));
+    background-color: color(var(--color-company) alpha(15%));
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import classNames from 'classnames';
 import { t } from 'services/translate';
 import { Observable } from 'services/observable';
 import languages from 'services/languages';
@@ -379,15 +380,25 @@ class MovieSearch extends React.Component {
     return styles[`${option.type}Value`];
   }
 
+  getOptionClass(isActive, group) {
+    return classNames({
+      [styles.isActive]: isActive,
+      [styles.option]: true,
+      [styles[`${group.id}Option`]]: true,
+    });
+  }
+
   render() {
     return (
       <div className={styles.container}>
         <Select
+          isExpanded
           className={styles.select}
           values={this.state.selected}
           onChange={this.onChange}
           getLabelClass={this.getLabelClass}
           getValueClass={this.getValueClass}
+          getOptionClass={this.getOptionClass}
           onInputChange={this.onInputChange}
           optionGroups={this.getOptionGroups()}
           isLoading={this.state.isLoading}
