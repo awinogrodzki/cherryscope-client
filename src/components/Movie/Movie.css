@@ -7,6 +7,7 @@
 
 .container {
   box-sizing: border-box;
+  margin-bottom: var(--default-margin);
   position: relative;
   padding: 1px var(--small-padding);
   z-index: 0;

@@ -7,7 +7,6 @@
 .container {
   width: var(--width);
   max-width: 100%;
-  line-height: 1.5em;
   font-size: var(--default-font-size);
   background-color: var(--color-white);
   display: flex;
@@ -22,6 +21,10 @@
   padding: var(--default-padding);
   width: var(--width);
   max-width: 100%;
+}
+
+.content {
+  line-height: 1.5em;
 }
 
 .iconLink {
@@ -77,8 +80,13 @@
 
 .badge {
   display: inline-block;
-  font-size: var(--default-font-size);
-  padding: 1px 8px 3px;
+  font-size: var(--small-font-size);
+  padding: 0px 5px 1px;
   border: 1px solid var(--color-black);
   margin: 0 5px 5px 0;
+  border-radius: 10px;
+}
+
+.genreBadge {
+  border-color: var(--color-genre);
 }

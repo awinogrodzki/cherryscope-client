@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import IMDBLogo from 'resources/images/imdb_logo.svg';
 import { t } from 'services/translate';
 import { MovieDetailsPropTypes } from './types';
@@ -18,9 +19,9 @@ const renderLoading = (isLoading) => {
 
 const renderGenres = genres => (
   <div className={styles.genresContainer}>
-    <h3 className={styles.rowTitle}>{t('movies.genres')}</h3>
+    <h4 className={styles.rowTitle}>{t('movies.genres')}</h4>
     { genres.map(genre => (
-      <div key={genre.id} className={styles.badge}>
+      <div key={genre.id} className={classNames(styles.badge, styles.genreBadge)}>
         <span>{genre.name}</span>
       </div>
     )) }
@@ -48,7 +49,7 @@ const MovieDetails = ({
         <h2 className={styles.originalTitle}>{originalTitle}</h2>
         { title !== originalTitle && <span className={styles.title}>{title}</span> }
       </div>
-      <div className={styles.row}>
+      <div className={classNames(styles.row, styles.content)}>
         {overview}
       </div>
       {
