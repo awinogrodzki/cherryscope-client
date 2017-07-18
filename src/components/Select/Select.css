@@ -22,9 +22,8 @@
 
 .input {
   flex: 1;
-  height: 1.2em;
   line-height: 1.2em;
-  font-size: 32px;
+  font-size: var(--input-font-size);
   outline: none;
   padding: 0;
   margin: 0 0 10px;
@@ -35,7 +34,7 @@
 
   &::placeholder {
     font-weight: 300;
-    font-size: 32px;
+    font-size: var(--input-font-size);
     color: var(--input-placeholder-color);
     letter-spacing: 0.01em;
     text-overflow: ellipsis;
