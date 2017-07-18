@@ -12,6 +12,14 @@ import {
   GET_MOVIE,
 } from './types';
 
+const mapDirectors = response =>
+  get(response, 'credits.crew', [])
+  .filter(item => item.job === 'Director');
+const mapWriters = response =>
+  get(response, 'credits.crew', [])
+  .filter(item => item.job === 'Writer' || item.job === 'Screenplay');
+const mapCast = response => get(response, 'credits.cast', []).slice(0, 20);
+
 const discoverMovies = (filters, append = false) =>
   (dispatch, getState) => movieService.discover(filters)
     .then((data) => {
@@ -92,6 +100,9 @@ const getMovie = id => dispatch => movieService.getMovie(id)
         originalTitle: data.original_title,
         title: data.title,
         genres: data.genres,
+        directors: mapDirectors(data),
+        writers: mapWriters(data),
+        cast: mapCast(data),
       },
     });
 

@@ -161,6 +161,9 @@ class Movies extends React.PureComponent {
             imdbId,
             image,
             genres,
+            directors,
+            writers,
+            cast,
           } = this.props.movieDetails;
 
           return (
@@ -171,6 +174,9 @@ class Movies extends React.PureComponent {
               imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
               image={image}
               genres={genres}
+              directors={directors}
+              writers={writers}
+              cast={cast}
             />
           );
         }, {
@@ -217,7 +223,7 @@ const mapDispatchToProps = {
 const mapStateToProps = state => ({
   movies: state.movies.items,
   pageCount: state.movies.pageCount,
-  movieDetails: state.movies.movieDetails,
+  movieDetails: state.movies.details,
 });
 
 Movies.propTypes = {

@@ -7,6 +7,11 @@ export default {
     voteAverage: 'Vote average',
     releaseDate: 'Released on',
   },
+  movieDetails: {
+    directors: 'Director(s)',
+    writers: 'Writer(s)',
+    cast: 'Stars',
+  },
   movieSearch: {
     inputLabel: 'Enter genre, name, language, date or a number. Search by anything...',
   },

@@ -18,7 +18,7 @@ const initialState = {
   genres: [],
   keywords: [],
   people: [],
-  movieDetails: {
+  details: {
     id: null,
     imdbId: null,
     overview: null,
@@ -26,6 +26,9 @@ const initialState = {
     originalTitle: null,
     title: null,
     genres: [],
+    directors: [],
+    writers: [],
+    actors: [],
   },
 };
 
@@ -68,7 +71,7 @@ export default function moviesReducer(state = initialState, action) {
       });
     case GET_MOVIE:
       return Object.assign({}, state, {
-        movieDetails: action.details,
+        details: action.details,
       });
     default:
       return state;

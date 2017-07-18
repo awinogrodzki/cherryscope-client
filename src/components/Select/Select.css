@@ -61,23 +61,15 @@
   opacity: 0;
 
   &.isExpanded {
+    min-height: 360px;
     opacity: 1;
     max-height: 360px;
-  }
-}
-
-:global @keyframes borderAnimation {
-  to {
-    border-color: color(var(--border-color) alpha(60%));
-    background-color: color(var(--border-color) alpha(15%));
   }
 }
 
 .container .activeOption {
   position: relative;
   z-index: 1;
-  border: 2px solid color(var(--border-color) alpha(30%));
-  background-color: color(var(--border-color) alpha(5%));
-  background-color: transparent;
-  animation: 1s 'borderAnimation' ease infinite alternate;
+  border-color: color(var(--border-color) alpha(60%));
+  background-color: color(var(--border-color) alpha(15%));
 }

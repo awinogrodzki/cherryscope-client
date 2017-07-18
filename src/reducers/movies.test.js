@@ -19,7 +19,7 @@ const initialState = {
   genres: [],
   keywords: [],
   companies: [],
-  movieDetails: {},
+  details: {},
 };
 
 describe('movies reducer', () => {
@@ -138,7 +138,7 @@ describe('movies reducer', () => {
     };
 
     expect(reducer(initialState, action)).toEqual(expect.objectContaining({
-      movieDetails: { id: 12345 },
+      details: { id: 12345 },
     }));
   });
 });

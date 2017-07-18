@@ -17,12 +17,12 @@ const renderLoading = (isLoading) => {
   );
 };
 
-const renderGenres = genres => (
-  <div className={styles.genresContainer}>
-    <h4 className={styles.rowTitle}>{t('movies.genres')}</h4>
-    { genres.map(genre => (
-      <div key={genre.id} className={classNames(styles.badge, styles.genreBadge)}>
-        <span>{genre.name}</span>
+const renderRow = (title, items) => (
+  <div className={styles.row}>
+    <h4 className={styles.rowTitle}>{title}</h4>
+    { items.map(item => (
+      <div key={item.id} className={styles.badge}>
+        <span>{item.name}</span>
       </div>
     )) }
   </div>
@@ -36,6 +36,9 @@ const MovieDetails = ({
   isLoading,
   image,
   genres,
+  directors,
+  writers,
+  cast,
 }) => (
   <article className={styles.container}>
     { image &&
@@ -44,7 +47,7 @@ const MovieDetails = ({
       </div>
     }
     <div className={styles.wrapper}>
-      { renderLoading(isLoading) }
+      {renderLoading(isLoading)}
       <div className={styles.titleContainer}>
         <h2 className={styles.originalTitle}>{originalTitle}</h2>
         { title !== originalTitle && <span className={styles.title}>{title}</span> }
@@ -58,9 +61,10 @@ const MovieDetails = ({
           <IMDBLogo />
         </a>
       }
-      <div className={styles.row}>
-        {renderGenres(genres)}
-      </div>
+      {renderRow(t('movies.genres'), genres)}
+      {renderRow(t('movieDetails.directors'), directors)}
+      {renderRow(t('movieDetails.writers'), writers)}
+      {renderRow(t('movieDetails.cast'), cast)}
     </div>
   </article>
 );
@@ -75,6 +79,9 @@ MovieDetails.defaultProps = {
   isLoading: false,
   image: null,
   genres: [],
+  directors: [],
+  writers: [],
+  cast: [],
 };
 
 export default MovieDetails;

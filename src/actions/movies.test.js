@@ -26,6 +26,26 @@ import {
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+const mockMovieResponse = {
+  id: 12345,
+  imdb_id: 54321,
+  overview: 'Lorem ipsum',
+  poster_path: 'test_image_url',
+  original_title: 'Original title',
+  title: 'Title',
+  genres: [1, 2, 3],
+  credits: {
+    crew: [
+      { id: 123456, name: 'Director Name', job: 'Director' },
+      { id: 654321, name: 'Writer Name', job: 'Writer' },
+      { id: 515212, name: 'Second Writer Name', job: 'Screenplay' },
+    ],
+    cast: [
+      { id: 123, name: 'John Doe' },
+    ],
+  },
+};
+
 jest.mock('services/movie', () => ({
   discover: () => Promise.resolve({
     results: [1, 2, 3],
@@ -45,15 +65,7 @@ jest.mock('services/movie', () => ({
   searchCompanies: () => Promise.resolve({
     results: [1, 2, 3],
   }),
-  getMovie: id => Promise.resolve({
-    id,
-    imdb_id: 54321,
-    overview: 'Lorem ipsum',
-    poster_path: 'test_image_url',
-    original_title: 'Original title',
-    title: 'Title',
-    genres: [],
-  }),
+  getMovie: id => Promise.resolve({ id, ...mockMovieResponse }),
   getImageUrl: image => image,
 }));
 
@@ -203,7 +215,12 @@ describe('movies actions', () => {
           image: 'test_image_url',
           originalTitle: 'Original title',
           title: 'Title',
-          genres: [],
+          genres: [1, 2, 3],
+          directors: mockMovieResponse.credits.crew
+            .filter(item => item.job === 'Director'),
+          writers: mockMovieResponse.credits.crew
+            .filter(item => item.job === 'Writer' || item.job === 'Screenplay'),
+          cast: mockMovieResponse.credits.cast,
         },
       },
     ];
