@@ -72,8 +72,6 @@ describe('Movies Page', () => {
     const filters = {};
 
     wrapper.find(MovieSearch).simulate('change', filters);
-    const mappedFilters = discoverMoviesSpy.mock.calls[0][0];
-
-    expect(mappedFilters).toBeInstanceOf(Object);
+    expect(discoverMoviesSpy).toHaveBeenCalledWith(expect.objectContaining({ page: 1 }), false);
   });
 });
