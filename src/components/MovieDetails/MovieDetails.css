@@ -16,7 +16,7 @@
   }
 }
 
-.wrapper {
+.contentWrapper {
   box-sizing: border-box;
   margin-top: 31px;
   padding: 0 var(--default-padding) var(--default-padding);
@@ -41,7 +41,7 @@
 }
 
 .image {
-  width: 400px;
+  width: auto;
   font-size: 0;
   /* animation fix in chrome */
   transform: translate3d(0, 0, 0);

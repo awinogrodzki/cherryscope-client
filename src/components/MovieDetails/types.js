@@ -15,7 +15,6 @@ export const MovieDetailsPropTypes = {
   title: PropTypes.string,
   imdbUrl: PropTypes.string,
   overview: PropTypes.string,
-  isLoading: PropTypes.bool,
   image: PropTypes.string,
   genres: PropTypes.arrayOf(GenreType),
   directors: PropTypes.arrayOf(PersonType),
