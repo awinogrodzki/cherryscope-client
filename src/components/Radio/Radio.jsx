@@ -28,10 +28,15 @@ class Radio extends React.Component {
       <div className={styles.container}>
         { this.props.options.map(option => (
           <div
+            data-test="Radio.option"
             key={option.value}
             className={classNames(styles.option, this.getSelectedClass(option))}
           >
-            <button className={styles.button} onClick={() => this.onChange(option.value)}>
+            <button
+              data-test="Radio.optionButton"
+              className={styles.button}
+              onClick={() => this.onChange(option.value)}
+            >
               {option.label}
             </button>
           </div>
