@@ -32,4 +32,15 @@ describe('OptionGroup', () => {
     expect(wrapper.find(CustomComponent)).toHaveLength(1);
     expect(wrapper.find(Option)).toHaveLength(0);
   });
+
+  it('should be possible to pass custom index to an option', () => {
+    const getOptionIndex = () => 123456;
+    const options = [
+      { value: 123, label: 'Option1' },
+      { value: 124, label: 'Option2' },
+    ];
+    const wrapper = shallow(<OptionGroup options={options} getOptionIndex={getOptionIndex} />);
+
+    expect(wrapper.find('[index=123456]')).toHaveLength(2);
+  });
 });

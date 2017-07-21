@@ -18,8 +18,8 @@ const renderOptions = ({
 
   return options.map((option, index) => (
     <Option
-      index={getOptionIndex(index)}
-      key={getOptionIndex(index)}
+      index={getOptionIndex ? getOptionIndex(index) : index}
+      key={getOptionIndex ? getOptionIndex(index) : index}
       option={option}
       onClick={onOptionClick}
       getClass={getOptionClass}
@@ -87,7 +87,7 @@ OptionGroup.defaultProps = {
   getOptionClass: () => {},
   label: null,
   labelClass: null,
-  getOptionIndex: index => index,
+  getOptionIndex: null,
   onOptionClick: () => {},
   getOptionElement: () => {},
   options: [],
