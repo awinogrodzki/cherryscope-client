@@ -18,7 +18,7 @@ const mapDirectors = response =>
 const mapWriters = response =>
   get(response, 'credits.crew', [])
   .filter(item => item.job === 'Writer' || item.job === 'Screenplay');
-const mapCast = response => get(response, 'credits.cast', []).slice(0, 20);
+const mapCast = response => get(response, 'credits.cast', []).slice(0, 10);
 
 const discoverMovies = (filters, append = false) =>
   (dispatch, getState) => movieService.discover(filters)

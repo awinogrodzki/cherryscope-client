@@ -17,13 +17,11 @@ const renderLoading = (isLoading) => {
   );
 };
 
-const renderRow = (title, items) => (
-  <div className={styles.row}>
+const renderLinks = (title, items) => (
+  <div className={classNames(styles.row, styles.links)}>
     <h4 className={styles.rowTitle}>{title}</h4>
     { items.map(item => (
-      <div key={item.id} className={styles.badge}>
-        <span>{item.name}</span>
-      </div>
+      <a key={item.id} className={styles.link}>{item.name}</a>
     )) }
   </div>
 );
@@ -61,10 +59,10 @@ const MovieDetails = ({
           <IMDBLogo />
         </a>
       }
-      {renderRow(t('movies.genres'), genres)}
-      {renderRow(t('movieDetails.directors'), directors)}
-      {renderRow(t('movieDetails.writers'), writers)}
-      {renderRow(t('movieDetails.cast'), cast)}
+      {renderLinks(t('movies.genres'), genres)}
+      {renderLinks(t('movieDetails.directors'), directors)}
+      {renderLinks(t('movieDetails.writers'), writers)}
+      {renderLinks(t('movieDetails.cast'), cast)}
     </div>
   </article>
 );
