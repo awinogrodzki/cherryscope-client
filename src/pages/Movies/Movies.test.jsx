@@ -2,18 +2,17 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import MovieSearch from 'components/MovieSearch';
 import MovieList from 'components/MovieList';
+import MovieDetails from 'components/MovieDetails';
 import LoadMore from 'components/LoadMore';
+import modalServiceMock from 'services/modal';
 import Movies from './Movies';
 
 jest.mock('services/modal', () => ({
   createModal: jest.fn(),
 }));
 
-/* eslint-disable global-require */
 describe('Movies Page', () => {
   beforeEach(() => {
-    const modalServiceMock = require('services/modal');
-
     modalServiceMock.createModal.mockClear();
   });
 
@@ -38,8 +37,7 @@ describe('Movies Page', () => {
     expect(wrapper.find(LoadMore)).toHaveLength(0);
   });
 
-  it('should open modal on movie select', () => {
-    jest.mock('services/modal', () => 'test');
+  it('should open modal with movie details on movie select', () => {
     const getMoviePromise = Promise.resolve();
     const getMovie = () => getMoviePromise;
 
@@ -47,9 +45,35 @@ describe('Movies Page', () => {
     wrapper.find(MovieList).simulate('movieSelect', 12);
 
     return getMoviePromise.then(() => {
-      const modalServiceMock = require('services/modal');
+      const getComponent = modalServiceMock.createModal.mock.calls[0][0];
+      const WrappingComponent = () => getComponent();
+      const detailsWrapper = shallow(<WrappingComponent />);
 
       expect(modalServiceMock.createModal).toHaveBeenCalled();
+      expect(detailsWrapper.is(MovieDetails)).toEqual(true);
     });
+  });
+
+  it('should discover movies on load more', () => {
+    const discoverMoviesSpy = jest.fn();
+    discoverMoviesSpy.mockReturnValue(Promise.resolve());
+    const wrapper = shallow(<Movies discoverMovies={discoverMoviesSpy} pageCount={10} />);
+    wrapper.setState({ page: 1 });
+    const nextPage = 2;
+
+    wrapper.find(LoadMore).simulate('change', nextPage);
+    expect(discoverMoviesSpy).toHaveBeenCalledWith(expect.objectContaining({ page: 2 }), true);
+  });
+
+  it('should discover movies on search change', () => {
+    const discoverMoviesSpy = jest.fn();
+    discoverMoviesSpy.mockReturnValue(Promise.resolve());
+    const wrapper = shallow(<Movies discoverMovies={discoverMoviesSpy} />);
+    const filters = {};
+
+    wrapper.find(MovieSearch).simulate('change', filters);
+    const mappedFilters = discoverMoviesSpy.mock.calls[0][0];
+
+    expect(mappedFilters).toBeInstanceOf(Object);
   });
 });
