@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { discoverMovies, getMovie } from 'actions';
 import { t } from 'services/translate';
 import modalService from 'services/modal';
 import MovieSearch from 'components/MovieSearch';
@@ -147,7 +145,7 @@ class Movies extends React.PureComponent {
   }
 
   selectMovie(id, element) {
-    if (this.state.isMovieLoading) {
+    if (this.state.isMovieLoading || !this.props.getMovie) {
       return;
     }
 
@@ -215,27 +213,20 @@ class Movies extends React.PureComponent {
   }
 }
 
-const mapDispatchToProps = {
-  discoverMovies: (filters, append) => discoverMovies(filters, append),
-  getMovie: id => getMovie(id),
-};
-
-const mapStateToProps = state => ({
-  movies: state.movies.items,
-  pageCount: state.movies.pageCount,
-  movieDetails: state.movies.details,
-});
-
 Movies.propTypes = {
-  movieDetails: PropTypes.shape(MovieDetailsPropTypes).isRequired,
-  discoverMovies: PropTypes.func.isRequired,
-  getMovie: PropTypes.func.isRequired,
-  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  movieDetails: PropTypes.shape(MovieDetailsPropTypes),
+  discoverMovies: PropTypes.func,
+  getMovie: PropTypes.func,
+  movies: PropTypes.arrayOf(PropTypes.object),
   pageCount: PropTypes.number,
 };
 
 Movies.defaultProps = {
+  movieDetails: {},
+  discoverMovies: null,
+  getMovie: null,
+  movies: [],
   pageCount: 0,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Movies);
+export default Movies;
