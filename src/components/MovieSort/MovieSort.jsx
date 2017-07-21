@@ -4,7 +4,7 @@ import Radio from 'components/Radio';
 import { t } from 'services/translate';
 import styles from './MovieSort.css';
 
-const getOptions = () => [
+const options = [
   {
     value: 'popularity.desc',
     label: t('movies.sort.popularity.desc'),
@@ -49,7 +49,7 @@ const getOptions = () => [
 
 const MovieSort = ({ onChange, value }) => (
   <div className={styles.container}>
-    <Radio onChange={onChange} value={value || 'popularity.desc'} options={getOptions()} />
+    <Radio onChange={onChange} value={value || 'popularity.desc'} options={options} />
   </div>
   );
 

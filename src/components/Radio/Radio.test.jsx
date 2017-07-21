@@ -16,10 +16,7 @@ describe('Radio', () => {
   });
 
   it('should set selected class on selected option', () => {
-    const wrapper = shallow(<Radio options={mockOptions} />);
-    const optionWrapper = wrapper.find('[data-test="Radio.option"]');
-
-    optionWrapper.at(1).find('[data-test="Radio.optionButton"]').simulate('click');
+    const wrapper = shallow(<Radio options={mockOptions} value={2} />);
 
     expect(wrapper.find('[data-test="Radio.option"]').at(1).hasClass('isSelected')).toBe(true);
   });
