@@ -30,7 +30,7 @@ class MovieList extends React.Component {
     }
 
     return (
-      <div className={styles.loading}>
+      <div data-test="MovieList.isLoading" className={styles.loading}>
         <Loader className={styles.loader} />
       </div>
     );

@@ -392,6 +392,31 @@ describe('MovieSearch', () => {
     expect(mockClearCompanies).toBeCalled();
   });
 
+  it('should show genres options if provided', () => {
+    const genres = [
+      { id: 123, name: 'Genre1' },
+      { id: 234, name: 'Genre2' },
+    ];
+    const wrapper = shallow(<MovieSearch genres={genres} />);
+
+    expect(wrapper.find(Select).props().optionGroups).toContainEqual(
+      expect.objectContaining({
+        options: expect.arrayContaining([
+          expect.objectContaining({
+            value: 123,
+            label: 'Genre1',
+            type: 'genre',
+          }),
+          expect.objectContaining({
+            value: 234,
+            label: 'Genre2',
+            type: 'genre',
+          }),
+        ]),
+      })
+    );
+  });
+
   it('should show keyword options if provided', () => {
     const keywords = [
       { id: 123, name: 'Keyword1' },
