@@ -12,6 +12,7 @@ import {
 } from 'actions';
 import MovieSearch from './MovieSearch';
 
+ /* istanbul ignore next */
 const MovieSearchContainer = props => (
   <MovieSearch
     getGenres={props.getGenres}
@@ -29,6 +30,7 @@ const MovieSearchContainer = props => (
   />
 );
 
+ /* istanbul ignore next */
 const mapDispatchToProps = {
   searchKeywords: value => searchKeywords(value),
   getGenres: () => getGenres(),
@@ -39,6 +41,7 @@ const mapDispatchToProps = {
   clearCompanies: () => clearCompanies(),
 };
 
+ /* istanbul ignore next */
 const mapStateToProps = state => ({
   people: state.movies.people,
   genres: state.movies.genres,
@@ -46,6 +49,7 @@ const mapStateToProps = state => ({
   companies: state.movies.companies,
 });
 
+ /* istanbul ignore next */
 MovieSearchContainer.propTypes = {
   onChange: PropTypes.func,
   getGenres: PropTypes.func.isRequired,
@@ -61,6 +65,7 @@ MovieSearchContainer.propTypes = {
   keywords: PropTypes.arrayOf(PropTypes.object),
 };
 
+ /* istanbul ignore next */
 MovieSearchContainer.defaultProps = {
   onChange: () => {},
   genres: [],
