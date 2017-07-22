@@ -13,6 +13,11 @@
   align-items: center;
   padding: var(--default-padding);
 
+  @media (--only-tablet) {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
   &::before {
     content: '';
     display: block;

@@ -7,6 +7,10 @@
   position: relative;
   display: flex;
   max-height: 100%;
+
+  @media (--only-tablet) {
+    max-height: none;
+  }
 }
 
 .closeButton {
@@ -16,7 +20,7 @@
   border: 1px solid var(--color-black);
   color: var(--color-black);
   background: none;
-  font-size: var(--default-font-size);
+  font-size: var(--medium-font-size);
   font-weight: 300;
   background-color: transparent;
   outline: none;
@@ -29,6 +33,10 @@
   line-height: 0;
   padding: 0;
   display: inline-block;
+
+  @media(--only-tablet) {
+    background-color: color(var(--color-white) alpha(80%));
+  }
 
   &::before {
     content: '×';
@@ -53,4 +61,5 @@
 .contentWrapper {
   max-height: 100%;
   display: flex;
+  width: 100%;
 }
