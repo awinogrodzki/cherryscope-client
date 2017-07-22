@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/awinogrodzki/tmdb-client/compare/v0.1.0...v0.2.0) (2017-07-22)
+
+
+### Bug Fixes
+
+* **Movie:** fixed movie image styles ([b9e331e](https://github.com/awinogrodzki/tmdb-client/commit/b9e331e))
+* **MovieDetails:** added tests ([0261b3c](https://github.com/awinogrodzki/tmdb-client/commit/0261b3c))
+* **MovieDetails:** updated detail styles ([74009f2](https://github.com/awinogrodzki/tmdb-client/commit/74009f2))
+* **MovieDetails:** updated genres styles ([cc7afa4](https://github.com/awinogrodzki/tmdb-client/commit/cc7afa4))
+* **Movies:** added tests for movies page ([6285b01](https://github.com/awinogrodzki/tmdb-client/commit/6285b01))
+* **Movies:** updated movie page test ([65b5f28](https://github.com/awinogrodzki/tmdb-client/commit/65b5f28))
+* **Movies:** updated tests ([d2290e6](https://github.com/awinogrodzki/tmdb-client/commit/d2290e6))
+* **OptionGroup:** updated option group tests ([cc5474c](https://github.com/awinogrodzki/tmdb-client/commit/cc5474c))
+* **Radio:** added radio component tests ([5b10fb0](https://github.com/awinogrodzki/tmdb-client/commit/5b10fb0))
+* **Radio:** optimized radio component ([4cd945c](https://github.com/awinogrodzki/tmdb-client/commit/4cd945c))
+
+
+### Features
+
+* **global:** styles update ([028a16d](https://github.com/awinogrodzki/tmdb-client/commit/028a16d))
+* **global:** styles update ([793243b](https://github.com/awinogrodzki/tmdb-client/commit/793243b))
+* **global:** styles update ([62fbfda](https://github.com/awinogrodzki/tmdb-client/commit/62fbfda))
+* **global:** styles update ([a401fb5](https://github.com/awinogrodzki/tmdb-client/commit/a401fb5))
+* **LoadMore:** updated styles ([e437836](https://github.com/awinogrodzki/tmdb-client/commit/e437836))
+* **MovieDetails:** updated styles; added directors, writers and cast ([9d1bfb0](https://github.com/awinogrodzki/tmdb-client/commit/9d1bfb0))
+* **MovieSearch:** updated selection styles ([b2a73da](https://github.com/awinogrodzki/tmdb-client/commit/b2a73da))
+* **Select:** updated expandable container ([e081d02](https://github.com/awinogrodzki/tmdb-client/commit/e081d02))
+
+
+
 <a name="0.1.0"></a>
 # 0.1.0 (2017-07-16)
 
