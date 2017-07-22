@@ -49,7 +49,6 @@ const mapStateToProps = state => ({
   companies: state.movies.companies,
 });
 
- /* istanbul ignore next */
 MovieSearchContainer.propTypes = {
   onChange: PropTypes.func,
   getGenres: PropTypes.func.isRequired,
@@ -65,7 +64,6 @@ MovieSearchContainer.propTypes = {
   keywords: PropTypes.arrayOf(PropTypes.object),
 };
 
- /* istanbul ignore next */
 MovieSearchContainer.defaultProps = {
   onChange: () => {},
   genres: [],
