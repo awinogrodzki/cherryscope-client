@@ -14,7 +14,7 @@ export default {
     votes: 'votes',
   },
   movieSearch: {
-    inputLabel: 'Enter genre, name, language, date or a number. Search by anything...',
+    inputLabel: 'Enter genre, name, language, date or number',
   },
   movies: {
     loading: 'Loading...',
@@ -68,7 +68,7 @@ export default {
     },
   },
   footer: {
-    infoPrefix: 'This project is possible thanks to ',
-    infoSuffix: 'Feel free to contribute!',
+    infoPrefix: 'This project runs on data from',
+    infoSuffix: 'Feel free to contribute.',
   },
 };

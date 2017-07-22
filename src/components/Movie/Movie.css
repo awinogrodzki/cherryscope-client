@@ -91,11 +91,12 @@
 
 .originalTitle {
   font-size: var(--large-font-size);
-  margin-bottom: 0.66em;
+  margin-bottom: 0.33em;
   font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.5em;
 }
 
 .content {

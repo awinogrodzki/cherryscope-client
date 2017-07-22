@@ -38,6 +38,10 @@
     color: var(--input-placeholder-color);
     letter-spacing: 0.01em;
     text-overflow: ellipsis;
+
+    @media (--only-tablet) {
+      font-size: var(--medium-font-size);
+    }
   }
 }
 

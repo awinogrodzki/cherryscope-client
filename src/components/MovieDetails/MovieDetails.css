@@ -37,7 +37,7 @@
 }
 
 .row {
-  margin-bottom: var(--default-margin);
+  margin-bottom: var(--small-margin);
 }
 
 .image {

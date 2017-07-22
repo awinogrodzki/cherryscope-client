@@ -5,9 +5,21 @@ import styles from './RatingBar.css';
 
 const getStyle = (value, maxValue, minValue) => {
   const length = maxValue - minValue;
-  const progress = `${value / length * 100}%`;
+  const progressValue = value / length;
+  const progress = `${progressValue * 100}%`;
 
-  return { width: progress };
+  const green = 255 * progressValue;
+  const red = 255 - green;
+  const blue = 100;
+
+  return {
+    width: progress,
+    backgroundColor: `
+      rgba(${parseInt(red, 10)},
+        ${parseInt(green, 10)},
+        ${parseInt(blue, 10)},
+        0.66)`,
+  };
 };
 
 const RatingBar = ({
