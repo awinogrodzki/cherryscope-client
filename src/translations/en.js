@@ -14,7 +14,7 @@ export default {
     votes: 'votes',
   },
   movieSearch: {
-    inputLabel: 'Enter genre, name, language, date or number',
+    inputLabel: 'Enter genre, name, language, date, number or keyword...',
   },
   movies: {
     loading: 'Loading...',
