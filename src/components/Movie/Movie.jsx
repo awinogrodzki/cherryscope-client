@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Loader from 'components/Loader';
+import RatingBar from 'components/RatingBar';
 import { t } from 'services/translate';
 import styles from './Movie.css';
 
@@ -53,12 +54,26 @@ class Movie extends React.Component {
             { this.renderImage(this.props.imageUrl) }
           </div>
           <div className={styles.content}>
-            <h4 className={styles.originalTitle}>{ this.props.originalTitle }</h4>
+            <h2
+              title={this.props.originalTitle}
+              className={styles.originalTitle}
+            >{ this.props.originalTitle }</h2>
             { this.props.originalTitle !== this.props.title
                 && <h6 className={styles.title}>{ this.props.title }</h6> }
             <ul className={styles.data}>
-              <li className={styles.dataItem}>{`${t('movie.voteAverage')}:`} <strong>{this.props.voteAverage}</strong></li>
-              <li className={styles.dataItem}>{`${t('movie.voteCount')}:`} <strong>{this.props.voteCount}</strong></li>
+              <li
+                className={styles.dataItem}
+              >
+                <div className={styles.rating}>
+                  <RatingBar
+                    showValue
+                    className={styles.ratingBar}
+                    value={this.props.voteAverage}
+                    maxValue={10}
+                  />
+                </div>
+              </li>
+              <li className={styles.dataItem}><strong>{this.props.voteCount} {t('movie.votes')}</strong></li>
               {
                 this.props.releaseDate !== null &&
                 <li className={styles.dataItem}>{t('movie.releaseDate')} <strong>{this.props.releaseDate.toLocaleDateString()}</strong></li>

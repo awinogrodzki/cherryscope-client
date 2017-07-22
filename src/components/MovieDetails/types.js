@@ -17,6 +17,8 @@ export const MovieDetailsPropTypes = {
   overview: PropTypes.string,
   image: PropTypes.string,
   genres: PropTypes.arrayOf(GenreType),
+  voteAverage: PropTypes.number,
+  voteCount: PropTypes.number,
   directors: PropTypes.arrayOf(PersonType),
   writers: PropTypes.arrayOf(PersonType),
   cast: PropTypes.arrayOf(PersonType),

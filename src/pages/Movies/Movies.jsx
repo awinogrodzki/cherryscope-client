@@ -159,6 +159,8 @@ class Movies extends React.PureComponent {
             imdbId,
             image,
             genres,
+            voteCount,
+            voteAverage,
             directors,
             writers,
             cast,
@@ -172,6 +174,8 @@ class Movies extends React.PureComponent {
               imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
               image={image}
               genres={genres}
+              voteCount={voteCount}
+              voteAverage={voteAverage}
               directors={directors}
               writers={writers}
               cast={cast}

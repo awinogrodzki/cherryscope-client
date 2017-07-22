@@ -90,9 +90,12 @@
 }
 
 .originalTitle {
-  font-size: var(--default-font-size);
-  margin-bottom: 1em;
+  font-size: var(--large-font-size);
+  margin-bottom: 0.66em;
   font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .content {

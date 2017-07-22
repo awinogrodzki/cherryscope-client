@@ -3,14 +3,15 @@ export default {
     headline: 'movie search engine for those who think they\'ve watched everything',
   },
   movie: {
-    voteCount: 'Vote count',
-    voteAverage: 'Vote average',
+    votes: 'votes',
     releaseDate: 'Released on',
   },
   movieDetails: {
+    rating: 'Rating',
     directors: 'Director(s)',
     writers: 'Writer(s)',
     cast: 'Stars',
+    votes: 'votes',
   },
   movieSearch: {
     inputLabel: 'Enter genre, name, language, date or a number. Search by anything...',

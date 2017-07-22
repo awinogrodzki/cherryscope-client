@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import IMDBLogo from 'resources/images/imdb_logo.svg';
+import RatingBar from 'components/RatingBar';
 import { t } from 'services/translate';
 import { MovieDetailsPropTypes } from './types';
 import styles from './MovieDetails.css';
@@ -31,6 +32,8 @@ const MovieDetails = ({
   overview,
   image,
   genres,
+  voteAverage,
+  voteCount,
   directors,
   writers,
   cast,
@@ -50,6 +53,14 @@ const MovieDetails = ({
       </div>
       <div className={classNames(styles.row, styles.content)}>
         {overview}
+      </div>
+      <div className={styles.ratingBar}>
+        <RatingBar
+          title={t('movieDetails.rating')}
+          value={voteAverage}
+          maxValue={10}
+        />
+        <span className={styles.votes}><strong>{voteCount}</strong> {t('movieDetails.votes')}</span>
       </div>
       {
         imdbUrl &&
@@ -79,6 +90,8 @@ MovieDetails.defaultProps = {
   imdbUrl: null,
   overview: null,
   image: null,
+  voteAverage: 0,
+  voteCount: 0,
   genres: [],
   directors: [],
   writers: [],

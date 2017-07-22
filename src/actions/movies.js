@@ -100,6 +100,8 @@ const getMovie = id => dispatch => movieService.getMovie(id)
         originalTitle: data.original_title,
         title: data.title,
         genres: data.genres,
+        voteCount: data.vote_count,
+        voteAverage: data.vote_average,
         directors: mapDirectors(data),
         writers: mapWriters(data),
         cast: mapCast(data),

@@ -90,3 +90,12 @@
   display: inline-block;
   margin: 0 10px 0 0;
 }
+
+.ratingBar {
+  font-size: var(--medium-font-size);
+  margin-bottom: var(--default-margin);
+}
+
+.votes {
+
+}

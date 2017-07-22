@@ -34,6 +34,8 @@ const mockMovieResponse = {
   original_title: 'Original title',
   title: 'Title',
   genres: [1, 2, 3],
+  vote_count: 10,
+  vote_average: 5.5,
   credits: {
     crew: [
       { id: 123456, name: 'Director Name', job: 'Director' },
@@ -216,6 +218,8 @@ describe('movies actions', () => {
           originalTitle: 'Original title',
           title: 'Title',
           genres: [1, 2, 3],
+          voteCount: 10,
+          voteAverage: 5.5,
           directors: mockMovieResponse.credits.crew
             .filter(item => item.job === 'Director'),
           writers: mockMovieResponse.credits.crew

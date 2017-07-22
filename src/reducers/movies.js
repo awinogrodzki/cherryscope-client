@@ -25,6 +25,8 @@ const initialState = {
     image: null,
     originalTitle: null,
     title: null,
+    voteCount: null,
+    voteAverage: null,
     genres: [],
     directors: [],
     writers: [],
