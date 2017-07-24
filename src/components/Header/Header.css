@@ -2,6 +2,10 @@
 
 .container {
   padding: var(--large-padding) 0;
+
+  @media (--only-tablet) {
+    padding: var(--default-padding) 0;
+  }
 }
 
 .logo {
