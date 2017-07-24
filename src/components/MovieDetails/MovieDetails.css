@@ -18,8 +18,7 @@
 
 .contentWrapper {
   box-sizing: border-box;
-  margin-top: 31px;
-  padding: 0 var(--default-padding) var(--default-padding);
+  padding: var(--default-padding);
   width: var(--width);
   max-width: 100%;
   overflow-y: auto;
@@ -28,6 +27,7 @@
 .content {
   font-size: var(--medium-font-size);
   line-height: 1.5em;
+  margin-bottom: var(--default-margin);
 }
 
 .iconLink {
