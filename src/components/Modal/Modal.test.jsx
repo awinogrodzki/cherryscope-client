@@ -41,6 +41,7 @@ describe('Modal', () => {
 
       expect(element).toBe(wrapper.instance().modalWindow);
       expect(wrapper.instance().container.classList).toContain('isAnimated');
+      expect(document.body.classList).toContain('hasModal');
       expect(fromOptions).toEqual({ x: 0, y: 100, opacity: 0 });
       expect(toOptions).toEqual({ x: 0, y: 0, opacity: 1 });
     });
@@ -58,6 +59,7 @@ describe('Modal', () => {
 
       expect(element).toBe(wrapper.instance().modalWindow);
       expect(wrapper.instance().container.classList).toContain('willLeave');
+      expect(document.body.classList).not.toContain('hasModal');
       expect(fromOptions).toEqual({ x: 0, y: 0, opacity: 1 });
       expect(toOptions).toEqual({ x: 0, y: -100, opacity: 0 });
     });

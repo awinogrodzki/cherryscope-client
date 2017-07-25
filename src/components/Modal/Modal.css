@@ -1,5 +1,9 @@
 @import 'resources/styles/variables';
 
+body.hasModal {
+  overflow: hidden;
+}
+
 .container {
   position: fixed;
   top: 0;

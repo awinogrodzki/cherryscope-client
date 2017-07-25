@@ -20,6 +20,7 @@ class Modal extends React.Component {
 
   componentWillEnter(callback) {
     this.container.classList.add(styles.isAnimated);
+    document.body.classList.add(styles.hasModal);
 
     if (!this.props.animateFromElement) {
       const initialCoords = { x: 0, y: 100 };
@@ -43,6 +44,7 @@ class Modal extends React.Component {
 
   componentWillLeave(callback) {
     this.container.classList.add(styles.willLeave);
+    document.body.classList.remove(styles.hasModal);
 
     if (!this.props.animateFromElement) {
       const finalCoords = { x: 0, y: -100 };
