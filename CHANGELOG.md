@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/awinogrodzki/tmdb-client/compare/v0.3.0...v0.4.0) (2017-07-26)
+
+
+### Bug Fixes
+
+* **Footer:** updated styles ([1cb44ae](https://github.com/awinogrodzki/tmdb-client/commit/1cb44ae))
+
+
+### Features
+
+* **Footer:** replaced text about the movie database with tmdb logo ([a9165c4](https://github.com/awinogrodzki/tmdb-client/commit/a9165c4))
+* **Gallery:** added gallery component skeleton ([96cf488](https://github.com/awinogrodzki/tmdb-client/commit/96cf488))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/awinogrodzki/tmdb-client/compare/v0.2.1...v0.3.0) (2017-07-25)
 
