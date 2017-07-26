@@ -12,13 +12,6 @@ class Languages {
 
     return languagesData.filter((language) => {
       if (
-        typeof language.name !== 'string'
-        || typeof language.nativeName !== 'string'
-      ) {
-        return false;
-      }
-
-      if (
         this.isLike(value, language.name)
         || this.isLike(value, language.nativeName)
       ) {
