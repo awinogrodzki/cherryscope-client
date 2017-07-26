@@ -3,19 +3,22 @@
 .container {
   font-size: var(--default-font-size);
   border-top: 2px solid var(--color-black);
-  padding: var(--default-padding) 0;
+  padding: var(--small-padding) 0;
   line-height: 1.5em;
-  display: inline-block;
-  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .tmdbLogo {
-  width: 100px;
+  width: 120px;
   display: inline-block;
-  float: right;
+
+  & > svg {
+    display: block;
+  }
 }
 
 .copyright {
   display: inline-block;
-  float: left;
 }
