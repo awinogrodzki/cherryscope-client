@@ -4,12 +4,18 @@
   font-size: var(--default-font-size);
   border-top: 2px solid var(--color-black);
   padding: var(--default-padding) 0;
-  text-align: right;
   line-height: 1.5em;
+  display: inline-block;
+  width: 100%;
 }
 
-.info {
+.tmdbLogo {
+  width: 100px;
+  display: inline-block;
+  float: right;
 }
 
 .copyright {
+  display: inline-block;
+  float: left;
 }
