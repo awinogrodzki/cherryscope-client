@@ -90,4 +90,13 @@ describe('MovieDetails', () => {
     expect(galleryWrapper.props().thumbnails).toEqual(thumbnails);
     expect(galleryNavWrapper.props().images).toEqual(thumbnails);
   });
+
+  it('should select image on gallery image click', () => {
+    const wrapper = shallow(<MovieDetails images={images} />);
+
+    wrapper.find(GalleryNav).simulate('imageClick', 2);
+    expect(wrapper.find(Gallery).props().selectedImageId).toEqual(2);
+    wrapper.find(Gallery).simulate('imageClick', 3);
+    expect(wrapper.find(Gallery).props().selectedImageId).toEqual(3);
+  });
 });

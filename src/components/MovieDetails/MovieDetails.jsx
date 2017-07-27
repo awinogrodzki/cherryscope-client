@@ -7,8 +7,6 @@ import { t } from 'services/translate';
 import { movieDetailsPropTypes } from './types';
 import styles from './MovieDetails.css';
 
-const getThumbnails = images => images.map(({ id, thumbnailUrl: url }) => ({ id, url }));
-
 const renderLinks = (title, items) => {
   if (!items.length) {
     return null;
@@ -28,68 +26,91 @@ const renderLinks = (title, items) => {
   );
 };
 
-const MovieDetails = ({
-  originalTitle,
-  title,
-  imdbUrl,
-  overview,
-  image,
-  genres,
-  voteAverage,
-  voteCount,
-  directors,
-  writers,
-  cast,
-  images,
-}) => (
-  <article className={styles.container}>
-    { image &&
-    <div data-test="MovieDetails.image" className={styles.image}>
-      <img src={image} />
-    </div>
-      }
-    <div className={styles.contentWrapper}>
-      <div className={styles.titleContainer}>
-        <h2 className={styles.originalTitle}>{originalTitle}</h2>
-        { title !== originalTitle &&
-        <span data-test="MovieDetails.title" className={styles.title}>{title}</span>
+class MovieDetails extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedImageId: null,
+    };
+
+    this.onImageClick = this.onImageClick.bind(this);
+  }
+
+  onImageClick(id) {
+    this.setState({ selectedImageId: id });
+  }
+
+  getThumbnails() {
+    return this.props.images.map(({ id, thumbnailUrl: url }) => ({ id, url }));
+  }
+
+  render() {
+    return (
+      <article className={styles.container}>
+        { this.props.image &&
+        <div data-test="MovieDetails.image" className={styles.image}>
+          <img src={this.props.image} />
+        </div>
           }
-      </div>
-      <div className={classNames(styles.row, styles.content)}>
-        {overview}
-      </div>
-      { images.length &&
-      <div className={styles.row}>
-        <Gallery images={images} thumbnails={getThumbnails(images)} />
-        <GalleryNav images={getThumbnails(images)} />
-      </div> }
-      <div className={styles.ratingBar}>
-        <RatingBar
-          title={t('movieDetails.rating')}
-          value={voteAverage}
-          maxValue={10}
-        />
-        <span className={styles.votes}><strong>{voteCount}</strong> {t('movieDetails.votes')}</span>
-      </div>
-      {
-          imdbUrl &&
-          <a
-            data-test="MovieDetails.imdbUrl"
-            rel="noopener noreferrer"
-            href={imdbUrl}
-            target="_blank"
-            className={styles.iconLink}
-          >
-            <IMDBLogo />
-          </a>
-        }
-      {renderLinks(t('movies.genres'), genres)}
-      {renderLinks(t('movieDetails.directors'), directors)}
-      {renderLinks(t('movieDetails.writers'), writers)}
-      {renderLinks(t('movieDetails.cast'), cast)}
-    </div>
-  </article>
-  );
+        <div className={styles.contentWrapper}>
+          <div className={styles.titleContainer}>
+            <h2 className={styles.originalTitle}>{this.props.originalTitle}</h2>
+            { this.props.title !== this.props.originalTitle &&
+              <span
+                data-test="MovieDetails.title"
+                className={styles.title}
+              >
+                {this.props.title}
+              </span>
+            }
+          </div>
+          <div className={classNames(styles.row, styles.content)}>
+            {this.props.overview}
+          </div>
+          { this.props.images.length &&
+          <div className={styles.row}>
+            <Gallery
+              selectedImageId={this.state.selectedImageId}
+              images={this.props.images}
+              thumbnails={this.getThumbnails()}
+              onImageClick={this.onImageClick}
+            />
+            <GalleryNav
+              selectedImageId={this.state.selectedImageId}
+              images={this.getThumbnails()}
+              onImageClick={this.onImageClick}
+            />
+          </div> }
+          <div className={styles.ratingBar}>
+            <RatingBar
+              title={t('movieDetails.rating')}
+              value={this.props.voteAverage}
+              maxValue={10}
+            />
+            <span className={styles.votes}><strong>{this.props.voteCount}</strong> {t('movieDetails.votes')}</span>
+          </div>
+          {
+              this.props.imdbUrl &&
+              <a
+                data-test="MovieDetails.imdbUrl"
+                rel="noopener noreferrer"
+                href={this.props.imdbUrl}
+                target="_blank"
+                className={styles.iconLink}
+              >
+                <IMDBLogo />
+              </a>
+            }
+          {renderLinks(t('movies.genres'), this.props.genres)}
+          {renderLinks(t('movieDetails.directors'), this.props.directors)}
+          {renderLinks(t('movieDetails.writers'), this.props.writers)}
+          {renderLinks(t('movieDetails.cast'), this.props.cast)}
+        </div>
+      </article>
+    );
+  }
+}
 
 MovieDetails.propTypes = movieDetailsPropTypes;
 
