@@ -79,7 +79,6 @@ describe('MovieDetails', () => {
 
   it('should map provided images data to thumbnails', () => {
     const wrapper = shallow(<MovieDetails images={images} />);
-    const galleryWrapper = wrapper.find(Gallery);
     const galleryNavWrapper = wrapper.find(GalleryNav);
     const thumbnails = [
       { id: 0, url: 'thumbnail_1_url' },
@@ -87,7 +86,6 @@ describe('MovieDetails', () => {
       { id: 2, url: 'thumbnail_3_url' },
     ];
 
-    expect(galleryWrapper.props().thumbnails).toEqual(thumbnails);
     expect(galleryNavWrapper.props().images).toEqual(thumbnails);
   });
 

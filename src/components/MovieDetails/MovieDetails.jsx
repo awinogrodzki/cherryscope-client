@@ -73,7 +73,6 @@ class MovieDetails extends React.Component {
             <Gallery
               selectedImageId={this.state.selectedImageId}
               images={this.props.images}
-              thumbnails={this.getThumbnails()}
               onImageClick={this.onImageClick}
             />
             <GalleryNav

@@ -13,11 +13,13 @@ const Gallery = ({
 }) => (
   <div className={styles.container}>
     <GalleryView selectedImageId={selectedImageId} images={images} />
-    <GalleryNav
-      selectedImageId={selectedImageId}
-      images={thumbnails}
-      onImageClick={onImageClick}
-    />
+    { thumbnails.length &&
+      <GalleryNav
+        selectedImageId={selectedImageId}
+        images={thumbnails}
+        onImageClick={onImageClick}
+      />
+    }
   </div>
 );
 

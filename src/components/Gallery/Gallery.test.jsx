@@ -29,6 +29,12 @@ describe('Gallery', () => {
     expect(galleryNavImages[2].url).toBe('thumbnail_3_url');
   });
 
+  it('should not display gallery nav if thumbnails are not provided', () => {
+    const wrapper = shallow(<Gallery />);
+
+    expect(wrapper.find(GalleryNav)).toHaveLength(0);
+  });
+
   it('should display gallery view with provided images', () => {
     const wrapper = shallow(<Gallery images={images} />);
     const galleryViewWrapper = wrapper.find(GalleryView);
@@ -42,7 +48,7 @@ describe('Gallery', () => {
   });
 
   it('should pass selected image id to nav and view components', () => {
-    const wrapper = shallow(<Gallery selectedImageId={2} />);
+    const wrapper = shallow(<Gallery thumbnails={thumbnails} selectedImageId={2} />);
 
     expect(wrapper.find(GalleryView).props().selectedImageId).toBe(2);
     expect(wrapper.find(GalleryNav).props().selectedImageId).toBe(2);
