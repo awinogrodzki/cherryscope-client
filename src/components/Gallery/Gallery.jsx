@@ -4,21 +4,25 @@ import Image from './Image';
 import { imageProps } from './Image/types';
 import styles from './Gallery.css';
 
-const renderImages = images => images.map((image, index) => <Image key={index} {...image} />);
+const renderImages = (images, onImageClick) =>
+  images.map((image, index) => <Image onClick={onImageClick} key={index} {...image} />);
 
 const Gallery = ({
   images,
+  onImageClick,
 }) => (
   <div className={styles.container}>
-    {renderImages(images)}
+    {renderImages(images, onImageClick)}
   </div>
 );
 
 Gallery.propTypes = {
+  onImageClick: PropTypes.func,
   images: PropTypes.arrayOf(PropTypes.shape(imageProps)),
 };
 
 Gallery.defaultProps = {
+  onImageClick: () => {},
   images: [],
 };
 
