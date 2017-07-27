@@ -1,7 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import Gallery, { GalleryNav } from 'components/Gallery';
 import MovieDetails from './MovieDetails';
 
+const images = [
+  { id: 0, url: 'image_1_url', thumbnailUrl: 'thumbnail_1_url' },
+  { id: 1, url: 'image_2_url', thumbnailUrl: 'thumbnail_2_url' },
+  { id: 2, url: 'image_3_url', thumbnailUrl: 'thumbnail_3_url' },
+];
 
 describe('MovieDetails', () => {
   it('should not render empty links', () => {
@@ -58,5 +64,30 @@ describe('MovieDetails', () => {
 
     expect(wrapperWithUrl.find('[data-test="MovieDetails.imdbUrl"]')).toHaveLength(1);
     expect(wrapperWithoutUrl.find('[data-test="MovieDetails.imdbUrl"]')).toHaveLength(0);
+  });
+
+  it('should display gallery and gallery nav only if images are provided', () => {
+    const wrapperWithImages = shallow(<MovieDetails images={images} />);
+    const wrapperWithoutImages = shallow(<MovieDetails />);
+
+    expect(wrapperWithImages.find(Gallery)).toHaveLength(1);
+    expect(wrapperWithImages.find(GalleryNav)).toHaveLength(1);
+
+    expect(wrapperWithoutImages.find(Gallery)).toHaveLength(0);
+    expect(wrapperWithoutImages.find(GalleryNav)).toHaveLength(0);
+  });
+
+  it('should map provided images data to thumbnails', () => {
+    const wrapper = shallow(<MovieDetails images={images} />);
+    const galleryWrapper = wrapper.find(Gallery);
+    const galleryNavWrapper = wrapper.find(GalleryNav);
+    const thumbnails = [
+      { id: 0, url: 'thumbnail_1_url' },
+      { id: 1, url: 'thumbnail_2_url' },
+      { id: 2, url: 'thumbnail_3_url' },
+    ];
+
+    expect(galleryWrapper.props().thumbnails).toEqual(thumbnails);
+    expect(galleryNavWrapper.props().images).toEqual(thumbnails);
   });
 });

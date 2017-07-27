@@ -4,7 +4,7 @@ import { t } from 'services/translate';
 import modalService from 'services/modal';
 import MovieSearch from 'components/MovieSearch';
 import MovieList from 'components/MovieList';
-import MovieDetails, { MovieDetailsPropTypes } from 'components/MovieDetails';
+import MovieDetails, { movieDetailsPropTypes } from 'components/MovieDetails';
 import LoadMore from 'components/LoadMore';
 import styles from './Movies.css';
 
@@ -164,6 +164,7 @@ class Movies extends React.PureComponent {
             directors,
             writers,
             cast,
+            images,
           } = this.props.movieDetails;
 
           return (
@@ -179,6 +180,7 @@ class Movies extends React.PureComponent {
               directors={directors}
               writers={writers}
               cast={cast}
+              images={images}
             />
           );
         }, {
@@ -218,7 +220,7 @@ class Movies extends React.PureComponent {
 }
 
 Movies.propTypes = {
-  movieDetails: PropTypes.shape(MovieDetailsPropTypes),
+  movieDetails: PropTypes.shape(movieDetailsPropTypes),
   discoverMovies: PropTypes.func,
   getMovie: PropTypes.func,
   movies: PropTypes.arrayOf(PropTypes.object),

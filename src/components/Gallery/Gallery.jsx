@@ -1,29 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Image from './Image';
-import { imageProps } from './Image/types';
+import GalleryView from './GalleryView';
+import GalleryNav from './GalleryNav';
 import styles from './Gallery.css';
-
-const renderImages = (images, onImageClick) =>
-  images.map((image, index) => <Image onClick={onImageClick} key={index} {...image} />);
+import { imageIdType } from './Image/types';
 
 const Gallery = ({
   images,
+  thumbnails,
+  selectedImageId,
   onImageClick,
 }) => (
   <div className={styles.container}>
-    {renderImages(images, onImageClick)}
+    <GalleryView selectedImageId={selectedImageId} images={images} />
+    <GalleryNav
+      selectedImageId={selectedImageId}
+      images={thumbnails}
+      onImageClick={onImageClick}
+    />
   </div>
 );
 
 Gallery.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.shape({
+    id: imageIdType.isRequired,
+    url: PropTypes.string,
+  })),
+  thumbnails: PropTypes.arrayOf(PropTypes.shape({
+    id: imageIdType.isRequired,
+    url: PropTypes.string,
+  })),
+  selectedImageId: imageIdType,
   onImageClick: PropTypes.func,
-  images: PropTypes.arrayOf(PropTypes.shape(imageProps)),
 };
 
 Gallery.defaultProps = {
-  onImageClick: () => {},
   images: [],
+  thumbnails: [],
+  selectedImageId: null,
+  onImageClick: () => {},
 };
 
 export default Gallery;

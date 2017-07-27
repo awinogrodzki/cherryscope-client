@@ -2,31 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Image from '../Image';
-import styles from './GalleryView.css';
 import { imageIdType } from '../Image/types';
+import styles from './GalleryNav.css';
 
-const renderImages = (images, selectedImageId) =>
+const renderImages = (images, selectedImageId, onImageClick) =>
   images.map(image =>
     (<Image
       className={classNames({
         [styles.image]: true,
         [styles.isSelected]: selectedImageId === image.id,
       })}
+      onClick={onImageClick}
       key={image.id}
       {...image}
     />)
   );
 
-const GalleryView = ({
+const GalleryNav = ({
   images,
   selectedImageId,
+  onImageClick,
 }) => (
-  <div className={styles.container}>
-    {renderImages(images, selectedImageId)}
-  </div>
+  <nav className={styles.container}>
+    {renderImages(images, selectedImageId, onImageClick)}
+  </nav>
 );
 
-GalleryView.propTypes = {
+GalleryNav.propTypes = {
+  onImageClick: PropTypes.func,
   images: PropTypes.arrayOf(PropTypes.shape({
     id: imageIdType.isRequired,
     url: PropTypes.string,
@@ -34,9 +37,10 @@ GalleryView.propTypes = {
   selectedImageId: imageIdType,
 };
 
-GalleryView.defaultProps = {
+GalleryNav.defaultProps = {
+  onImageClick: () => {},
   images: [],
   selectedImageId: null,
 };
 
-export default GalleryView;
+export default GalleryNav;

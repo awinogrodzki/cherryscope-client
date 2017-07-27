@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Gallery from './Gallery';
-import Image from './Image';
+import GalleryView from './GalleryView';
+import GalleryNav from './GalleryNav';
 
 describe('Gallery', () => {
   const images = [
@@ -10,22 +11,49 @@ describe('Gallery', () => {
     { id: 3, url: 'image_3_url' },
   ];
 
-  it('should display images from provided data', () => {
-    const wrapper = shallow(<Gallery images={images} />);
-    const imageWrapper = wrapper.find(Image);
+  const thumbnails = [
+    { id: 1, url: 'thumbnail_1_url' },
+    { id: 2, url: 'thumbnail_2_url' },
+    { id: 3, url: 'thumbnail_3_url' },
+  ];
 
-    expect(imageWrapper).toHaveLength(3);
-    expect(imageWrapper.at(0).props().url).toBe('image_1_url');
-    expect(imageWrapper.at(1).props().url).toBe('image_2_url');
-    expect(imageWrapper.at(2).props().url).toBe('image_3_url');
+  it('should display gallery navigation with provided thumbnail images', () => {
+    const wrapper = shallow(<Gallery thumbnails={thumbnails} />);
+    const galleryNavWrapper = wrapper.find(GalleryNav);
+    const galleryNavImages = galleryNavWrapper.props().images;
+
+    expect(galleryNavWrapper).toHaveLength(1);
+    expect(galleryNavImages).toHaveLength(3);
+    expect(galleryNavImages[0].url).toBe('thumbnail_1_url');
+    expect(galleryNavImages[1].url).toBe('thumbnail_2_url');
+    expect(galleryNavImages[2].url).toBe('thumbnail_3_url');
   });
 
-  it('should return image id on click', () => {
-    const onImageClickSpy = jest.fn();
-    const wrapper = shallow(<Gallery images={images} onImageClick={onImageClickSpy} />);
-    const imageWrapper = wrapper.find(Image);
+  it('should display gallery view with provided images', () => {
+    const wrapper = shallow(<Gallery images={images} />);
+    const galleryViewWrapper = wrapper.find(GalleryView);
+    const galleryViewImages = galleryViewWrapper.props().images;
 
-    imageWrapper.at(1).simulate('click', 2);
+    expect(galleryViewWrapper).toHaveLength(1);
+    expect(galleryViewImages).toHaveLength(3);
+    expect(galleryViewImages[0].url).toBe('image_1_url');
+    expect(galleryViewImages[1].url).toBe('image_2_url');
+    expect(galleryViewImages[2].url).toBe('image_3_url');
+  });
+
+  it('should pass selected image id to nav and view components', () => {
+    const wrapper = shallow(<Gallery selectedImageId={2} />);
+
+    expect(wrapper.find(GalleryView).props().selectedImageId).toBe(2);
+    expect(wrapper.find(GalleryNav).props().selectedImageId).toBe(2);
+  });
+
+  it('should inform about image click', () => {
+    const onImageClickSpy = jest.fn();
+    const wrapper = shallow(<Gallery thumbnails={thumbnails} onImageClick={onImageClickSpy} />);
+    const galleryNavWrapper = wrapper.find(GalleryNav);
+
+    galleryNavWrapper.simulate('imageClick', 2);
     expect(onImageClickSpy).toHaveBeenCalledWith(2);
   });
 });

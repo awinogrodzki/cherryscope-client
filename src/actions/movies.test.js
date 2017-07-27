@@ -46,6 +46,12 @@ const mockMovieResponse = {
       { id: 123, name: 'John Doe' },
     ],
   },
+  images: {
+    backdrops: [
+      { file_path: 'image_1' },
+      { file_path: 'image_2' },
+    ],
+  },
 };
 
 jest.mock('services/movie', () => ({
@@ -225,6 +231,10 @@ describe('movies actions', () => {
           writers: mockMovieResponse.credits.crew
             .filter(item => item.job === 'Writer' || item.job === 'Screenplay'),
           cast: mockMovieResponse.credits.cast,
+          images: [
+            { id: 0, url: 'image_1', thumbnailUrl: 'image_1' },
+            { id: 1, url: 'image_2', thumbnailUrl: 'image_2' },
+          ],
         },
       },
     ];

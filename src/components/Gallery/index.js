@@ -1,2 +1,2 @@
-export { default as GalleryView } from './GalleryView';
+export { default as GalleryNav } from './GalleryNav';
 export { default } from './Gallery';

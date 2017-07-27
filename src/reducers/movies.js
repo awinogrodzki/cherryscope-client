@@ -31,6 +31,7 @@ const initialState = {
     directors: [],
     writers: [],
     actors: [],
+    images: [],
   },
 };
 
