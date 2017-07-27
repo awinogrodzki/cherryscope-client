@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import { get } from 'lodash';
 import IMDBLogo from 'resources/images/imdb_logo.svg';
 import RatingBar from 'components/RatingBar';
 import Gallery, { GalleryNav } from 'components/Gallery';
@@ -32,10 +31,38 @@ class MovieDetails extends React.Component {
     super(props);
 
     this.state = {
-      selectedImageId: get(props, 'images.0.id'),
+      selectedImageId: null,
     };
 
+    this.wrapper = null;
+    this.galleryContainer = null;
     this.onImageClick = this.onImageClick.bind(this);
+
+    this.registerEventListeners();
+  }
+
+  registerEventListeners() {
+    window.addEventListener('resize', () => this.updateElements());
+  }
+
+  setGalleryContainer(element) {
+    this.galleryContainer = element;
+    this.updateElements();
+  }
+
+  setWrapper(element) {
+    this.wrapper = element;
+    this.updateElements();
+  }
+
+  updateElements() {
+    if (!this.wrapper || !this.galleryContainer) {
+      return;
+    }
+
+    const wrapperHeight = this.wrapper.getBoundingClientRect().height;
+    this.wrapper.style.transformOrigin = `center center -${wrapperHeight / 2}px`;
+    this.galleryContainer.style.transformOrigin = `center center -${wrapperHeight / 2}px`;
   }
 
   onImageClick(id) {
@@ -48,64 +75,83 @@ class MovieDetails extends React.Component {
 
   render() {
     return (
-      <article className={styles.container}>
-        { this.props.image &&
-        <div data-test="MovieDetails.image" className={styles.image}>
-          <img src={this.props.image} />
-        </div>
-          }
-        <div className={styles.contentWrapper}>
-          <div className={styles.titleContainer}>
-            <h2 className={styles.originalTitle}>{this.props.originalTitle}</h2>
-            { this.props.title !== this.props.originalTitle &&
-              <span
-                data-test="MovieDetails.title"
-                className={styles.title}
-              >
-                {this.props.title}
-              </span>
+      <article
+        className={classNames({
+          [styles.container]: true,
+          [styles.isGalleryVisible]: this.state.selectedImageId !== null,
+        })}
+      >
+        <div
+          ref={element => this.setWrapper(element)}
+          className={styles.wrapper}
+        >
+          <div
+            ref={element => this.setGalleryContainer(element)}
+            className={styles.galleryContainer}
+          >
+            { this.props.images.length &&
+              <Gallery
+                selectedImageId={this.state.selectedImageId}
+                images={this.props.images}
+                onImageClick={this.onImageClick}
+              />
             }
           </div>
-          <div className={classNames(styles.row, styles.content)}>
-            {this.props.overview}
+          <div className={styles.detailsContainer}>
+            { this.props.image &&
+            <div data-test="MovieDetails.image" className={styles.image}>
+              <img src={this.props.image} />
+            </div>
+              }
+            <div className={styles.contentWrapper}>
+              <div className={styles.titleContainer}>
+                <h2 className={styles.originalTitle}>{this.props.originalTitle}</h2>
+                { this.props.title !== this.props.originalTitle &&
+                  <span
+                    data-test="MovieDetails.title"
+                    className={styles.title}
+                  >
+                    {this.props.title}
+                  </span>
+                }
+              </div>
+              <div className={classNames(styles.row, styles.content)}>
+                {this.props.overview}
+              </div>
+              { this.props.images.length &&
+              <div className={styles.row}>
+                <GalleryNav
+                  selectedImageId={this.state.selectedImageId}
+                  images={this.getThumbnails()}
+                  onImageClick={this.onImageClick}
+                />
+              </div> }
+              <div className={styles.ratingBar}>
+                <RatingBar
+                  title={t('movieDetails.rating')}
+                  value={this.props.voteAverage}
+                  maxValue={10}
+                />
+                <span className={styles.votes}><strong>{this.props.voteCount}</strong> {t('movieDetails.votes')}</span>
+              </div>
+              {
+                  this.props.imdbUrl &&
+                  <a
+                    data-test="MovieDetails.imdbUrl"
+                    rel="noopener noreferrer"
+                    href={this.props.imdbUrl}
+                    target="_blank"
+                    className={styles.iconLink}
+                  >
+                    <IMDBLogo />
+                  </a>
+                }
+              {renderLinks(t('movies.genres'), this.props.genres)}
+              {renderLinks(t('movieDetails.directors'), this.props.directors)}
+              {renderLinks(t('movieDetails.writers'), this.props.writers)}
+              {renderLinks(t('movieDetails.cast'), this.props.cast)}
+            </div>
           </div>
-          { this.props.images.length &&
-          <div className={styles.row}>
-            <Gallery
-              selectedImageId={this.state.selectedImageId}
-              images={this.props.images}
-              onImageClick={this.onImageClick}
-            />
-            <GalleryNav
-              selectedImageId={this.state.selectedImageId}
-              images={this.getThumbnails()}
-              onImageClick={this.onImageClick}
-            />
-          </div> }
-          <div className={styles.ratingBar}>
-            <RatingBar
-              title={t('movieDetails.rating')}
-              value={this.props.voteAverage}
-              maxValue={10}
-            />
-            <span className={styles.votes}><strong>{this.props.voteCount}</strong> {t('movieDetails.votes')}</span>
-          </div>
-          {
-              this.props.imdbUrl &&
-              <a
-                data-test="MovieDetails.imdbUrl"
-                rel="noopener noreferrer"
-                href={this.props.imdbUrl}
-                target="_blank"
-                className={styles.iconLink}
-              >
-                <IMDBLogo />
-              </a>
-            }
-          {renderLinks(t('movies.genres'), this.props.genres)}
-          {renderLinks(t('movieDetails.directors'), this.props.directors)}
-          {renderLinks(t('movieDetails.writers'), this.props.writers)}
-          {renderLinks(t('movieDetails.cast'), this.props.cast)}
         </div>
       </article>
     );
