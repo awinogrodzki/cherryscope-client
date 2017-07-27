@@ -1,15 +1,13 @@
+@import 'resources/styles/variables';
+
 .container {
   display: flex;
   flex-wrap: wrap;
+  background-color: color(var(--color-white) alpha(88%));
 }
 
 .image {
   cursor: pointer;
   height: 40px;
   width: 40px;
-  opacity: 0.5;
-
-  &.isSelected {
-    opacity: 1;
-  }
 }

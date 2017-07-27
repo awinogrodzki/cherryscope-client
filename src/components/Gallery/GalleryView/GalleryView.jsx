@@ -5,9 +5,14 @@ import Image from '../Image';
 import styles from './GalleryView.css';
 import { imageIdType } from '../Image/types';
 
-const renderImages = (images, selectedImageId) =>
+const renderImages = (
+  images,
+  selectedImageId,
+  onImageClick
+) =>
   images.map(image =>
     (<Image
+      onClick={onImageClick}
       className={classNames({
         [styles.image]: true,
         [styles.isSelected]: selectedImageId === image.id,
@@ -20,13 +25,15 @@ const renderImages = (images, selectedImageId) =>
 const GalleryView = ({
   images,
   selectedImageId,
+  onImageClick,
 }) => (
   <div className={styles.container}>
-    {renderImages(images, selectedImageId)}
+    {renderImages(images, selectedImageId, onImageClick)}
   </div>
 );
 
 GalleryView.propTypes = {
+  onImageClick: PropTypes.func,
   images: PropTypes.arrayOf(PropTypes.shape({
     id: imageIdType.isRequired,
     url: PropTypes.string,
@@ -35,6 +42,7 @@ GalleryView.propTypes = {
 };
 
 GalleryView.defaultProps = {
+  onImageClick: () => {},
   images: [],
   selectedImageId: null,
 };

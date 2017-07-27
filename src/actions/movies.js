@@ -99,7 +99,7 @@ const getMovie = id => dispatch => movieService.getMovie(id)
         image: movieService.getImageUrl(data.poster_path),
         images: data.images.backdrops.map((image, index) => ({
           id: index,
-          url: movieService.getImageUrl(image.file_path, 500),
+          url: movieService.getImageUrl(image.file_path, 1000),
           thumbnailUrl: movieService.getImageUrl(image.file_path, 160),
         })),
         originalTitle: data.original_title,

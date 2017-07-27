@@ -55,11 +55,13 @@ describe('Gallery', () => {
   });
 
   it('should inform about image click', () => {
-    const onImageClickSpy = jest.fn();
-    const wrapper = shallow(<Gallery thumbnails={thumbnails} onImageClick={onImageClickSpy} />);
+    const onThumbnailClickSpy = jest.fn();
+    const wrapper = shallow(
+      <Gallery thumbnails={thumbnails} onThumbnailClick={onThumbnailClickSpy} />
+    );
     const galleryNavWrapper = wrapper.find(GalleryNav);
 
     galleryNavWrapper.simulate('imageClick', 2);
-    expect(onImageClickSpy).toHaveBeenCalledWith(2);
+    expect(onThumbnailClickSpy).toHaveBeenCalledWith(2);
   });
 });

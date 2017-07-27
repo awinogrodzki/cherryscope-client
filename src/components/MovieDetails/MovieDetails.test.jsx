@@ -94,7 +94,7 @@ describe('MovieDetails', () => {
 
     wrapper.find(GalleryNav).simulate('imageClick', 2);
     expect(wrapper.find(Gallery).props().selectedImageId).toEqual(2);
-    wrapper.find(Gallery).simulate('imageClick', 3);
+    wrapper.find(Gallery).simulate('thumbnailClick', 3);
     expect(wrapper.find(Gallery).props().selectedImageId).toEqual(3);
   });
 });

@@ -32,11 +32,13 @@ class MovieDetails extends React.Component {
 
     this.state = {
       selectedImageId: null,
+      isGalleryVisible: false,
     };
 
     this.wrapper = null;
     this.galleryContainer = null;
     this.onImageClick = this.onImageClick.bind(this);
+    this.onThumbnailClick = this.onThumbnailClick.bind(this);
 
     this.registerEventListeners();
   }
@@ -60,13 +62,21 @@ class MovieDetails extends React.Component {
       return;
     }
 
-    const wrapperHeight = this.wrapper.getBoundingClientRect().height;
+    // reset transition
+    this.wrapper.style.transform = 'none';
+    const wrapperHeight = this.wrapper.offsetHeight;
+    this.wrapper.style.transform = '';
+
     this.wrapper.style.transformOrigin = `center center -${wrapperHeight / 2}px`;
     this.galleryContainer.style.transformOrigin = `center center -${wrapperHeight / 2}px`;
   }
 
-  onImageClick(id) {
-    this.setState({ selectedImageId: id });
+  onImageClick() {
+    this.setState({ isGalleryVisible: false });
+  }
+
+  onThumbnailClick(id) {
+    this.setState({ selectedImageId: id, isGalleryVisible: true });
   }
 
   getThumbnails() {
@@ -78,7 +88,7 @@ class MovieDetails extends React.Component {
       <article
         className={classNames({
           [styles.container]: true,
-          [styles.isGalleryVisible]: this.state.selectedImageId !== null,
+          [styles.isGalleryVisible]: this.state.isGalleryVisible,
         })}
       >
         <div
@@ -94,6 +104,9 @@ class MovieDetails extends React.Component {
                 selectedImageId={this.state.selectedImageId}
                 images={this.props.images}
                 onImageClick={this.onImageClick}
+                onThumbnailClick={this.onThumbnailClick}
+                thumbnails={this.getThumbnails()}
+                navClassName={styles.galleryNav}
               />
             }
           </div>
@@ -123,7 +136,7 @@ class MovieDetails extends React.Component {
                 <GalleryNav
                   selectedImageId={this.state.selectedImageId}
                   images={this.getThumbnails()}
-                  onImageClick={this.onImageClick}
+                  onImageClick={this.onThumbnailClick}
                 />
               </div> }
               <div className={styles.ratingBar}>

@@ -14,24 +14,21 @@
 
 .wrapper {
   transform-style: preserve-3d;
-  transition: transform 3s linear;
-  transform: rotateX(0);
+  transition: transform 1s ease-in-out;
+  transform: rotateX(0deg);
 }
 
 .galleryContainer {
-  backface-visibility: hidden;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 1;
-  transform-style: preserve-3d;
   transform: rotateX(90deg);
 }
 
 .detailsContainer {
-  backface-visibility: hidden;
   width: var(--width);
   max-width: 100%;
   font-size: var(--default-font-size);
@@ -45,9 +42,20 @@
   }
 }
 
+.galleryNav {
+  opacity: 0;
+  transition: opacity var(--default-animation) 0s;
+  transform: translate3d(0, 0, 0);
+}
+
 .isGalleryVisible {
   & .wrapper {
     transform: rotateX(-90deg);
+  }
+
+  & .galleryNav {
+    opacity: 1;
+    transition-delay: 1s;
   }
 }
 

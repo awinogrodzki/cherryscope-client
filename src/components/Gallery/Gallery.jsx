@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import GalleryView from './GalleryView';
 import GalleryNav from './GalleryNav';
 import styles from './Gallery.css';
@@ -10,14 +11,23 @@ const Gallery = ({
   thumbnails,
   selectedImageId,
   onImageClick,
+  onThumbnailClick,
+  navClassName,
 }) => (
   <div className={styles.container}>
-    <GalleryView selectedImageId={selectedImageId} images={images} />
+    <GalleryView
+      selectedImageId={selectedImageId}
+      onImageClick={onImageClick}
+      images={images}
+    />
     { thumbnails.length > 0 &&
       <GalleryNav
+        className={classNames(styles.nav, navClassName)}
+        imageClassName={styles.thumbnail}
+        selectedImageClass={styles.isSelected}
         selectedImageId={selectedImageId}
         images={thumbnails}
-        onImageClick={onImageClick}
+        onImageClick={onThumbnailClick}
       />
     }
   </div>
@@ -34,6 +44,8 @@ Gallery.propTypes = {
   })),
   selectedImageId: imageIdType,
   onImageClick: PropTypes.func,
+  onThumbnailClick: PropTypes.func,
+  navClassName: PropTypes.string,
 };
 
 Gallery.defaultProps = {
@@ -41,6 +53,8 @@ Gallery.defaultProps = {
   thumbnails: [],
   selectedImageId: null,
   onImageClick: () => {},
+  onThumbnailClick: () => {},
+  navClassName: null,
 };
 
 export default Gallery;
