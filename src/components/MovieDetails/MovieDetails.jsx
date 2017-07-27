@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import { get } from 'lodash';
 import IMDBLogo from 'resources/images/imdb_logo.svg';
 import RatingBar from 'components/RatingBar';
 import Gallery, { GalleryNav } from 'components/Gallery';
@@ -31,7 +32,7 @@ class MovieDetails extends React.Component {
     super(props);
 
     this.state = {
-      selectedImageId: null,
+      selectedImageId: get(props, 'images.0.id'),
     };
 
     this.onImageClick = this.onImageClick.bind(this);

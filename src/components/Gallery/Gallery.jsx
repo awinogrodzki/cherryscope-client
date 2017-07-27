@@ -13,7 +13,7 @@ const Gallery = ({
 }) => (
   <div className={styles.container}>
     <GalleryView selectedImageId={selectedImageId} images={images} />
-    { thumbnails.length &&
+    { thumbnails.length > 0 &&
       <GalleryNav
         selectedImageId={selectedImageId}
         images={thumbnails}
