@@ -35,40 +35,8 @@ class MovieDetails extends React.Component {
       isGalleryVisible: false,
     };
 
-    this.wrapper = null;
-    this.galleryContainer = null;
     this.onImageClick = this.onImageClick.bind(this);
     this.onThumbnailClick = this.onThumbnailClick.bind(this);
-
-    this.registerEventListeners();
-  }
-
-  registerEventListeners() {
-    window.addEventListener('resize', () => this.updateElements());
-  }
-
-  setGalleryContainer(element) {
-    this.galleryContainer = element;
-    this.updateElements();
-  }
-
-  setWrapper(element) {
-    this.wrapper = element;
-    this.updateElements();
-  }
-
-  updateElements() {
-    if (!this.wrapper || !this.galleryContainer) {
-      return;
-    }
-
-    // reset transition
-    this.wrapper.style.transform = 'none';
-    const wrapperHeight = this.wrapper.offsetHeight;
-    this.wrapper.style.transform = '';
-
-    this.wrapper.style.transformOrigin = `center center -${wrapperHeight / 2}px`;
-    this.galleryContainer.style.transformOrigin = `center center -${wrapperHeight / 2}px`;
   }
 
   onImageClick() {
@@ -92,11 +60,9 @@ class MovieDetails extends React.Component {
         })}
       >
         <div
-          ref={element => this.setWrapper(element)}
           className={styles.wrapper}
         >
           <div
-            ref={element => this.setGalleryContainer(element)}
             className={styles.galleryContainer}
           >
             { this.props.images.length &&

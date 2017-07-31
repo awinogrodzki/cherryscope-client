@@ -7,7 +7,7 @@
 .container {
   display: flex;
   max-width: 100%;
-  perspective: 2000px;
+  perspective: 1000px;
   transform-style: preserve-3d;
   position: relative;
 }
@@ -15,7 +15,7 @@
 .wrapper {
   transform-style: preserve-3d;
   transition: transform 1s ease-in-out;
-  transform: rotateX(0deg);
+  transform: rotateX(0deg) translateY(0%);
 }
 
 .galleryContainer {
@@ -25,7 +25,7 @@
   right: 0;
   bottom: 0;
   z-index: 1;
-  transform: rotateX(90deg);
+  transform: rotateX(90deg) translateY(-50%) rotateX(90deg) translateY(50%) rotateX(-90deg);
 }
 
 .detailsContainer {
@@ -34,7 +34,7 @@
   font-size: var(--default-font-size);
   background-color: var(--color-white);
   display: flex;
-  transform: translate3d(0, 0, 0);
+  transform: translate(0, 0);
   max-height: 100%;
 
   @media (--only-tablet) {
@@ -42,7 +42,7 @@
   }
 }
 
-.galleryNav {
+.galleryNav {s
   opacity: 0;
   transition: opacity var(--default-animation) 0s;
   transform: translate3d(0, 0, 0);
@@ -50,7 +50,7 @@
 
 .isGalleryVisible {
   & .wrapper {
-    transform: rotateX(-90deg);
+    transform: rotateX(-90deg) rotateX(90deg) translateY(50%) rotateX(-90deg) rotateY(90deg) translateY(50%) rotateY(-90deg);
   }
 
   & .galleryNav {
