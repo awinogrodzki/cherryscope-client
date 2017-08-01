@@ -92,7 +92,7 @@
 
   @media (--only-tablet) {
     width: 100%;
-    height: 360px;
+    height: 33vh;
   }
 
   & > img {
