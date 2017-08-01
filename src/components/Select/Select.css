@@ -14,6 +14,10 @@
   display: flex;
   padding: var(--default-padding) 0 0;
   flex-wrap: wrap;
+
+  @media (--only-tablet) {
+    display: block;
+  }
 }
 
 .optionContainer {
