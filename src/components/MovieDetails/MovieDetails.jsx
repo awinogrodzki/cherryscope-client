@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import ArrowLeftIcon from 'react-icons/lib/ti/arrow-left';
 import IMDBLogo from 'resources/images/imdb_logo.svg';
 import RatingBar from 'components/RatingBar';
 import Gallery, { GalleryNav } from 'components/Gallery';
@@ -35,11 +36,11 @@ class MovieDetails extends React.Component {
       isGalleryVisible: false,
     };
 
-    this.onImageClick = this.onImageClick.bind(this);
+    this.closeGallery = this.closeGallery.bind(this);
     this.onThumbnailClick = this.onThumbnailClick.bind(this);
   }
 
-  onImageClick() {
+  closeGallery() {
     this.setState({ isGalleryVisible: false });
   }
 
@@ -65,11 +66,13 @@ class MovieDetails extends React.Component {
           <div
             className={styles.galleryContainer}
           >
+            <button className={styles.back} onClick={this.closeGallery}>
+              <ArrowLeftIcon />
+            </button>
             { this.props.images.length &&
               <Gallery
                 selectedImageId={this.state.selectedImageId}
                 images={this.props.images}
-                onImageClick={this.onImageClick}
                 onThumbnailClick={this.onThumbnailClick}
                 thumbnails={this.getThumbnails()}
                 navClassName={styles.galleryNav}

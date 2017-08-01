@@ -25,12 +25,20 @@
   line-height: 1.2em;
   font-size: var(--input-font-size);
   outline: none;
-  padding: 0;
-  margin: 0 0 10px;
+  padding: 0 0 10px;
+  margin: 0;
   border: none;
   background-color: transparent;
   color: var(--input-text-color);
   text-overflow: ellipsis;
+  min-width: 240px;
+  box-sizing: border-box;
+
+  @media (--only-tablet) {
+    padding: 0 5px 10px;
+    min-width: 100%;
+    background-color: var(--color-light-grey);
+  }
 
   &::placeholder {
     font-weight: 300;

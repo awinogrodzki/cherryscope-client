@@ -3,7 +3,6 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-  background-color: color(var(--color-white) alpha(88%));
 }
 
 .image {
