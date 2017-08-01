@@ -35,7 +35,7 @@
   box-sizing: border-box;
 
   @media (--only-tablet) {
-    padding: 0 5px 10px;
+    padding: 5px 10px;
     min-width: 100%;
     background-color: var(--color-light-grey);
   }
