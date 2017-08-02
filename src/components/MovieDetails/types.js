@@ -16,6 +16,14 @@ export const imageType = PropTypes.shape({
   thumbnailUrl: PropTypes.string,
 });
 
+export const videoType = PropTypes.shape({
+  id: PropTypes.string,
+  key: PropTypes.string,
+  name: PropTypes.string,
+  site: PropTypes.string,
+  type: PropTypes.string,
+});
+
 export const movieDetailsPropTypes = {
   originalTitle: PropTypes.string,
   title: PropTypes.string,
@@ -23,6 +31,7 @@ export const movieDetailsPropTypes = {
   overview: PropTypes.string,
   image: PropTypes.string,
   images: PropTypes.arrayOf(imageType),
+  videos: PropTypes.arrayOf(videoType),
   genres: PropTypes.arrayOf(genreType),
   voteAverage: PropTypes.number,
   voteCount: PropTypes.number,

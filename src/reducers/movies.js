@@ -32,6 +32,7 @@ const initialState = {
     writers: [],
     actors: [],
     images: [],
+    videos: [],
   },
 };
 

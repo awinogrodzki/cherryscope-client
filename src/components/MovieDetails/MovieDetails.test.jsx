@@ -1,12 +1,28 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Gallery, { GalleryNav } from 'components/Gallery';
 import MovieDetails from './MovieDetails';
 
 const images = [
   { id: 0, url: 'image_1_url', thumbnailUrl: 'thumbnail_1_url' },
   { id: 1, url: 'image_2_url', thumbnailUrl: 'thumbnail_2_url' },
   { id: 2, url: 'image_3_url', thumbnailUrl: 'thumbnail_3_url' },
+];
+
+const videos = [
+  {
+    id: '57d2ffc49251415496000429',
+    key: 'PC460OxDNhc',
+    name: 'Announcement',
+    site: 'YouTube',
+    type: 'Teaser',
+  },
+  {
+    id: '590dedfbc3a36864a700fb24',
+    key: 'T7O7BtBnsG4',
+    name: 'Official Trailer #1',
+    site: 'YouTube',
+    type: 'Trailer',
+  },
 ];
 
 describe('MovieDetails', () => {
@@ -66,20 +82,22 @@ describe('MovieDetails', () => {
     expect(wrapperWithoutUrl.find('[data-test="MovieDetails.imdbUrl"]')).toHaveLength(0);
   });
 
-  it('should display gallery and gallery nav only if images are provided', () => {
+  it('should display gallery and gallery nav only if images are provided and image is selected', () => {
     const wrapperWithImages = shallow(<MovieDetails images={images} />);
     const wrapperWithoutImages = shallow(<MovieDetails />);
 
-    expect(wrapperWithImages.find(Gallery)).toHaveLength(1);
-    expect(wrapperWithImages.find(GalleryNav)).toHaveLength(1);
+    wrapperWithImages.setState({ selectedImageId: 2 });
 
-    expect(wrapperWithoutImages.find(Gallery)).toHaveLength(0);
-    expect(wrapperWithoutImages.find(GalleryNav)).toHaveLength(0);
+    expect(wrapperWithImages.find('[data-test="MovieDetails.imageGallery"]')).toHaveLength(1);
+    expect(wrapperWithImages.find('[data-test="MovieDetails.imageGalleryNav"]')).toHaveLength(1);
+
+    expect(wrapperWithoutImages.find('[data-test="MovieDetails.imageGallery"]')).toHaveLength(0);
+    expect(wrapperWithoutImages.find('[data-test="MovieDetails.imageGalleryNav"]')).toHaveLength(0);
   });
 
   it('should map provided images data to thumbnails', () => {
     const wrapper = shallow(<MovieDetails images={images} />);
-    const galleryNavWrapper = wrapper.find(GalleryNav);
+    const galleryNavWrapper = wrapper.find('[data-test="MovieDetails.imageGalleryNav"]');
     const thumbnails = [
       { id: 0, url: 'thumbnail_1_url' },
       { id: 1, url: 'thumbnail_2_url' },
@@ -92,9 +110,42 @@ describe('MovieDetails', () => {
   it('should select image on gallery image click', () => {
     const wrapper = shallow(<MovieDetails images={images} />);
 
-    wrapper.find(GalleryNav).simulate('imageClick', 2);
-    expect(wrapper.find(Gallery).props().selectedImageId).toEqual(2);
-    wrapper.find(Gallery).simulate('thumbnailClick', 3);
-    expect(wrapper.find(Gallery).props().selectedImageId).toEqual(3);
+    wrapper.find('[data-test="MovieDetails.imageGalleryNav"]').simulate('imageClick', 2);
+    expect(wrapper.find('[data-test="MovieDetails.imageGallery"]').props().selectedImageId).toEqual(2);
+    wrapper.find('[data-test="MovieDetails.imageGallery"]').simulate('thumbnailClick', 3);
+    expect(wrapper.find('[data-test="MovieDetails.imageGallery"]').props().selectedImageId).toEqual(3);
+  });
+
+  it('should display video gallery and video gallery nav only if videos are provided and video is selected', () => {
+    const wrapperWithVideos = shallow(<MovieDetails videos={videos} />);
+    const wrapperWithoutVideos = shallow(<MovieDetails />);
+
+    wrapperWithVideos.setState({ selectedVideoId: '57d2ffc49251415496000429' });
+
+    expect(wrapperWithVideos.find('[data-test="MovieDetails.videoGallery"]')).toHaveLength(1);
+    expect(wrapperWithVideos.find('[data-test="MovieDetails.videoGalleryNav"]')).toHaveLength(1);
+
+    expect(wrapperWithoutVideos.find('[data-test="MovieDetails.videoGallery"]')).toHaveLength(0);
+    expect(wrapperWithoutVideos.find('[data-test="MovieDetails.videoGalleryNav"]')).toHaveLength(0);
+  });
+
+  it('should map provided video data to thumbnails', () => {
+    const wrapper = shallow(<MovieDetails videos={videos} />);
+    const galleryNavWrapper = wrapper.find('[data-test="MovieDetails.videoGalleryNav"]');
+    const thumbnails = [
+      { id: '57d2ffc49251415496000429', url: 'https://img.youtube.com/vi/PC460OxDNhc/mqdefault.jpg' },
+      { id: '590dedfbc3a36864a700fb24', url: 'https://img.youtube.com/vi/T7O7BtBnsG4/mqdefault.jpg' },
+    ];
+
+    expect(galleryNavWrapper.props().images).toEqual(thumbnails);
+  });
+
+  it('should select video on video thumbnail click', () => {
+    const wrapper = shallow(<MovieDetails videos={videos} />);
+
+    wrapper.find('[data-test="MovieDetails.videoGalleryNav"]').simulate('imageClick', '57d2ffc49251415496000429');
+    expect(wrapper.find('[data-test="MovieDetails.videoGallery"]').props().selectedVideoId).toEqual('57d2ffc49251415496000429');
+    wrapper.find('[data-test="MovieDetails.videoGallery"]').simulate('thumbnailClick', 'test_id');
+    expect(wrapper.find('[data-test="MovieDetails.videoGallery"]').props().selectedVideoId).toEqual('test_id');
   });
 });

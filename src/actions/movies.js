@@ -102,6 +102,13 @@ const getMovie = id => dispatch => movieService.getMovie(id)
           url: movieService.getImageUrl(image.file_path, 1000),
           thumbnailUrl: movieService.getImageUrl(image.file_path, 160),
         })),
+        videos: data.videos.results.map(video => ({
+          id: video.id,
+          key: video.key,
+          name: video.name,
+          site: video.site,
+          type: video.type,
+        })),
         originalTitle: data.original_title,
         title: data.title,
         genres: data.genres,

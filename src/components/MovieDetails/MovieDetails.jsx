@@ -4,6 +4,7 @@ import ArrowLeftIcon from 'react-icons/lib/ti/arrow-left';
 import IMDBLogo from 'resources/images/imdb_logo.svg';
 import RatingBar from 'components/RatingBar';
 import Gallery, { GalleryNav } from 'components/Gallery';
+import VideoGallery from 'components/VideoGallery';
 import { t } from 'services/translate';
 import { movieDetailsPropTypes } from './types';
 import styles from './MovieDetails.css';
@@ -33,23 +34,81 @@ class MovieDetails extends React.Component {
 
     this.state = {
       selectedImageId: null,
+      selectedVideoId: null,
       isGalleryVisible: false,
     };
 
     this.closeGallery = this.closeGallery.bind(this);
     this.onThumbnailClick = this.onThumbnailClick.bind(this);
+    this.onVideoThumbnailClick = this.onVideoThumbnailClick.bind(this);
+    this.onVideoReady = this.onVideoReady.bind(this);
   }
 
   closeGallery() {
+    if (this.video && this.state.selectedVideoId) {
+      this.video.pauseVideo();
+    }
+
     this.setState({ isGalleryVisible: false });
   }
 
   onThumbnailClick(id) {
-    this.setState({ selectedImageId: id, isGalleryVisible: true });
+    this.setState({
+      selectedImageId: id,
+      selectedVideoId: null,
+      isGalleryVisible: true,
+    });
+  }
+
+  onVideoThumbnailClick(id) {
+    this.setState({
+      selectedVideoId: id,
+      selectedImageId: null,
+      isGalleryVisible: true,
+    });
+  }
+
+  onVideoReady(event) {
+    this.video = event.target;
   }
 
   getThumbnails() {
     return this.props.images.map(({ id, thumbnailUrl: url }) => ({ id, url }));
+  }
+
+  getVideoThumbnails() {
+    return this.props.videos.map(({ id, key }) => ({ id, url: `https://img.youtube.com/vi/${key}/mqdefault.jpg` }));
+  }
+
+  renderGallery() {
+    if (this.props.images.length && this.state.selectedImageId) {
+      return (
+        <Gallery
+          data-test="MovieDetails.imageGallery"
+          selectedImageId={this.state.selectedImageId}
+          images={this.props.images}
+          onThumbnailClick={this.onThumbnailClick}
+          thumbnails={this.getThumbnails()}
+          navClassName={styles.galleryNav}
+        />
+      );
+    }
+
+    if (this.props.videos.length && this.state.selectedVideoId) {
+      return (
+        <VideoGallery
+          data-test="MovieDetails.videoGallery"
+          selectedVideoId={this.state.selectedVideoId}
+          videos={this.props.videos}
+          onThumbnailClick={this.onVideoThumbnailClick}
+          thumbnails={this.getVideoThumbnails()}
+          navClassName={styles.galleryNav}
+          onVideoReady={this.onVideoReady}
+        />
+      );
+    }
+
+    return null;
   }
 
   render() {
@@ -69,15 +128,7 @@ class MovieDetails extends React.Component {
             <button className={styles.back} onClick={this.closeGallery}>
               <ArrowLeftIcon />
             </button>
-            { this.props.images.length &&
-              <Gallery
-                selectedImageId={this.state.selectedImageId}
-                images={this.props.images}
-                onThumbnailClick={this.onThumbnailClick}
-                thumbnails={this.getThumbnails()}
-                navClassName={styles.galleryNav}
-              />
-            }
+            { this.renderGallery() }
           </div>
           <div className={styles.detailsContainer}>
             { this.props.image &&
@@ -103,9 +154,20 @@ class MovieDetails extends React.Component {
               { this.props.images.length &&
               <div className={styles.row}>
                 <GalleryNav
+                  data-test="MovieDetails.imageGalleryNav"
                   selectedImageId={this.state.selectedImageId}
                   images={this.getThumbnails()}
                   onImageClick={this.onThumbnailClick}
+                />
+              </div> }
+              { this.props.videos.length &&
+              <div className={styles.row}>
+                <GalleryNav
+                  data-test="MovieDetails.videoGalleryNav"
+                  selectedImageId={this.state.selectedVideoId}
+                  images={this.getVideoThumbnails()}
+                  imageClassName={styles.videoThumbnail}
+                  onImageClick={this.onVideoThumbnailClick}
                 />
               </div> }
               <div className={styles.ratingBar}>
@@ -155,6 +217,7 @@ MovieDetails.defaultProps = {
   writers: [],
   cast: [],
   images: [],
+  videos: [],
 };
 
 export default MovieDetails;

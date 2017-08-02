@@ -165,6 +165,7 @@ class Movies extends React.PureComponent {
             writers,
             cast,
             images,
+            videos,
           } = this.props.movieDetails;
 
           return (
@@ -181,6 +182,7 @@ class Movies extends React.PureComponent {
               writers={writers}
               cast={cast}
               images={images}
+              videos={videos}
             />
           );
         }, {

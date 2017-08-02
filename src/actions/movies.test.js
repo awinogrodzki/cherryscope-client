@@ -52,6 +52,30 @@ const mockMovieResponse = {
       { file_path: 'image_2' },
     ],
   },
+  videos: {
+    results: [
+      {
+        id: '57d2ffc49251415496000429',
+        iso_639_1: 'en',
+        iso_3166_1: 'US',
+        key: 'PC460OxDNhc',
+        name: 'Announcement',
+        site: 'YouTube',
+        size: 1080,
+        type: 'Teaser',
+      },
+      {
+        id: '590dedfbc3a36864a700fb24',
+        iso_639_1: 'en',
+        iso_3166_1: 'US',
+        key: 'T7O7BtBnsG4',
+        name: 'Official Trailer #1',
+        site: 'YouTube',
+        size: 1080,
+        type: 'Trailer',
+      },
+    ],
+  },
 };
 
 jest.mock('services/movie', () => ({
@@ -234,6 +258,22 @@ describe('movies actions', () => {
           images: [
             { id: 0, url: 'image_1', thumbnailUrl: 'image_1' },
             { id: 1, url: 'image_2', thumbnailUrl: 'image_2' },
+          ],
+          videos: [
+            {
+              id: '57d2ffc49251415496000429',
+              key: 'PC460OxDNhc',
+              name: 'Announcement',
+              site: 'YouTube',
+              type: 'Teaser',
+            },
+            {
+              id: '590dedfbc3a36864a700fb24',
+              key: 'T7O7BtBnsG4',
+              name: 'Official Trailer #1',
+              site: 'YouTube',
+              type: 'Trailer',
+            },
           ],
         },
       },
