@@ -1,12 +1,21 @@
 @import 'resources/styles/variables';
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-block;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
 }
 
 .image {
+  display: block;
+  float: left;
   cursor: pointer;
   height: 40px;
   width: 40px;
 }
+
+.isSelected {}
