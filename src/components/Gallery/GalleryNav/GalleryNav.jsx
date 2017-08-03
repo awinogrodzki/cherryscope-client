@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Image from '../Image';
-import { imageIdType } from '../Image/types';
+import { imageIdType } from './types';
 import styles from './GalleryNav.css';
 
 const renderImages = ({
@@ -13,17 +13,25 @@ const renderImages = ({
   selectedImageClass,
 }) =>
   images.map(image => (
-    <Image
+    <button
       className={classNames({
-        [styles.image]: true,
+        [styles.imageContainer]: true,
         [imageClassName]: true,
-        [styles.isSelected]: selectedImageId === image.id,
         [selectedImageClass]: selectedImageId === image.id,
+        [styles.isSelected]: selectedImageId === image.id,
       })}
-      onClick={onImageClick}
+      onClick={() => onImageClick(image.id)}
       key={image.id}
-      {...image}
-    />
+    >
+      <Image
+        className={classNames({
+          [styles.image]: true,
+        })}
+        {...image}
+      >
+        <span className={styles.title}>{image.title}</span>
+      </Image>
+    </button>
   ));
 
 const GalleryNav = ({

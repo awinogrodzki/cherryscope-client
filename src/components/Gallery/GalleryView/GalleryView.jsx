@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Image from '../Image';
 import styles from './GalleryView.css';
-import { imageIdType } from '../Image/types';
+import { imageIdType } from '../GalleryNav/types';
 
 const renderImages = (
   images,

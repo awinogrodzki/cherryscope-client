@@ -23,7 +23,7 @@ describe('GalleryNav', () => {
   it('should return image id on click', () => {
     const onImageClickSpy = jest.fn();
     const wrapper = shallow(<GalleryNav images={images} onImageClick={onImageClickSpy} />);
-    const imageWrapper = wrapper.find(Image);
+    const imageWrapper = wrapper.find('button');
 
     imageWrapper.at(1).simulate('click', 2);
     expect(onImageClickSpy).toHaveBeenCalledWith(2);
@@ -32,6 +32,6 @@ describe('GalleryNav', () => {
   it('should mark selected image', () => {
     const wrapper = shallow(<GalleryNav images={images} selectedImageId={2} />);
 
-    expect(wrapper.find(Image).at(1).hasClass('isSelected')).toBe(true);
+    expect(wrapper.find('button').at(1).hasClass('isSelected')).toBe(true);
   });
 });

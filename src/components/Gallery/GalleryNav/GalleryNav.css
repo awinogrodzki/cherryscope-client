@@ -1,7 +1,13 @@
 @import 'resources/styles/variables';
 
+:root {
+  --default-animation-time: 100ms;
+  --default-animation: var(--default-animation-time) ease-in;
+}
+
 .container {
   display: inline-block;
+  padding-right: 40px;
 
   &::after {
     content: '';
@@ -10,12 +16,59 @@
   }
 }
 
-.image {
+.imageContainer {
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
   display: block;
   float: left;
-  cursor: pointer;
   height: 40px;
   width: 40px;
+  transform: translateX(0%);
+  z-index: 0;
+  background-color: var(--color-black);
+}
+
+.image {
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: translateX(0%);
+  transition: all var(--default-animation);
+  box-shadow: none;
+}
+
+.imageContainer {
+  &:hover {
+    z-index: 2;
+    transition-delay: 0s;
+  }
+}
+
+.title {
+  padding: 5px;
+  font-size: 10px;
+  color: var(--color-white);
+  display: block;
+  opacity: 0;
+  transition: opacity 200ms;
+  line-height: 1em;
+  text-shadow: 1px 1px #000;
+}
+
+.imageContainer:hover .image {
+  width: 200%;
+  height: 200%;
+  transform: translateY(-100%);
+  box-shadow: 0 2px 15px 0 color(var(--color-black) alpha(33%));
+}
+
+.imageContainer:hover .title {
+  opacity: 1;
+  transition-delay: var(--default-animation-time);
 }
 
 .isSelected {}

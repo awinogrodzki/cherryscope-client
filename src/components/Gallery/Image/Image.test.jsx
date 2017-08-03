@@ -10,13 +10,4 @@ describe('Image', () => {
     expect(imgWrapper).toHaveLength(1);
     expect(imgWrapper.props().src).toBe('url');
   });
-
-  it('should return image id on click', () => {
-    const onClickSpy = jest.fn();
-    const wrapper = shallow(<Image id={'testId'} onClick={onClickSpy} />);
-
-    wrapper.simulate('click');
-
-    expect(onClickSpy).toHaveBeenCalledWith('testId');
-  });
 });

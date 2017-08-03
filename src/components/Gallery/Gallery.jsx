@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import GalleryView from './GalleryView';
 import GalleryNav from './GalleryNav';
 import styles from './Gallery.css';
-import { imageIdType } from './Image/types';
+import { imageIdType } from './GalleryNav/types';
 
 const Gallery = ({
   className,

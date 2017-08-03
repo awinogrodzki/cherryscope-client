@@ -1,38 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { imageIdType } from './types';
 import styles from './Image.css';
 
 const Image = ({
-  id,
   url,
-  onClick,
   className,
   title,
+  children,
 }) => (
-  <button
+  <div
     title={title}
-    onClick={() => onClick(id)}
     className={classNames(styles.container, className)}
   >
     <img src={url} />
-  </button>
+    { children &&
+      <div className={styles.content}>
+        { children }
+      </div>
+    }
+  </div>
 );
 
 Image.propTypes = {
-  id: imageIdType.isRequired,
+  children: PropTypes.node,
   url: PropTypes.string,
-  onClick: PropTypes.func,
   className: PropTypes.string,
   title: PropTypes.string,
 };
 
 Image.defaultProps = {
+  children: null,
   title: null,
   className: null,
   url: '',
-  onClick: () => {},
 };
 
 export default Image;
