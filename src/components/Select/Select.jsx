@@ -263,7 +263,7 @@ class Select extends React.Component {
             onFocus={this.onInputFocus}
             onBlur={this.onInputBlur}
             className={styles.input}
-            placeholder={this.props.inputPlaceholder}
+            placeholder={this.state.values.length ? '' : this.props.inputPlaceholder}
           />
           { this.props.isLoading && <Loader className={styles.loader} /> }
         </div>
