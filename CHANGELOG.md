@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/awinogrodzki/tmdb-client/compare/v0.6.0...v0.7.0) (2017-08-03)
+
+
+### Bug Fixes
+
+* updated tests ([239403b](https://github.com/awinogrodzki/tmdb-client/commit/239403b))
+* **MovieDetails:** refactor ([b83a8cf](https://github.com/awinogrodzki/tmdb-client/commit/b83a8cf))
+
+
+### Features
+
+* **MovieSearch:** added loader ([a404b0d](https://github.com/awinogrodzki/tmdb-client/commit/a404b0d))
+* **MovieSearch:** added loader test ([cf2304a](https://github.com/awinogrodzki/tmdb-client/commit/cf2304a))
+
+
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/awinogrodzki/tmdb-client/compare/v0.5.0...v0.6.0) (2017-08-02)
 
