@@ -1,5 +1,5 @@
 {
-  "name": "tmdb-client",
+  "name": "cherryscope-client",
   "version": "0.7.1",
   "description": "",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
     "release": "standard-version"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.16.1",
     "classnames": "^2.2.5",

@@ -5,7 +5,7 @@ import styles from './Footer.css';
 const Footer = () => (
   <div className={styles.container}>
     <span className={styles.copyright}>
-      © {(new Date()).getFullYear()}&nbsp;
+      Copyright © {(new Date()).getFullYear()}&nbsp;
       <a rel="noopener noreferrer" target="_blank" href="https://github.com/awinogrodzki">
         Amadeusz Winogrodzki
       </a>
