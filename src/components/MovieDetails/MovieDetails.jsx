@@ -38,6 +38,7 @@ class MovieDetails extends React.Component {
       isGalleryVisible: false,
     };
 
+    this.video = null;
     this.closeGallery = this.closeGallery.bind(this);
     this.onThumbnailClick = this.onThumbnailClick.bind(this);
     this.onVideoThumbnailClick = this.onVideoThumbnailClick.bind(this);
@@ -125,7 +126,11 @@ class MovieDetails extends React.Component {
           <div
             className={styles.galleryContainer}
           >
-            <button className={styles.back} onClick={this.closeGallery}>
+            <button
+              data-test="MovieDetails.galleryCloseButton"
+              className={styles.back}
+              onClick={this.closeGallery}
+            >
               <ArrowLeftIcon />
             </button>
             { this.renderGallery() }

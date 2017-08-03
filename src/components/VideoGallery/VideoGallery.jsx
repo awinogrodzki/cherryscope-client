@@ -7,7 +7,7 @@ import { GalleryNav } from 'components/Gallery';
 import styles from './VideoGallery.css';
 
 const renderVideo = (video, onVideoReady) => {
-  if (!video) {
+  if (!video || video.site !== 'YouTube') {
     return null;
   }
 
@@ -18,6 +18,7 @@ const renderVideo = (video, onVideoReady) => {
 
   return (
     <YouTube
+      data-test="VideoGallery.video"
       className={styles.video}
       opts={options}
       id={video.id}
@@ -41,16 +42,14 @@ const VideoGallery = ({
         get(videos.filter(video => video.id === selectedVideoId), 0),
         onVideoReady
       ) }
-    { thumbnails.length > 0 &&
-      <GalleryNav
-        className={classNames(styles.nav, navClassName)}
-        imageClassName={styles.thumbnail}
-        selectedImageClass={styles.isSelected}
-        selectedImageId={selectedVideoId}
-        images={thumbnails}
-        onImageClick={onThumbnailClick}
-      />
-    }
+    <GalleryNav
+      className={classNames(styles.nav, navClassName)}
+      imageClassName={styles.thumbnail}
+      selectedImageClass={styles.isSelected}
+      selectedImageId={selectedVideoId}
+      images={thumbnails}
+      onImageClick={onThumbnailClick}
+    />
   </div>
 );
 

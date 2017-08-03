@@ -120,7 +120,8 @@ describe('MovieDetails', () => {
     const wrapperWithVideos = shallow(<MovieDetails videos={videos} />);
     const wrapperWithoutVideos = shallow(<MovieDetails />);
 
-    wrapperWithVideos.setState({ selectedVideoId: '57d2ffc49251415496000429' });
+    wrapperWithVideos.find('[data-test="MovieDetails.videoGalleryNav"]')
+      .simulate('imageClick', '57d2ffc49251415496000429');
 
     expect(wrapperWithVideos.find('[data-test="MovieDetails.videoGallery"]')).toHaveLength(1);
     expect(wrapperWithVideos.find('[data-test="MovieDetails.videoGalleryNav"]')).toHaveLength(1);
@@ -147,5 +148,58 @@ describe('MovieDetails', () => {
     expect(wrapper.find('[data-test="MovieDetails.videoGallery"]').props().selectedVideoId).toEqual('57d2ffc49251415496000429');
     wrapper.find('[data-test="MovieDetails.videoGallery"]').simulate('thumbnailClick', 'test_id');
     expect(wrapper.find('[data-test="MovieDetails.videoGallery"]').props().selectedVideoId).toEqual('test_id');
+  });
+
+  it('should pause video on gallery close', () => {
+    const wrapper = shallow(<MovieDetails videos={videos} />);
+    const event = {
+      target: {
+        pauseVideo: jest.fn(),
+      },
+    };
+
+    wrapper.find('[data-test="MovieDetails.videoGalleryNav"]').simulate('imageClick', '57d2ffc49251415496000429');
+    wrapper.find('[data-test="MovieDetails.videoGallery"]').simulate('videoReady', event);
+    wrapper.find('[data-test="MovieDetails.galleryCloseButton"]').simulate('click');
+
+    expect(event.target.pauseVideo).toHaveBeenCalled();
+  });
+
+  it('should not pause video on gallery close if image gallery is opened', () => {
+    const wrapper = shallow(<MovieDetails videos={videos} images={images} />);
+    const event = {
+      target: {
+        pauseVideo: jest.fn(),
+      },
+    };
+
+    wrapper.find('[data-test="MovieDetails.videoGalleryNav"]').simulate('imageClick', '57d2ffc49251415496000429');
+    wrapper.find('[data-test="MovieDetails.videoGallery"]').simulate('videoReady', event);
+    wrapper.find('[data-test="MovieDetails.imageGalleryNav"]').simulate('imageClick', 1);
+    wrapper.find('[data-test="MovieDetails.galleryCloseButton"]').simulate('click');
+
+    expect(event.target.pauseVideo).not.toHaveBeenCalled();
+  });
+
+  it('should remove video gallery if image gallery is opened', () => {
+    const wrapper = shallow(<MovieDetails videos={videos} images={images} />);
+
+    wrapper.find('[data-test="MovieDetails.videoGalleryNav"]').simulate('imageClick', '57d2ffc49251415496000429');
+    expect(wrapper.find('[data-test="MovieDetails.videoGallery"]')).toHaveLength(1);
+
+    wrapper.find('[data-test="MovieDetails.imageGalleryNav"]').simulate('imageClick', 3);
+    expect(wrapper.find('[data-test="MovieDetails.videoGallery"]')).toHaveLength(0);
+    expect(wrapper.find('[data-test="MovieDetails.imageGallery"]')).toHaveLength(1);
+  });
+
+  it('should remove image gallery if video gallery is opened', () => {
+    const wrapper = shallow(<MovieDetails videos={videos} images={images} />);
+
+    wrapper.find('[data-test="MovieDetails.imageGalleryNav"]').simulate('imageClick', 3);
+    expect(wrapper.find('[data-test="MovieDetails.imageGallery"]')).toHaveLength(1);
+
+    wrapper.find('[data-test="MovieDetails.videoGalleryNav"]').simulate('imageClick', '57d2ffc49251415496000429');
+    expect(wrapper.find('[data-test="MovieDetails.imageGallery"]')).toHaveLength(0);
+    expect(wrapper.find('[data-test="MovieDetails.videoGallery"]')).toHaveLength(1);
   });
 });
