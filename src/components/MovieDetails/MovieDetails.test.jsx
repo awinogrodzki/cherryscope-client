@@ -134,8 +134,16 @@ describe('MovieDetails', () => {
     const wrapper = shallow(<MovieDetails videos={videos} />);
     const galleryNavWrapper = wrapper.find('[data-test="MovieDetails.videoGalleryNav"]');
     const thumbnails = [
-      { id: '57d2ffc49251415496000429', url: 'https://img.youtube.com/vi/PC460OxDNhc/mqdefault.jpg' },
-      { id: '590dedfbc3a36864a700fb24', url: 'https://img.youtube.com/vi/T7O7BtBnsG4/mqdefault.jpg' },
+      {
+        id: '57d2ffc49251415496000429',
+        title: 'Announcement',
+        url: 'https://img.youtube.com/vi/PC460OxDNhc/mqdefault.jpg',
+      },
+      {
+        id: '590dedfbc3a36864a700fb24',
+        title: 'Official Trailer #1',
+        url: 'https://img.youtube.com/vi/T7O7BtBnsG4/mqdefault.jpg',
+      },
     ];
 
     expect(galleryNavWrapper.props().images).toEqual(thumbnails);

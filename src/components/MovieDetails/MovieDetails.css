@@ -99,9 +99,9 @@
     height: 100%;
     content: '►';
     position: absolute;
-    font-size: 16px;
-    line-height: 40px;
-    color: color(var(--color-white) alpha(66%));
+    font-size: 20px;
+    line-height: 34px;
+    color: color(var(--color-white) alpha(80%));
     transition: all var(--default-animation);
   }
 }

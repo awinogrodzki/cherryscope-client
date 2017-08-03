@@ -9,8 +9,13 @@ const Image = ({
   url,
   onClick,
   className,
+  title,
 }) => (
-  <button onClick={() => onClick(id)} className={classNames(styles.container, className)}>
+  <button
+    title={title}
+    onClick={() => onClick(id)}
+    className={classNames(styles.container, className)}
+  >
     <img src={url} />
   </button>
 );
@@ -20,9 +25,11 @@ Image.propTypes = {
   url: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
+  title: PropTypes.string,
 };
 
 Image.defaultProps = {
+  title: null,
   className: null,
   url: '',
   onClick: () => {},

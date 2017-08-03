@@ -51,6 +51,7 @@ GalleryNav.propTypes = {
   images: PropTypes.arrayOf(PropTypes.shape({
     id: imageIdType.isRequired,
     url: PropTypes.string,
+    title: PropTypes.string,
   })),
   selectedImageId: imageIdType,
   imageClassName: PropTypes.string,

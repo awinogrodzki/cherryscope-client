@@ -78,7 +78,11 @@ class MovieDetails extends React.Component {
   }
 
   getVideoThumbnails() {
-    return this.props.videos.map(({ id, key }) => ({ id, url: `https://img.youtube.com/vi/${key}/mqdefault.jpg` }));
+    return this.props.videos.map(({ id, key, name }) => ({
+      id,
+      url: `https://img.youtube.com/vi/${key}/mqdefault.jpg`,
+      title: name,
+    }));
   }
 
   renderGallery() {
