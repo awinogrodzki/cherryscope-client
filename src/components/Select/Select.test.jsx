@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import Loader from 'components/Loader';
 import Value from './Value';
 import Option from './Option';
 import OptionGroup from './OptionGroup';
@@ -568,5 +569,11 @@ describe('Select', () => {
     );
 
     expect(wrapper.find(CustomComponent)).toHaveLength(1);
+  });
+
+  it('should display loader if select is loading', () => {
+    const wrapper = shallow(<Select isLoading />);
+
+    expect(wrapper.find(Loader)).toHaveLength(1);
   });
 });
