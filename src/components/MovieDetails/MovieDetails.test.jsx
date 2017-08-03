@@ -86,7 +86,8 @@ describe('MovieDetails', () => {
     const wrapperWithImages = shallow(<MovieDetails images={images} />);
     const wrapperWithoutImages = shallow(<MovieDetails />);
 
-    wrapperWithImages.setState({ selectedImageId: 2 });
+    wrapperWithImages.find('[data-test="MovieDetails.imageGalleryNav"]')
+      .simulate('imageClick', 'image_id');
 
     expect(wrapperWithImages.find('[data-test="MovieDetails.imageGallery"]')).toHaveLength(1);
     expect(wrapperWithImages.find('[data-test="MovieDetails.imageGalleryNav"]')).toHaveLength(1);
@@ -187,27 +188,5 @@ describe('MovieDetails', () => {
     wrapper.find('[data-test="MovieDetails.galleryCloseButton"]').simulate('click');
 
     expect(event.target.pauseVideo).not.toHaveBeenCalled();
-  });
-
-  it('should remove video gallery if image gallery is opened', () => {
-    const wrapper = shallow(<MovieDetails videos={videos} images={images} />);
-
-    wrapper.find('[data-test="MovieDetails.videoGalleryNav"]').simulate('imageClick', '57d2ffc49251415496000429');
-    expect(wrapper.find('[data-test="MovieDetails.videoGallery"]')).toHaveLength(1);
-
-    wrapper.find('[data-test="MovieDetails.imageGalleryNav"]').simulate('imageClick', 3);
-    expect(wrapper.find('[data-test="MovieDetails.videoGallery"]')).toHaveLength(0);
-    expect(wrapper.find('[data-test="MovieDetails.imageGallery"]')).toHaveLength(1);
-  });
-
-  it('should remove image gallery if video gallery is opened', () => {
-    const wrapper = shallow(<MovieDetails videos={videos} images={images} />);
-
-    wrapper.find('[data-test="MovieDetails.imageGalleryNav"]').simulate('imageClick', 3);
-    expect(wrapper.find('[data-test="MovieDetails.imageGallery"]')).toHaveLength(1);
-
-    wrapper.find('[data-test="MovieDetails.videoGalleryNav"]').simulate('imageClick', '57d2ffc49251415496000429');
-    expect(wrapper.find('[data-test="MovieDetails.imageGallery"]')).toHaveLength(0);
-    expect(wrapper.find('[data-test="MovieDetails.videoGallery"]')).toHaveLength(1);
   });
 });

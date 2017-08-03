@@ -36,6 +36,7 @@ class MovieDetails extends React.Component {
       selectedImageId: null,
       selectedVideoId: null,
       isGalleryVisible: false,
+      isVideoGalleryVisible: false,
     };
 
     this.video = null;
@@ -46,26 +47,29 @@ class MovieDetails extends React.Component {
   }
 
   closeGallery() {
-    if (this.video && this.state.selectedVideoId) {
+    if (this.video && this.state.isVideoGalleryVisible) {
       this.video.pauseVideo();
     }
 
-    this.setState({ isGalleryVisible: false });
+    this.setState({
+      isGalleryVisible: false,
+      isVideoGalleryVisible: false,
+    });
   }
 
   onThumbnailClick(id) {
     this.setState({
       selectedImageId: id,
-      selectedVideoId: null,
       isGalleryVisible: true,
+      isVideoGalleryVisible: false,
     });
   }
 
   onVideoThumbnailClick(id) {
     this.setState({
       selectedVideoId: id,
-      selectedImageId: null,
-      isGalleryVisible: true,
+      isVideoGalleryVisible: true,
+      isGalleryVisible: false,
     });
   }
 
@@ -86,34 +90,40 @@ class MovieDetails extends React.Component {
   }
 
   renderGallery() {
-    if (this.props.images.length && this.state.selectedImageId) {
-      return (
-        <Gallery
-          data-test="MovieDetails.imageGallery"
-          selectedImageId={this.state.selectedImageId}
-          images={this.props.images}
-          onThumbnailClick={this.onThumbnailClick}
-          thumbnails={this.getThumbnails()}
-          navClassName={styles.galleryNav}
-        />
-      );
+    if (!this.props.images.length) {
+      return null;
     }
 
-    if (this.props.videos.length && this.state.selectedVideoId) {
-      return (
-        <VideoGallery
-          data-test="MovieDetails.videoGallery"
-          selectedVideoId={this.state.selectedVideoId}
-          videos={this.props.videos}
-          onThumbnailClick={this.onVideoThumbnailClick}
-          thumbnails={this.getVideoThumbnails()}
-          navClassName={styles.galleryNav}
-          onVideoReady={this.onVideoReady}
-        />
-      );
+    return (
+      <Gallery
+        className={styles.gallery}
+        data-test="MovieDetails.imageGallery"
+        selectedImageId={this.state.selectedImageId}
+        images={this.props.images}
+        onThumbnailClick={this.onThumbnailClick}
+        thumbnails={this.getThumbnails()}
+        navClassName={styles.galleryNav}
+      />
+    );
+  }
+
+  renderVideoGallery() {
+    if (!this.props.videos.length) {
+      return null;
     }
 
-    return null;
+    return (
+      <VideoGallery
+        className={styles.videoGallery}
+        data-test="MovieDetails.videoGallery"
+        selectedVideoId={this.state.selectedVideoId}
+        videos={this.props.videos}
+        onThumbnailClick={this.onVideoThumbnailClick}
+        thumbnails={this.getVideoThumbnails()}
+        navClassName={styles.galleryNav}
+        onVideoReady={this.onVideoReady}
+      />
+    );
   }
 
   render() {
@@ -122,6 +132,7 @@ class MovieDetails extends React.Component {
         className={classNames({
           [styles.container]: true,
           [styles.isGalleryVisible]: this.state.isGalleryVisible,
+          [styles.isVideoGalleryVisible]: this.state.isVideoGalleryVisible,
         })}
       >
         <div
@@ -138,6 +149,7 @@ class MovieDetails extends React.Component {
               <ArrowLeftIcon />
             </button>
             { this.renderGallery() }
+            { this.renderVideoGallery() }
           </div>
           <div className={styles.detailsContainer}>
             { this.props.image &&

@@ -29,6 +29,7 @@ const renderVideo = (video, onVideoReady) => {
 };
 
 const VideoGallery = ({
+  className,
   videos,
   thumbnails,
   selectedVideoId,
@@ -36,7 +37,7 @@ const VideoGallery = ({
   navClassName,
   onVideoReady,
 }) => (
-  <div className={styles.container}>
+  <div className={classNames(styles.container, className)}>
     { selectedVideoId &&
       renderVideo(
         get(videos.filter(video => video.id === selectedVideoId), 0),
@@ -54,6 +55,7 @@ const VideoGallery = ({
 );
 
 VideoGallery.propTypes = {
+  className: PropTypes.string,
   videos: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     key: PropTypes.string.isRequired,
@@ -72,6 +74,7 @@ VideoGallery.propTypes = {
 };
 
 VideoGallery.defaultProps = {
+  className: null,
   videos: [],
   thumbnails: [],
   selectedVideoId: null,

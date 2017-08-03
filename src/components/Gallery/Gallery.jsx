@@ -7,6 +7,7 @@ import styles from './Gallery.css';
 import { imageIdType } from './Image/types';
 
 const Gallery = ({
+  className,
   images,
   thumbnails,
   selectedImageId,
@@ -14,7 +15,7 @@ const Gallery = ({
   onThumbnailClick,
   navClassName,
 }) => (
-  <div className={styles.container}>
+  <div className={classNames(styles.container, className)}>
     <GalleryView
       selectedImageId={selectedImageId}
       onImageClick={onImageClick}
@@ -34,6 +35,7 @@ const Gallery = ({
 );
 
 Gallery.propTypes = {
+  className: PropTypes.string,
   images: PropTypes.arrayOf(PropTypes.shape({
     id: imageIdType.isRequired,
     url: PropTypes.string,
@@ -49,6 +51,7 @@ Gallery.propTypes = {
 };
 
 Gallery.defaultProps = {
+  className: null,
   images: [],
   thumbnails: [],
   selectedImageId: null,
