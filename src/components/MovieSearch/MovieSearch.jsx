@@ -22,7 +22,8 @@ class MovieSearch extends React.Component {
       query: null,
       selected: [],
       sortBy: null,
-      isLoading: false,
+      inputLoading: false,
+      genresLoading: false,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -37,10 +38,10 @@ class MovieSearch extends React.Component {
   }
 
   getGenres() {
-    this.setState({ isLoading: true });
+    this.setState({ genresLoading: true });
     this.props.getGenres()
-      .then(() => this.setState({ isLoading: false }))
-      .catch(() => this.setState({ isLoading: false }));
+      .then(() => this.setState({ genresLoading: false }))
+      .catch(() => this.setState({ genresLoading: false }));
   }
 
   registerObservables() {
@@ -227,9 +228,17 @@ class MovieSearch extends React.Component {
       return;
     }
 
-    this.props.searchCompanies(value);
-    this.props.searchPeople(value);
-    this.props.searchKeywords(value);
+    this.setState({
+      inputLoading: true,
+    });
+
+    Promise.all([
+      this.props.searchCompanies(value),
+      this.props.searchPeople(value),
+      this.props.searchKeywords(value),
+    ])
+      .then(() => this.setState({ inputLoading: false }))
+      .catch(() => this.setState({ inputLoading: false }));
   }
 
   getDateOptionsFromQuery() {
@@ -400,7 +409,7 @@ class MovieSearch extends React.Component {
           getOptionClass={this.getOptionClass}
           onInputChange={this.onInputChange}
           optionGroups={this.getOptionGroups()}
-          isLoading={this.state.isLoading}
+          isLoading={this.state.genresLoading || this.state.inputLoading}
           inputPlaceholder={t('movieSearch.inputLabel')}
         />
       </div>

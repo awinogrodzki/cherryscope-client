@@ -8,6 +8,7 @@
 }
 
 .inputContainer {
+  position: relative;
   background: transparent;
   border: 2px solid var(--color-black);
   border-width: 0 0 2px 0;
@@ -54,6 +55,22 @@
     @media (--only-tablet) {
       font-size: var(--medium-font-size);
     }
+  }
+}
+
+.loader {
+  position: absolute;
+  right: 0;
+  bottom: 0px;
+
+  & svg {
+    width: 40px;
+    height: 40px;
+  };
+
+  & svg path,
+  & svg rect {
+    fill: #000;
   }
 }
 

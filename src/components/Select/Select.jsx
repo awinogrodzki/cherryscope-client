@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { find, isEqual, get } from 'lodash';
+import Loader from 'components/Loader';
 import OptionGroup from './OptionGroup';
 import Value from './Value';
 import styles from './Select.css';
@@ -21,6 +22,13 @@ class Select extends React.Component {
       inputValue: props.inputValue,
       isExpanded: props.isExpanded,
     };
+
+    this.setInput = this.setInput.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onInputKeyDown = this.onInputKeyDown.bind(this);
+    this.onInputFocus = this.onInputFocus.bind(this);
+    this.onInputBlur = this.onInputBlur.bind(this);
+    this.onValueDelete = this.onValueDelete.bind(this);
 
     this.registerEventListeners();
   }
@@ -225,18 +233,6 @@ class Select extends React.Component {
     this.adjustExpandableContainer();
   }
 
-  getInputPlaceholder() {
-    if (this.props.isLoading) {
-      return 'Loading...';
-    }
-
-    if (this.state.values.length) {
-      return '';
-    }
-
-    return this.props.inputPlaceholder;
-  }
-
   /* eslint-disable react/no-array-index-key */
   render() {
     return (
@@ -254,21 +250,22 @@ class Select extends React.Component {
               key={index}
               option={option}
               getClass={this.props.getValueClass}
-              onDelete={optionToDelete => this.onValueDelete(optionToDelete)}
+              onDelete={this.onValueDelete}
             />
           )) }
           <input
-            ref={input => this.setInput(input)}
+            ref={this.setInput}
             data-test="Select.input"
             type="text"
             value={this.state.inputValue}
-            onChange={e => this.onInputChange(e)}
-            onKeyDown={e => this.onInputKeyDown(e)}
-            onFocus={e => this.onInputFocus(e)}
-            onBlur={e => this.onInputBlur(e)}
+            onChange={this.onInputChange}
+            onKeyDown={this.onInputKeyDown}
+            onFocus={this.onInputFocus}
+            onBlur={this.onInputBlur}
             className={styles.input}
-            placeholder={this.getInputPlaceholder()}
+            placeholder={this.props.inputPlaceholder}
           />
+          { this.props.isLoading && <Loader className={styles.loader} /> }
         </div>
         <div
           className={styles.expandableContainer}
