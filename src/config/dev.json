@@ -10,7 +10,8 @@
       "search": {
         "keywords_uri": "/search/keyword",
         "people_uri": "/search/person",
-        "companies_uri": "/search/company"
+        "companies_uri": "/search/company",
+        "movies_uri": "/search/movie"
       }
     }
   }

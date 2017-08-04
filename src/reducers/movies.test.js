@@ -8,6 +8,8 @@ import {
   CLEAR_PEOPLE,
   SEARCH_COMPANIES,
   CLEAR_COMPANIES,
+  SEARCH_MOVIES,
+  CLEAR_MOVIES,
   GET_MOVIE,
 } from '../actions/types';
 
@@ -19,6 +21,7 @@ const initialState = {
   genres: [],
   keywords: [],
   companies: [],
+  searchMovies: [],
   details: {},
 };
 
@@ -128,6 +131,30 @@ describe('movies reducer', () => {
 
     expect(reducer(initialStateWithCompanies, action)).toEqual({
       companies: [],
+    });
+  });
+
+  it('should be able to search movies', () => {
+    const action = {
+      type: SEARCH_MOVIES,
+      movies: [10, 11, 12],
+    };
+
+    expect(reducer(initialState, action)).toEqual(expect.objectContaining({
+      searchMovies: [10, 11, 12],
+    }));
+  });
+
+  it('should be able to clear movies', () => {
+    const initialStateWithCompanies = {
+      searchMovies: [1, 2, 3],
+    };
+    const action = {
+      type: CLEAR_MOVIES,
+    };
+
+    expect(reducer(initialStateWithCompanies, action)).toEqual({
+      searchMovies: [],
     });
   });
 

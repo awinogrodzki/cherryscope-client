@@ -14,6 +14,7 @@ jest.mock('services/config', () => {
           keywords_uri: '/search/keyword',
           people_uri: '/search/person',
           companies_uri: '/search/company',
+          movies_uri: '/search/movie',
         },
       },
     },
@@ -67,6 +68,11 @@ describe('movie service', () => {
 
   it('should be able to search companies', () => movieService.searchCompanies('queryValue').then((response) => {
     expect(response.url).toBe('https://api.themoviedb.org/3/search/company?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
+    expect(response.options.params.query).toBe('queryValue');
+  }));
+
+  it('should be able to search movies', () => movieService.searchMovies('queryValue').then((response) => {
+    expect(response.url).toBe('https://api.themoviedb.org/3/search/movie?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
     expect(response.options.params.query).toBe('queryValue');
   }));
 

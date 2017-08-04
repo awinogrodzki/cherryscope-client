@@ -7,6 +7,8 @@ import {
   CLEAR_PEOPLE,
   SEARCH_COMPANIES,
   CLEAR_COMPANIES,
+  SEARCH_MOVIES,
+  CLEAR_MOVIES,
   GET_MOVIE,
 } from '../actions/types';
 
@@ -18,6 +20,8 @@ const initialState = {
   genres: [],
   keywords: [],
   people: [],
+  companies: [],
+  searchMovies: [],
   details: {
     id: null,
     imdbId: null,
@@ -72,6 +76,14 @@ export default function moviesReducer(state = initialState, action) {
     case CLEAR_COMPANIES:
       return Object.assign({}, state, {
         companies: [],
+      });
+    case SEARCH_MOVIES:
+      return Object.assign({}, state, {
+        searchMovies: action.movies,
+      });
+    case CLEAR_MOVIES:
+      return Object.assign({}, state, {
+        searchMovies: [],
       });
     case GET_MOVIE:
       return Object.assign({}, state, {

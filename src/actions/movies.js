@@ -9,6 +9,8 @@ import {
   CLEAR_PEOPLE,
   SEARCH_COMPANIES,
   CLEAR_COMPANIES,
+  SEARCH_MOVIES,
+  CLEAR_MOVIES,
   GET_MOVIE,
 } from './types';
 
@@ -88,6 +90,20 @@ const clearCompanies = () => ({
   type: CLEAR_COMPANIES,
 });
 
+const searchMovies = query => dispatch => movieService.searchMovies(query)
+  .then((data) => {
+    dispatch({
+      type: SEARCH_MOVIES,
+      movies: data.results,
+    });
+
+    return data;
+  });
+
+const clearMovies = () => ({
+  type: CLEAR_MOVIES,
+});
+
 const getMovie = id => dispatch => movieService.getMovie(id)
   .then((data) => {
     dispatch({
@@ -132,5 +148,7 @@ module.exports = {
   clearPeople,
   searchCompanies,
   clearCompanies,
+  searchMovies,
+  clearMovies,
   getMovie,
 };

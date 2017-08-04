@@ -8,6 +8,7 @@ import {
   SEARCH_KEYWORDS_URI,
   SEARCH_PEOPLE_URI,
   SEARCH_COMPANIES_URI,
+  SEARCH_MOVIES_URI,
   MOVIE_URI,
   IMAGE_URL,
 } from './constants';
@@ -48,6 +49,11 @@ export default {
 
   searchCompanies(query = null) {
     return axios.get(getUrl(SEARCH_COMPANIES_URI), { params: { query } })
+      .then(response => mapResponse(response));
+  },
+
+  searchMovies(query = null) {
+    return axios.get(getUrl(SEARCH_MOVIES_URI), { params: { query } })
       .then(response => mapResponse(response));
   },
 
