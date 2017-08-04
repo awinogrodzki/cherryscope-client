@@ -5,6 +5,7 @@ import movieService from 'services/movie';
 import Movie from 'components/Movie';
 import Loader from 'components/Loader';
 import styles from './MovieList.css';
+import { movieType } from './types';
 
 class MovieList extends React.Component {
   renderMovies() {
@@ -53,7 +54,7 @@ class MovieList extends React.Component {
 }
 
 MovieList.propTypes = {
-  movies: PropTypes.arrayOf(PropTypes.object),
+  movies: PropTypes.arrayOf(movieType),
   isLoading: PropTypes.bool,
   loadingMovieId: PropTypes.number,
   onMovieSelect: PropTypes.func,

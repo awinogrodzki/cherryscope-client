@@ -9,6 +9,8 @@ import {
   clearPeople,
   searchCompanies,
   clearCompanies,
+  searchMovies,
+  clearMovies,
 } from 'actions';
 import MovieSearch from './MovieSearch';
 
@@ -22,6 +24,9 @@ const MovieSearchContainer = props => (
     clearPeople={props.clearPeople}
     searchCompanies={props.searchCompanies}
     clearCompanies={props.clearCompanies}
+    searchMovies={props.searchMovies}
+    clearMovies={props.clearMovies}
+    movies={props.movies}
     companies={props.companies}
     genres={props.genres}
     people={props.people}
@@ -39,6 +44,8 @@ const mapDispatchToProps = {
   clearPeople: () => clearPeople(),
   searchCompanies: value => searchCompanies(value),
   clearCompanies: () => clearCompanies(),
+  searchMovies: value => searchMovies(value),
+  clearMovies: () => clearMovies(),
 };
 
  /* istanbul ignore next */
@@ -47,6 +54,7 @@ const mapStateToProps = state => ({
   genres: state.movies.genres,
   keywords: state.movies.keywords,
   companies: state.movies.companies,
+  movies: state.movies.searchMovies,
 });
 
 MovieSearchContainer.propTypes = {
@@ -58,9 +66,12 @@ MovieSearchContainer.propTypes = {
   clearPeople: PropTypes.func.isRequired,
   searchCompanies: PropTypes.func.isRequired,
   clearCompanies: PropTypes.func.isRequired,
+  searchMovies: PropTypes.func.isRequired,
+  clearMovies: PropTypes.func.isRequired,
   people: PropTypes.arrayOf(PropTypes.object),
   genres: PropTypes.arrayOf(PropTypes.object),
   companies: PropTypes.arrayOf(PropTypes.object),
+  movies: PropTypes.arrayOf(PropTypes.object),
   keywords: PropTypes.arrayOf(PropTypes.object),
 };
 
@@ -70,6 +81,7 @@ MovieSearchContainer.defaultProps = {
   people: [],
   keywords: [],
   companies: [],
+  movies: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieSearchContainer);

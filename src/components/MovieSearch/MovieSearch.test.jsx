@@ -1,6 +1,8 @@
 import React from 'react';
+import { find } from 'lodash';
 import { shallow, mount } from 'enzyme';
 import Select from 'components/Select';
+import MovieOptions from 'components/MovieOptions';
 import MovieSearch from './MovieSearch';
 
 jest.mock('services/translate', () => ({
@@ -392,6 +394,30 @@ describe('MovieSearch', () => {
     expect(mockClearCompanies).toBeCalled();
   });
 
+  it('should search movies if input value is provided', () => {
+    const mockSearchMovies = jest.fn();
+    const wrapper = shallow(<MovieSearch searchMovies={mockSearchMovies} />);
+
+    wrapper.find(Select).simulate('inputChange', 'abc');
+    expect(mockSearchMovies).toBeCalledWith('abc');
+  });
+
+  it('should clear movies if input value is empty', () => {
+    const mockClearMovies = jest.fn();
+    const wrapper = shallow(<MovieSearch clearMovies={mockClearMovies} />);
+
+    wrapper.find(Select).simulate('inputChange', '');
+    expect(mockClearMovies).toBeCalled();
+  });
+
+  it('should clear movies if input value has changed', () => {
+    const mockClearMovies = jest.fn();
+    const wrapper = shallow(<MovieSearch clearMovies={mockClearMovies} />);
+
+    wrapper.find(Select).simulate('change', []);
+    expect(mockClearMovies).toBeCalled();
+  });
+
   it('should show genres options if provided', () => {
     const genres = [
       { id: 123, name: 'Genre1' },
@@ -490,5 +516,27 @@ describe('MovieSearch', () => {
         ]),
       })
     );
+  });
+
+  it('should show movies options if provided', () => {
+    const movies = [
+      { id: 123, title: 'Movie1' },
+      { id: 234, title: 'Movie2' },
+    ];
+    const wrapper = shallow(<MovieSearch movies={movies} />);
+    const optionGroups = wrapper.find(Select).props().optionGroups;
+    const group = find(optionGroups, { id: 'movies' });
+    const customComponent = group.customComponent;
+
+    expect(customComponent.type).toBe(MovieOptions);
+    expect(customComponent.props.movies).toEqual(movies);
+  });
+
+  it('should not show movies options if movies are not provided', () => {
+    const wrapper = shallow(<MovieSearch />);
+    const optionGroups = wrapper.find(Select).props().optionGroups;
+    const group = find(optionGroups, { id: 'movies' });
+
+    expect(group).toBeFalsy();
   });
 });

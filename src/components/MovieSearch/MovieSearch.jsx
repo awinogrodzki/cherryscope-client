@@ -7,6 +7,7 @@ import { Observable } from 'services/observable';
 import languages from 'services/languages';
 import movieService from 'services/movie';
 import MovieSort from 'components/MovieSort';
+import MovieOptions from 'components/MovieOptions';
 import Select from 'components/Select';
 import Person from './Person';
 import Company from './Company';
@@ -63,12 +64,29 @@ class MovieSearch extends React.Component {
       this.getSortOptionGroup(),
       this.getDateOptionGroup(),
       this.getVoteOptionGroup(),
+      this.getMoviesOptionGroup(),
       this.getGenreOptionGroup(),
       this.getLanguageOptionGroup(),
       this.getPeopleOptionGroup(),
       this.getCompaniesOptionGroup(),
       this.getKeywordOptionGroup(),
-    ];
+    ].filter(item => !!item);
+  }
+
+  getMoviesOptionGroup() {
+    if (!this.props.movies.length) {
+      return null;
+    }
+
+    return {
+      id: 'movies',
+      customComponent: (
+        <MovieOptions
+          movies={this.props.movies}
+          onMovieClick={this.onMovieClick}
+        />
+      ),
+    };
   }
 
   getSortOptionGroup() {
@@ -209,6 +227,7 @@ class MovieSearch extends React.Component {
       this.props.clearCompanies();
       this.props.clearKeywords();
       this.props.clearPeople();
+      this.props.clearMovies();
       this.props.onChange(this.getValues());
     });
   }
@@ -225,6 +244,8 @@ class MovieSearch extends React.Component {
       this.props.clearCompanies();
       this.props.clearKeywords();
       this.props.clearPeople();
+      this.props.clearMovies();
+
       return;
     }
 
@@ -236,6 +257,7 @@ class MovieSearch extends React.Component {
       this.props.searchCompanies(value),
       this.props.searchPeople(value),
       this.props.searchKeywords(value),
+      this.props.searchMovies(value),
     ])
       .then(() => this.setState({ inputLoading: false }))
       .catch(() => this.setState({ inputLoading: false }));
@@ -421,6 +443,7 @@ MovieSearch.propTypes = {
   genres: PropTypes.arrayOf(PropTypes.object),
   people: PropTypes.arrayOf(PropTypes.object),
   companies: PropTypes.arrayOf(PropTypes.object),
+  movies: PropTypes.arrayOf(PropTypes.object),
   keywords: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
   getGenres: PropTypes.func,
@@ -430,12 +453,15 @@ MovieSearch.propTypes = {
   clearPeople: PropTypes.func,
   searchCompanies: PropTypes.func,
   clearCompanies: PropTypes.func,
+  searchMovies: PropTypes.func,
+  clearMovies: PropTypes.func,
 };
 
 MovieSearch.defaultProps = {
   genres: [],
   people: [],
   companies: [],
+  movies: [],
   keywords: [],
   onChange: () => {},
   getGenres: () => {},
@@ -445,6 +471,8 @@ MovieSearch.defaultProps = {
   clearPeople: () => {},
   searchCompanies: () => {},
   clearCompanies: () => {},
+  searchMovies: () => {},
+  clearMovies: () => {},
 };
 
 export default MovieSearch;
