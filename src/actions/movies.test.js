@@ -32,7 +32,7 @@ const mockStore = configureMockStore(middlewares);
 
 jest.mock('services/movie', () => ({
   discover: () => Promise.resolve({
-    items: [1, 2, 3],
+    movies: [1, 2, 3],
     page: 1,
     pageCount: 10,
     itemCount: 20,
@@ -41,16 +41,16 @@ jest.mock('services/movie', () => ({
     genres: [1, 2, 3],
   }),
   searchKeywords: () => Promise.resolve({
-    results: [1, 2, 3],
+    keywords: [1, 2, 3],
   }),
   searchPeople: () => Promise.resolve({
-    results: [1, 2, 3],
+    people: [1, 2, 3],
   }),
   searchCompanies: () => Promise.resolve({
-    results: [1, 2, 3],
+    companies: [1, 2, 3],
   }),
   searchMovies: () => Promise.resolve({
-    items: [1, 2, 3],
+    movies: [1, 2, 3],
   }),
   getMovie: id => Promise.resolve({ id }),
   getImageUrl: image => image,

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Movie from 'components/Movie';
+import Movie, { movieType } from 'components/Movie';
 import Loader from 'components/Loader';
 import styles from './MovieList.css';
-import { movieType } from './types';
 
 class MovieList extends React.Component {
   renderMovies() {

@@ -5,12 +5,12 @@ import classNames from 'classnames';
 import { t } from 'services/translate';
 import { Observable } from 'services/observable';
 import languages from 'services/languages';
-import movieService from 'services/movie';
 import MovieSort from 'components/MovieSort';
 import MovieOptions from 'components/MovieOptions';
 import Select from 'components/Select';
-import Person from './Person';
-import Company from './Company';
+import { movieType } from 'components/Movie';
+import Person, { personType } from './Person';
+import Company, { companyType } from './Company';
 import styles from './MovieSearch.css';
 import validDateStrings from './validDateStrings';
 
@@ -149,8 +149,8 @@ class MovieSearch extends React.Component {
       type: 'person',
       customComponent: <Person
         name={person.name}
-        image={movieService.getImageUrl(person.profile_path, 160)}
-        tags={person.known_for && person.known_for.map(item => ({ label: item.original_title }))}
+        imageUrl={person.avatarUrl}
+        tags={person.knownFor && person.knownFor.map(item => ({ label: item.originalTitle }))}
       />,
     }))
     .filter((option, index) => index < limit);
@@ -177,7 +177,7 @@ class MovieSearch extends React.Component {
       type: 'company',
       customComponent: <Company
         name={company.name}
-        image={movieService.getImageUrl(company.logo_path, 160)}
+        imageUrl={company.logoUrl}
       />,
     }))
     .filter((option, index) => index < limit);
@@ -423,6 +423,7 @@ class MovieSearch extends React.Component {
     return (
       <div className={styles.container}>
         <Select
+          isExpanded
           className={styles.select}
           values={this.state.selected}
           onChange={this.onChange}
@@ -440,11 +441,17 @@ class MovieSearch extends React.Component {
 }
 
 MovieSearch.propTypes = {
-  genres: PropTypes.arrayOf(PropTypes.object),
-  people: PropTypes.arrayOf(PropTypes.object),
-  companies: PropTypes.arrayOf(PropTypes.object),
-  movies: PropTypes.arrayOf(PropTypes.object),
-  keywords: PropTypes.arrayOf(PropTypes.object),
+  genres: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
+  people: PropTypes.arrayOf(personType),
+  companies: PropTypes.arrayOf(companyType),
+  movies: PropTypes.arrayOf(movieType),
+  keywords: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
   onChange: PropTypes.func,
   getGenres: PropTypes.func,
   searchKeywords: PropTypes.func,

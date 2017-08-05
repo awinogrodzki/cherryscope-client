@@ -21,7 +21,7 @@ const discoverMovies = (filters, append = false) =>
 
       dispatch({
         type: DISCOVER_MOVIES,
-        items: append ? currentMovies.concat(data.items) : data.items,
+        items: append ? currentMovies.concat(data.movies) : data.movies,
         page: data.page,
         pageCount: data.pageCount,
         itemCount: data.itemCount,
@@ -44,7 +44,7 @@ const searchKeywords = query => dispatch => movieService.searchKeywords(query)
   .then((data) => {
     dispatch({
       type: SEARCH_KEYWORDS,
-      keywords: data.results,
+      keywords: data.keywords,
     });
 
     return data;
@@ -58,7 +58,7 @@ const searchPeople = query => dispatch => movieService.searchPeople(query)
   .then((data) => {
     dispatch({
       type: SEARCH_PEOPLE,
-      people: data.results,
+      people: data.people,
     });
 
     return data;
@@ -72,7 +72,7 @@ const searchCompanies = query => dispatch => movieService.searchCompanies(query)
   .then((data) => {
     dispatch({
       type: SEARCH_COMPANIES,
-      companies: data.results,
+      companies: data.companies,
     });
 
     return data;
@@ -86,7 +86,7 @@ const searchMovies = query => dispatch => movieService.searchMovies(query)
   .then((data) => {
     dispatch({
       type: SEARCH_MOVIES,
-      movies: data.items,
+      movies: data.movies,
     });
 
     return data;

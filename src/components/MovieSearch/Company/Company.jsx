@@ -2,21 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Company.css';
 
-const renderImage = (image) => {
-  if (!image) {
+const renderImage = (url) => {
+  if (!url) {
     return null;
   }
 
   return (
     <div data-test="Company.image" className={styles.image}>
-      <img src={image} />
+      <img src={url} />
     </div>
   );
 };
 
-const Company = ({ name, image }) => (
+const Company = ({ name, imageUrl }) => (
   <div className={styles.container}>
-    { renderImage(image) }
+    { renderImage(imageUrl) }
     <div className={styles.content}>
       <div className={styles.name}>
         { name }
@@ -27,11 +27,11 @@ const Company = ({ name, image }) => (
 
 Company.propTypes = {
   name: PropTypes.string,
-  image: PropTypes.string,
+  imageUrl: PropTypes.string,
 };
 Company.defaultProps = {
   name: null,
-  image: null,
+  imageUrl: null,
 };
 
 export default Company;

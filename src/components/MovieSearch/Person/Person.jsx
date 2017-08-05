@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Person.css';
 
-const renderImage = (image) => {
-  if (!image) {
+const renderImage = (url) => {
+  if (!url) {
     return null;
   }
 
   return (
     <div data-test="Person.image" className={styles.image}>
-      <img src={image} />
+      <img src={url} />
     </div>
   );
 };
@@ -28,9 +28,9 @@ const renderTags = tags => (
   </div>
 );
 
-const Person = ({ name, image, tags }) => (
+const Person = ({ name, imageUrl, tags }) => (
   <div className={styles.container}>
-    { renderImage(image) }
+    { renderImage(imageUrl) }
     <div className={styles.content}>
       <div className={styles.name}>
         { name }
@@ -42,7 +42,7 @@ const Person = ({ name, image, tags }) => (
 
 Person.propTypes = {
   name: PropTypes.string,
-  image: PropTypes.string,
+  imageUrl: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,
   })),
@@ -50,7 +50,7 @@ Person.propTypes = {
 
 Person.defaultProps = {
   name: null,
-  image: null,
+  imageUrl: null,
   tags: [],
 };
 

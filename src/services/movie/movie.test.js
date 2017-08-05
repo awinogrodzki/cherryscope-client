@@ -26,8 +26,12 @@ jest.mock('services/config', () => {
 });
 
 jest.mock('./mappers', () => ({
-  mapMovies: data => data,
-  mapMovie: data => data,
+  mapMoviesResponse: data => data,
+  mapMovieResponse: data => data,
+  mapPeopleResponse: data => data,
+  mapCompaniesResponse: data => data,
+  mapKeywordsResponse: data => data,
+  mapGenresResponse: data => data,
 }));
 
 jest.mock('axios', () => ({

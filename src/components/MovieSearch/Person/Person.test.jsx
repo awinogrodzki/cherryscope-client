@@ -10,20 +10,20 @@ describe('Person', () => {
   });
 
   it('should display image if valid image url is provided', () => {
-    const wrapper = shallow(<Person image={'test_url'} />);
+    const wrapper = shallow(<Person imageUrl={'test_url'} />);
 
     expect(wrapper.find('[data-test="Person.image"]')).toHaveLength(1);
   });
 
   it('should display tags', () => {
-    const wrapper = shallow(<Person image={'test_url'} tags={[{ label: 'Test' }]} />);
+    const wrapper = shallow(<Person imageUrl={'test_url'} tags={[{ label: 'Test' }]} />);
 
     expect(wrapper.find('[data-test="Person.tag"]')).toHaveLength(1);
     expect(wrapper.find('[data-test="Person.tag"]').text()).toBe('Test');
   });
 
   it('should not display empty tags', () => {
-    const wrapper = shallow(<Person image={'test_url'} tags={[{ label: undefined }]} />);
+    const wrapper = shallow(<Person imageUrl={'test_url'} tags={[{ label: undefined }]} />);
 
     expect(wrapper.find('[data-test="Person.tag"]')).toHaveLength(0);
   });

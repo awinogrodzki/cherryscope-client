@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { movieType } from 'components/Movie';
 import styles from './MovieOptions.css';
-import { movieType } from '../MovieList/types';
 
 const renderImage = (url) => {
   if (!url) {

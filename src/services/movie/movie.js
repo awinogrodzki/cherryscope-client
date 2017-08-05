@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { mapMovies, mapMovie } from './mappers';
+import {
+  mapMoviesResponse,
+  mapMovieResponse,
+  mapCompaniesResponse,
+  mapPeopleResponse,
+  mapKeywordsResponse,
+  mapGenresResponse,
+} from './mappers';
 
 import {
   API_KEY,
@@ -25,37 +32,37 @@ const mapResponse = (response) => {
 export default {
   discover(filters = {}) {
     return axios.get(getUrl(DISCOVER_URI), { params: filters })
-      .then(response => mapMovies(mapResponse(response)));
+      .then(response => mapMoviesResponse(mapResponse(response)));
   },
 
   getMovie(id) {
     return axios.get(getUrl(`${MOVIE_URI}/${id}`), { params: { append_to_response: 'videos,images,credits' } })
-      .then(response => mapMovie(mapResponse(response)));
+      .then(response => mapMovieResponse(mapResponse(response)));
   },
 
   getGenres() {
     return axios.get(getUrl(GENRES_URI))
-      .then(response => mapResponse(response));
+      .then(response => mapGenresResponse(mapResponse(response)));
   },
 
   searchKeywords(query = null) {
     return axios.get(getUrl(SEARCH_KEYWORDS_URI), { params: { query } })
-      .then(response => mapResponse(response));
+      .then(response => mapKeywordsResponse(mapResponse(response)));
   },
 
   searchPeople(query = null) {
     return axios.get(getUrl(SEARCH_PEOPLE_URI), { params: { query } })
-      .then(response => mapResponse(response));
+      .then(response => mapPeopleResponse(mapResponse(response)));
   },
 
   searchCompanies(query = null) {
     return axios.get(getUrl(SEARCH_COMPANIES_URI), { params: { query } })
-      .then(response => mapResponse(response));
+      .then(response => mapCompaniesResponse(mapResponse(response)));
   },
 
   searchMovies(query = null) {
     return axios.get(getUrl(SEARCH_MOVIES_URI), { params: { query } })
-      .then(response => mapMovies(mapResponse(response), 160));
+      .then(response => mapMoviesResponse(mapResponse(response), 160));
   },
 
   getImageUrl,

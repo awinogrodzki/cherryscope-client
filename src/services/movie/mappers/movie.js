@@ -11,7 +11,7 @@ export const mapWriters = response =>
 
 export const mapCast = response => get(response, 'credits.cast', []).slice(0, 10);
 
-export const mapMovie = data => ({
+export const mapMovieResponse = data => ({
   id: data.id,
   overview: data.overview,
   imdbId: data.imdb_id,

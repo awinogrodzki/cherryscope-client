@@ -94,6 +94,7 @@
   opacity: 0;
 
   &.isExpanded {
+    min-height: 360px;
     opacity: 1;
     max-height: 360px;
   }

@@ -1,4 +1,4 @@
-import { mapMovies } from '../movies';
+import { mapMoviesResponse } from '../movies';
 
 jest.mock('services/movie', () => ({
   getImageUrl: image => image,
@@ -22,7 +22,7 @@ const mockMoviesResponse = {
 };
 
 const mappedMoviesResponse = {
-  items: [
+  movies: [
     {
       id: 12345,
       imageUrl: 'test_image_url',
@@ -38,8 +38,8 @@ const mappedMoviesResponse = {
   itemCount: 20,
 };
 
-describe('movie service response get movie details mapper', () => {
-  it('should map movie details', () => {
-    expect(mapMovies(mockMoviesResponse)).toEqual(mappedMoviesResponse);
+describe('movie service movies response mapper', () => {
+  it('should map movie list', () => {
+    expect(mapMoviesResponse(mockMoviesResponse)).toEqual(mappedMoviesResponse);
   });
 });
