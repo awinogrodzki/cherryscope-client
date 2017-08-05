@@ -55,7 +55,7 @@ export default {
 
   searchMovies(query = null) {
     return axios.get(getUrl(SEARCH_MOVIES_URI), { params: { query } })
-      .then(response => mapMovies(mapResponse(response)));
+      .then(response => mapMovies(mapResponse(response), 160));
   },
 
   getImageUrl,
