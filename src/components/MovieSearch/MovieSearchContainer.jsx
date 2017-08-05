@@ -32,6 +32,8 @@ const MovieSearchContainer = props => (
     people={props.people}
     keywords={props.keywords}
     onChange={values => props.onChange(values)}
+    onMovieClick={props.onMovieClick}
+    ignoreInputBlur={props.ignoreInputBlur}
   />
 );
 
@@ -58,6 +60,7 @@ const mapStateToProps = state => ({
 });
 
 MovieSearchContainer.propTypes = {
+  onMovieClick: PropTypes.func,
   onChange: PropTypes.func,
   getGenres: PropTypes.func.isRequired,
   searchKeywords: PropTypes.func.isRequired,
@@ -73,9 +76,12 @@ MovieSearchContainer.propTypes = {
   companies: PropTypes.arrayOf(PropTypes.object),
   movies: PropTypes.arrayOf(PropTypes.object),
   keywords: PropTypes.arrayOf(PropTypes.object),
+  ignoreInputBlur: PropTypes.bool,
 };
 
 MovieSearchContainer.defaultProps = {
+  ignoreInputBlur: false,
+  onMovieClick: () => {},
   onChange: () => {},
   genres: [],
   people: [],

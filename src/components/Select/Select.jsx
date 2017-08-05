@@ -29,6 +29,7 @@ class Select extends React.Component {
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onInputBlur = this.onInputBlur.bind(this);
     this.onValueDelete = this.onValueDelete.bind(this);
+    this.ignoreBlurOnce = this.ignoreBlurOnce.bind(this);
 
     this.registerEventListeners();
   }
@@ -123,7 +124,7 @@ class Select extends React.Component {
   }
 
   onInputBlur() {
-    if (this.ignoreBlur) {
+    if (this.ignoreBlur || this.props.ignoreInputBlur) {
       this.input.focus();
       this.ignoreBlur = false;
       return;
@@ -277,7 +278,7 @@ class Select extends React.Component {
               [styles.expandable]: true,
               [styles.isExpanded]: this.state.isExpanded,
             })}
-            onMouseDown={() => this.ignoreBlurOnce()}
+            onMouseDown={this.ignoreBlurOnce}
           >
             { !!this.state.isExpanded &&
             <div data-test="Select.optionContainer" className={styles.optionContainer}>
@@ -489,6 +490,7 @@ Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
   isExpanded: PropTypes.bool,
+  ignoreInputBlur: PropTypes.bool,
 };
 
 Select.defaultProps = {
@@ -505,6 +507,7 @@ Select.defaultProps = {
   options: [],
   isLoading: false,
   isExpanded: false,
+  ignoreInputBlur: false,
 };
 
 export default Select;

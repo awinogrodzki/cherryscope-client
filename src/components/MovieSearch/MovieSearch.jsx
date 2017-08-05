@@ -83,7 +83,7 @@ class MovieSearch extends React.Component {
       customComponent: (
         <MovieOptions
           movies={this.props.movies}
-          onMovieClick={this.onMovieClick}
+          onMovieClick={this.props.onMovieClick}
         />
       ),
     };
@@ -433,6 +433,7 @@ class MovieSearch extends React.Component {
           optionGroups={this.getOptionGroups()}
           isLoading={this.state.genresLoading || this.state.inputLoading}
           inputPlaceholder={t('movieSearch.inputLabel')}
+          ignoreInputBlur={this.props.ignoreInputBlur}
         />
       </div>
     );
@@ -461,6 +462,8 @@ MovieSearch.propTypes = {
   clearCompanies: PropTypes.func,
   searchMovies: PropTypes.func,
   clearMovies: PropTypes.func,
+  onMovieClick: PropTypes.func,
+  ignoreInputBlur: PropTypes.bool,
 };
 
 MovieSearch.defaultProps = {
@@ -479,6 +482,8 @@ MovieSearch.defaultProps = {
   clearCompanies: () => {},
   searchMovies: () => {},
   clearMovies: () => {},
+  onMovieClick: () => {},
+  ignoreInputBlur: false,
 };
 
 export default MovieSearch;

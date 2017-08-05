@@ -376,6 +376,19 @@ describe('Select', () => {
     expect(wrapper.find('[data-test="Select.input"]').props().value).toBe('');
   });
 
+  it('should be able to ignore input blur always', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+    ];
+    const wrapper = mount(<Select isExpanded ignoreInputBlur options={options} />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
+
+    inputWrapper.simulate('blur');
+
+    expect(wrapper.find(Option)).toHaveLength(2);
+  });
+
   it('should re-focus on option group area click', () => {
     const options = [
       { value: 1, label: 'Value', type: 'genre' },

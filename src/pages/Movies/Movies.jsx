@@ -26,6 +26,7 @@ class Movies extends React.PureComponent {
       isListLoading: false,
       isMovieLoading: false,
       loadingMovieId: null,
+      selectedMovieId: null,
       page: 1,
     };
   }
@@ -149,7 +150,11 @@ class Movies extends React.PureComponent {
       return;
     }
 
-    this.setState({ isMovieLoading: true, loadingMovieId: id }, () => {
+    this.setState({
+      isMovieLoading: true,
+      loadingMovieId: id,
+      selectedMovieId: id,
+    }, () => {
       this.props.getMovie(id).then(() => {
         modalService.createModal(() => {
           const {
@@ -187,6 +192,9 @@ class Movies extends React.PureComponent {
           );
         }, {
           animateFromElement: element,
+          onClose: () => this.setState({
+            selectedMovieId: null,
+          }),
         });
 
         this.setState({ isMovieLoading: false, loadingMovieId: null });
@@ -200,6 +208,8 @@ class Movies extends React.PureComponent {
       <div className={styles.container}>
         <MovieSearch
           onChange={this.onMovieSearchChange}
+          onMovieClick={this.selectMovie}
+          ignoreInputBlur={!!this.state.selectedMovieId}
         />
         <MovieList
           movies={this.props.movies}

@@ -15,15 +15,25 @@ class ModalStack extends React.Component {
   }
 
   render() {
-    const modals = this.state.modals.map(modal => (
-      <Modal
-        {...modal.getOptions()}
-        key={modal.getId()}
-        onClose={() => modalService.removeModal(modal)}
-      >
-        {modal.getComponent()}
-      </Modal>
-    ));
+    const modals = this.state.modals.map((modal) => {
+      const {
+        animateFromElement,
+        onClose,
+      } = modal.getOptions();
+
+      return (
+        <Modal
+          animateFromElement={animateFromElement}
+          key={modal.getId()}
+          onClose={() => {
+            typeof onClose === 'function' && onClose();
+            modalService.removeModal(modal);
+          }}
+        >
+          {modal.getComponent()}
+        </Modal>
+      );
+    });
 
     return (
       <TransitionGroup component="div">

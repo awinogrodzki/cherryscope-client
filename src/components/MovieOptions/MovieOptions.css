@@ -6,6 +6,8 @@
   overflow-x: auto;
   position: relative;
   z-index: 3;
+  padding: 0 0 10px;
+  margin-bottom: -10px;
 }
 
 .movie {

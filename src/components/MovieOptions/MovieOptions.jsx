@@ -19,7 +19,7 @@ const MovieOptions = ({
 }) => (
   <div className={styles.container}>
     { movies.map(movie => (
-      <button onClick={() => onMovieClick(movie)} className={styles.movie} key={movie.id}>
+      <button onClick={() => onMovieClick(movie.id)} className={styles.movie} key={movie.id}>
         <div className={styles.image}>
           {renderImage(movie.imageUrl)}
         </div>
