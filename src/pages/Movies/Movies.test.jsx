@@ -54,6 +54,33 @@ describe('Movies Page', () => {
     });
   });
 
+  it('should ignore blur on movie search when movie is selected', () => {
+    const getMoviePromise = Promise.resolve();
+    const getMovie = () => getMoviePromise;
+
+    const wrapper = shallow(<Movies getMovie={getMovie} />);
+    wrapper.find(MovieList).simulate('movieSelect', 12);
+
+    return getMoviePromise.then(() => {
+      expect(wrapper.find(MovieSearch).props().ignoreInputBlur).toBe(true);
+    });
+  });
+
+  it('should stop ignoring blur on movie search when movie modal is closed', () => {
+    const getMoviePromise = Promise.resolve();
+    const getMovie = () => getMoviePromise;
+
+    const wrapper = shallow(<Movies getMovie={getMovie} />);
+    wrapper.find(MovieList).simulate('movieSelect', 12);
+
+    return getMoviePromise.then(() => {
+      const onClose = modalServiceMock.createModal.mock.calls[0][1].onClose;
+      onClose();
+
+      expect(wrapper.find(MovieSearch).props().ignoreInputBlur).toBe(false);
+    });
+  });
+
   it('should not open modal if movie is loading', () => {
     const getMoviePromise = Promise.resolve();
     const getMovie = () => getMoviePromise;
