@@ -8,7 +8,7 @@ import MovieDetails, { movieDetailsPropTypes } from 'components/MovieDetails';
 import LoadMore from 'components/LoadMore';
 import styles from './Movies.css';
 
-class Movies extends React.PureComponent {
+class Movies extends React.Component {
   constructor(props) {
     super(props);
 
@@ -192,7 +192,7 @@ class Movies extends React.PureComponent {
           );
         }, {
           animateFromElement: element,
-          onClose: () => this.setState({
+          onWillUnmount: () => this.setState({
             selectedMovieId: null,
           }),
         });

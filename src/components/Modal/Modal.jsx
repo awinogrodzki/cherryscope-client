@@ -59,6 +59,10 @@ class Modal extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    this.props.onWillUnmount();
+  }
+
   animateModalWindowEnter({ x, y }, callback) {
     TweenMax.fromTo(
       this.modalWindow,
@@ -183,12 +187,14 @@ Modal.propTypes = {
   animateFromElement: PropTypes.instanceOf(Element),
   onClose: PropTypes.func,
   children: PropTypes.node,
+  onWillUnmount: PropTypes.func,
 };
 
 Modal.defaultProps = {
   animateFromElement: null,
   onClose: () => {},
   children: null,
+  onWillUnmount: () => {},
 };
 
 export default Modal;

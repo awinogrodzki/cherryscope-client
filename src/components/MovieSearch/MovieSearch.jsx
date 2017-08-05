@@ -434,6 +434,7 @@ class MovieSearch extends React.Component {
           isLoading={this.state.genresLoading || this.state.inputLoading}
           inputPlaceholder={t('movieSearch.inputLabel')}
           ignoreInputBlur={this.props.ignoreInputBlur}
+          isExpanded={this.props.isExpanded}
         />
       </div>
     );
@@ -464,6 +465,7 @@ MovieSearch.propTypes = {
   clearMovies: PropTypes.func,
   onMovieClick: PropTypes.func,
   ignoreInputBlur: PropTypes.bool,
+  isExpanded: PropTypes.bool,
 };
 
 MovieSearch.defaultProps = {
@@ -484,6 +486,7 @@ MovieSearch.defaultProps = {
   clearMovies: () => {},
   onMovieClick: () => {},
   ignoreInputBlur: false,
+  isExpanded: false,
 };
 
 export default MovieSearch;

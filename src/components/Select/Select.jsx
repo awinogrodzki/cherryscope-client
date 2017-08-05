@@ -276,7 +276,7 @@ class Select extends React.Component {
             data-test="Select.expandable"
             className={classNames({
               [styles.expandable]: true,
-              [styles.isExpanded]: this.state.isExpanded,
+              [styles.isExpanded]: this.state.isExpanded || this.props.isExpanded,
             })}
             onMouseDown={this.ignoreBlurOnce}
           >

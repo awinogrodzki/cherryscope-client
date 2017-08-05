@@ -74,8 +74,8 @@ describe('Movies Page', () => {
     wrapper.find(MovieList).simulate('movieSelect', 12);
 
     return getMoviePromise.then(() => {
-      const onClose = modalServiceMock.createModal.mock.calls[0][1].onClose;
-      onClose();
+      const onWillUnmount = modalServiceMock.createModal.mock.calls[0][1].onWillUnmount;
+      onWillUnmount();
 
       expect(wrapper.find(MovieSearch).props().ignoreInputBlur).toBe(false);
     });

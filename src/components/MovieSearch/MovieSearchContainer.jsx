@@ -34,6 +34,7 @@ const MovieSearchContainer = props => (
     onChange={values => props.onChange(values)}
     onMovieClick={props.onMovieClick}
     ignoreInputBlur={props.ignoreInputBlur}
+    isExpanded={props.isExpanded}
   />
 );
 
@@ -77,9 +78,11 @@ MovieSearchContainer.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object),
   keywords: PropTypes.arrayOf(PropTypes.object),
   ignoreInputBlur: PropTypes.bool,
+  isExpanded: PropTypes.bool,
 };
 
 MovieSearchContainer.defaultProps = {
+  isExpanded: false,
   ignoreInputBlur: false,
   onMovieClick: () => {},
   onChange: () => {},
