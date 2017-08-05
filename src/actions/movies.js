@@ -14,22 +14,36 @@ import {
   GET_MOVIE,
 } from './types';
 
+const mapMovies = (results, imageSize = 500) =>
+  results.map(item => ({
+    id: item.id,
+    title: item.title,
+    originalTitle: item.original_title,
+    imageUrl: movieService.getImageUrl(item.poster_path, imageSize),
+    voteAverage: item.vote_average,
+    voteCount: item.vote_count,
+    releaseDate: item.release_date,
+  }));
+
 const mapDirectors = response =>
   get(response, 'credits.crew', [])
   .filter(item => item.job === 'Director');
+
 const mapWriters = response =>
   get(response, 'credits.crew', [])
   .filter(item => item.job === 'Writer' || item.job === 'Screenplay');
+
 const mapCast = response => get(response, 'credits.cast', []).slice(0, 10);
 
 const discoverMovies = (filters, append = false) =>
   (dispatch, getState) => movieService.discover(filters)
     .then((data) => {
       const currentMovies = get(getState(), 'movies.items');
+      const mappedMovies = mapMovies(data.results);
 
       dispatch({
         type: DISCOVER_MOVIES,
-        items: append ? currentMovies.concat(data.results) : data.results,
+        items: append ? currentMovies.concat(mappedMovies) : mappedMovies,
         page: data.page,
         pageCount: data.total_pages,
         itemCount: data.total_results,
@@ -94,7 +108,7 @@ const searchMovies = query => dispatch => movieService.searchMovies(query)
   .then((data) => {
     dispatch({
       type: SEARCH_MOVIES,
-      movies: data.results,
+      movies: mapMovies(data.results, 160),
     });
 
     return data;

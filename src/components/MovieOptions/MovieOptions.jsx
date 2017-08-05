@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import movieService from 'services/movie';
 import styles from './MovieOptions.css';
 import { movieType } from '../MovieList/types';
 
@@ -22,7 +21,7 @@ const MovieOptions = ({
     { movies.map(movie => (
       <div className={styles.movie} key={movie.id}>
         <div className={styles.image}>
-          {renderImage(movieService.getImageUrl(movie.poster_path, 160))}
+          {renderImage(movie.imageUrl)}
         </div>
       </div>
     )) }

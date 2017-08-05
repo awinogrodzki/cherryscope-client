@@ -84,7 +84,17 @@ const mockMovieResponse = {
 
 jest.mock('services/movie', () => ({
   discover: () => Promise.resolve({
-    results: [1, 2, 3],
+    results: [
+      {
+        id: 123,
+        title: 'title',
+        original_title: 'original_title',
+        poster_path: 'poster_path',
+        vote_average: 1,
+        vote_count: 2,
+        release_date: '2017-12',
+      },
+    ],
     page: 1,
     total_pages: 10,
     total_results: 20,
@@ -102,7 +112,17 @@ jest.mock('services/movie', () => ({
     results: [1, 2, 3],
   }),
   searchMovies: () => Promise.resolve({
-    results: [1, 2, 3],
+    results: [
+      {
+        id: 123,
+        title: 'title',
+        original_title: 'original_title',
+        poster_path: 'poster_path',
+        vote_average: 1,
+        vote_count: 2,
+        release_date: '2017-12',
+      },
+    ],
   }),
   getMovie: id => Promise.resolve({ id, ...mockMovieResponse }),
   getImageUrl: image => image,
@@ -114,7 +134,17 @@ describe('movies actions', () => {
       const expectedActions = [
         {
           type: DISCOVER_MOVIES,
-          items: [1, 2, 3],
+          items: [
+            {
+              id: 123,
+              title: 'title',
+              originalTitle: 'original_title',
+              imageUrl: 'poster_path',
+              voteAverage: 1,
+              voteCount: 2,
+              releaseDate: '2017-12',
+            },
+          ],
           page: 1,
           pageCount: 10,
           itemCount: 20,
@@ -132,13 +162,46 @@ describe('movies actions', () => {
       const expectedActions = [
         {
           type: DISCOVER_MOVIES,
-          items: [3, 4, 5, 1, 2, 3],
+          items: [
+            {
+              id: 321,
+              title: 'title2',
+              originalTitle: 'original_title2',
+              imageUrl: 'poster_path2',
+              voteAverage: 12,
+              voteCount: 23,
+              releaseDate: '2016-11',
+            },
+            {
+              id: 123,
+              title: 'title',
+              originalTitle: 'original_title',
+              imageUrl: 'poster_path',
+              voteAverage: 1,
+              voteCount: 2,
+              releaseDate: '2017-12',
+            },
+          ],
           page: 1,
           pageCount: 10,
           itemCount: 20,
         },
       ];
-      const store = mockStore({ movies: { items: [3, 4, 5] } });
+      const store = mockStore({
+        movies: {
+          items: [
+            {
+              id: 321,
+              title: 'title2',
+              originalTitle: 'original_title2',
+              imageUrl: 'poster_path2',
+              voteAverage: 12,
+              voteCount: 23,
+              releaseDate: '2016-11',
+            },
+          ],
+        },
+      });
 
       return store.dispatch(discoverMovies({}, true))
         .then(() => {
@@ -247,7 +310,17 @@ describe('movies actions', () => {
     const expectedActions = [
       {
         type: SEARCH_MOVIES,
-        movies: [1, 2, 3],
+        movies: [
+          {
+            id: 123,
+            title: 'title',
+            originalTitle: 'original_title',
+            imageUrl: 'poster_path',
+            voteAverage: 1,
+            voteCount: 2,
+            releaseDate: '2017-12',
+          },
+        ],
       },
     ];
     const store = mockStore({ movies: {} });

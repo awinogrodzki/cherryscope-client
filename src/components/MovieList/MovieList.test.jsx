@@ -40,11 +40,11 @@ describe('MovieList', () => {
       {
         id: 123,
         title: 'title',
-        original_title: 'original_title',
-        poster_path: 'poster_path',
-        vote_average: 1,
-        vote_count: 2,
-        release_date: '2017-12',
+        originalTitle: 'original_title',
+        imageUrl: 'poster_path',
+        voteAverage: 1,
+        voteCount: 2,
+        releaseDate: '2017-12',
       },
     ];
     const wrapper = shallow(<MovieList movies={movies} isLoading={false} />);
