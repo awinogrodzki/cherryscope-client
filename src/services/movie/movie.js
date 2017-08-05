@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { mapMovies, mapMovie } from './mappers';
 
 import {
   API_KEY,
@@ -24,12 +25,12 @@ const mapResponse = (response) => {
 export default {
   discover(filters = {}) {
     return axios.get(getUrl(DISCOVER_URI), { params: filters })
-      .then(response => mapResponse(response));
+      .then(response => mapMovies(mapResponse(response)));
   },
 
   getMovie(id) {
     return axios.get(getUrl(`${MOVIE_URI}/${id}`), { params: { append_to_response: 'videos,images,credits' } })
-      .then(response => mapResponse(response));
+      .then(response => mapMovie(mapResponse(response)));
   },
 
   getGenres() {
@@ -54,7 +55,7 @@ export default {
 
   searchMovies(query = null) {
     return axios.get(getUrl(SEARCH_MOVIES_URI), { params: { query } })
-      .then(response => mapResponse(response));
+      .then(response => mapMovies(mapResponse(response)));
   },
 
   getImageUrl,

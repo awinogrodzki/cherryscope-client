@@ -14,39 +14,17 @@ import {
   GET_MOVIE,
 } from './types';
 
-const mapMovies = (results, imageSize = 500) =>
-  results.map(item => ({
-    id: item.id,
-    title: item.title,
-    originalTitle: item.original_title,
-    imageUrl: movieService.getImageUrl(item.poster_path, imageSize),
-    voteAverage: item.vote_average,
-    voteCount: item.vote_count,
-    releaseDate: item.release_date,
-  }));
-
-const mapDirectors = response =>
-  get(response, 'credits.crew', [])
-  .filter(item => item.job === 'Director');
-
-const mapWriters = response =>
-  get(response, 'credits.crew', [])
-  .filter(item => item.job === 'Writer' || item.job === 'Screenplay');
-
-const mapCast = response => get(response, 'credits.cast', []).slice(0, 10);
-
 const discoverMovies = (filters, append = false) =>
   (dispatch, getState) => movieService.discover(filters)
     .then((data) => {
       const currentMovies = get(getState(), 'movies.items');
-      const mappedMovies = mapMovies(data.results);
 
       dispatch({
         type: DISCOVER_MOVIES,
-        items: append ? currentMovies.concat(mappedMovies) : mappedMovies,
+        items: append ? currentMovies.concat(data.items) : data.items,
         page: data.page,
-        pageCount: data.total_pages,
-        itemCount: data.total_results,
+        pageCount: data.pageCount,
+        itemCount: data.itemCount,
       });
 
       return data;
@@ -108,7 +86,7 @@ const searchMovies = query => dispatch => movieService.searchMovies(query)
   .then((data) => {
     dispatch({
       type: SEARCH_MOVIES,
-      movies: mapMovies(data.results, 160),
+      movies: data.items,
     });
 
     return data;
@@ -122,32 +100,7 @@ const getMovie = id => dispatch => movieService.getMovie(id)
   .then((data) => {
     dispatch({
       type: GET_MOVIE,
-      details: {
-        id: data.id,
-        overview: data.overview,
-        imdbId: data.imdb_id,
-        image: movieService.getImageUrl(data.poster_path),
-        images: data.images.backdrops.map((image, index) => ({
-          id: index,
-          url: movieService.getImageUrl(image.file_path, 1000),
-          thumbnailUrl: movieService.getImageUrl(image.file_path, 160),
-        })),
-        videos: data.videos.results.map(video => ({
-          id: video.id,
-          key: video.key,
-          name: video.name,
-          site: video.site,
-          type: video.type,
-        })),
-        originalTitle: data.original_title,
-        title: data.title,
-        genres: data.genres,
-        voteCount: data.vote_count,
-        voteAverage: data.vote_average,
-        directors: mapDirectors(data),
-        writers: mapWriters(data),
-        cast: mapCast(data),
-      },
+      details: data,
     });
 
     return data;

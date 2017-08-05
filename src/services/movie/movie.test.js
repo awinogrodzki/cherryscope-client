@@ -25,6 +25,11 @@ jest.mock('services/config', () => {
   };
 });
 
+jest.mock('./mappers', () => ({
+  mapMovies: data => data,
+  mapMovie: data => data,
+}));
+
 jest.mock('axios', () => ({
   get: (url, options = {}) => Promise.resolve({ data: { url, options } }),
 }));
