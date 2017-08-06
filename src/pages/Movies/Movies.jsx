@@ -12,9 +12,13 @@ class Movies extends React.Component {
   constructor(props) {
     super(props);
 
+    this.movieSearchInput = null;
+
     this.onLoadMoreChange = this.onLoadMoreChange.bind(this);
     this.selectMovie = this.selectMovie.bind(this);
     this.onMovieSearchChange = this.onMovieSearchChange.bind(this);
+    this.onMovieSearchMovieClick = this.onMovieSearchMovieClick.bind(this);
+    this.setMovieSearchInput = this.setMovieSearchInput.bind(this);
 
     this.state = {
       filters: {},
@@ -24,9 +28,8 @@ class Movies extends React.Component {
       votes: [],
       sortBy: null,
       isListLoading: false,
-      isMovieLoading: false,
       loadingMovieId: null,
-      selectedMovieId: null,
+      selectedSearchMovieId: null,
       page: 1,
     };
   }
@@ -145,61 +148,91 @@ class Movies extends React.Component {
     this.setState({ page }, () => this.discoverMovies(this.mapFilters(), true));
   }
 
-  selectMovie(id, element) {
-    if (this.state.isMovieLoading || !this.props.getMovie) {
+  onMovieSearchMovieClick(id, element) {
+    if (
+      this.state.loadingMovieId !== null ||
+      this.state.selectedSearchMovieId !== null
+    ) {
       return;
     }
 
     this.setState({
-      isMovieLoading: true,
       loadingMovieId: id,
-      selectedMovieId: id,
+      selectedSearchMovieId: id,
     }, () => {
-      this.props.getMovie(id).then(() => {
-        modalService.createModal(() => {
-          const {
-            originalTitle,
-            title,
-            overview,
-            imdbId,
-            image,
-            genres,
-            voteCount,
-            voteAverage,
-            directors,
-            writers,
-            cast,
-            images,
-            videos,
-          } = this.props.movieDetails;
-
-          return (
-            <MovieDetails
-              originalTitle={originalTitle}
-              title={title}
-              overview={overview}
-              imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
-              image={image}
-              genres={genres}
-              voteCount={voteCount}
-              voteAverage={voteAverage}
-              directors={directors}
-              writers={writers}
-              cast={cast}
-              images={images}
-              videos={videos}
-            />
-          );
-        }, {
-          animateFromElement: element,
-          onWillUnmount: () => this.setState({
-            selectedMovieId: null,
-          }),
-        });
-
-        this.setState({ isMovieLoading: false, loadingMovieId: null });
+      this.openMovieModal(id, element, () => {
+        this.setState({
+          loadingMovieId: null,
+          selectedSearchMovieId: null,
+        }, () => this.movieSearchInput.focus());
       })
-      .catch(() => this.setState({ isMovieLoading: false, loadingMovieId: null }));
+      .catch(() => this.setState({
+        loadingMovieId: null,
+        selectedSearchMovieId: null,
+      }));
+    });
+  }
+
+  setMovieSearchInput(input) {
+    this.movieSearchInput = input;
+  }
+
+  selectMovie(id, element) {
+    if (this.state.loadingMovieId !== null) {
+      return;
+    }
+
+    this.setState({
+      loadingMovieId: id,
+    }, () => {
+      this.openMovieModal(id, element)
+        .then(() => this.setState({ loadingMovieId: null }))
+        .catch(() => {
+          this.setState({ loadingMovieId: null });
+        });
+    });
+  }
+
+  openMovieModal(id, element, onWillUnmountCallback) {
+    return this.props.getMovie(id).then(() => {
+      modalService.createModal(() => {
+        const {
+          originalTitle,
+          title,
+          overview,
+          imdbId,
+          image,
+          genres,
+          voteCount,
+          voteAverage,
+          directors,
+          writers,
+          cast,
+          images,
+          videos,
+        } = this.props.movieDetails;
+
+        return (
+          <MovieDetails
+            originalTitle={originalTitle}
+            title={title}
+            overview={overview}
+            imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
+            image={image}
+            genres={genres}
+            voteCount={voteCount}
+            voteAverage={voteAverage}
+            directors={directors}
+            writers={writers}
+            cast={cast}
+            images={images}
+            videos={videos}
+          />
+        );
+      }, {
+        animateFromElement: element,
+        onWillUnmount: onWillUnmountCallback,
+      });
     });
   }
 
@@ -208,8 +241,9 @@ class Movies extends React.Component {
       <div className={styles.container}>
         <MovieSearch
           onChange={this.onMovieSearchChange}
-          onMovieClick={this.selectMovie}
-          ignoreInputBlur={!!this.state.selectedMovieId}
+          onMovieClick={this.onMovieSearchMovieClick}
+          isExpanded={!!this.state.selectedSearchMovieId}
+          getInput={this.setMovieSearchInput}
         />
         <MovieList
           movies={this.props.movies}

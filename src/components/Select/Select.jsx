@@ -47,7 +47,7 @@ class Select extends React.Component {
       return;
     }
 
-    if (!this.state.isExpanded) {
+    if (!this.isExpanded()) {
       this.expandableContainer.style.maxHeight = 0;
       return;
     }
@@ -57,6 +57,10 @@ class Select extends React.Component {
     const targetHeight = documentHeight - rect.top - rect.left;
 
     this.expandableContainer.style.maxHeight = `${targetHeight}px`;
+  }
+
+  isExpanded() {
+    return this.state.isExpanded || this.props.isExpanded;
   }
 
   handleValuesChange() {
@@ -70,6 +74,7 @@ class Select extends React.Component {
 
   setInput(input) {
     this.input = input;
+    this.props.getInput(input);
   }
 
   onInputChange(e) {
@@ -99,7 +104,7 @@ class Select extends React.Component {
         this.handleArrowUp(e);
         break;
       default:
-        if (!this.state.isExpanded) { this.expand(); }
+        if (!this.isExpanded()) { this.expand(); }
     }
   }
 
@@ -276,11 +281,11 @@ class Select extends React.Component {
             data-test="Select.expandable"
             className={classNames({
               [styles.expandable]: true,
-              [styles.isExpanded]: this.state.isExpanded || this.props.isExpanded,
+              [styles.isExpanded]: this.isExpanded(),
             })}
             onMouseDown={this.ignoreBlurOnce}
           >
-            { !!this.state.isExpanded &&
+            { this.isExpanded() &&
             <div data-test="Select.optionContainer" className={styles.optionContainer}>
               {this.renderOptionGroups()}
             </div>
@@ -491,6 +496,7 @@ Select.propTypes = {
   isLoading: PropTypes.bool,
   isExpanded: PropTypes.bool,
   ignoreInputBlur: PropTypes.bool,
+  getInput: PropTypes.func,
 };
 
 Select.defaultProps = {
@@ -508,6 +514,7 @@ Select.defaultProps = {
   isLoading: false,
   isExpanded: false,
   ignoreInputBlur: false,
+  getInput: () => {},
 };
 
 export default Select;

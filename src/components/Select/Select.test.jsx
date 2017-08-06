@@ -332,9 +332,10 @@ describe('Select', () => {
   });
 
   it('should be able to contract on input blur', () => {
-    const wrapper = mount(<Select isExpanded />);
+    const wrapper = mount(<Select />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
+    inputWrapper.simulate('focus');
     expect(wrapper.find('[data-test="Select.optionContainer"]')).toHaveLength(1);
     inputWrapper.simulate('blur');
     expect(wrapper.find('[data-test="Select.optionContainer"]')).toHaveLength(0);
@@ -345,17 +346,19 @@ describe('Select', () => {
       { value: 1, label: 'Value', type: 'genre' },
       { value: 2, label: 'Value2', type: 'genre' },
     ];
-    const wrapper = mount(<Select isExpanded options={options} />);
-    const optionWrapper = wrapper.find(Option);
+    const wrapper = mount(<Select options={options} />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
-    optionWrapper.at(0).simulate('mousedown');
+    inputWrapper.simulate('focus');
+    wrapper.find(Option).at(0).simulate('mousedown');
 
     expect(wrapper.find('[data-test="Select.optionContainer"]')).toHaveLength(1);
   });
 
   it('should blur input on escape key', () => {
-    const wrapper = mount(<Select isExpanded />);
+    const wrapper = mount(<Select />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
+    inputWrapper.simulate('focus');
 
     expect(wrapper.find('[data-test="Select.optionContainer"]')).toHaveLength(1);
 
@@ -381,9 +384,10 @@ describe('Select', () => {
       { value: 1, label: 'Value', type: 'genre' },
       { value: 2, label: 'Value2', type: 'genre' },
     ];
-    const wrapper = mount(<Select isExpanded ignoreInputBlur options={options} />);
+    const wrapper = mount(<Select ignoreInputBlur options={options} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
+    inputWrapper.simulate('focus');
     inputWrapper.simulate('blur');
 
     expect(wrapper.find(Option)).toHaveLength(2);
@@ -394,10 +398,10 @@ describe('Select', () => {
       { value: 1, label: 'Value', type: 'genre' },
       { value: 2, label: 'Value2', type: 'genre' },
     ];
-    const wrapper = mount(<Select isExpanded options={options} />);
+    const wrapper = mount(<Select options={options} />);
     const expandableWrapper = wrapper.find('[data-test="Select.expandable"]');
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
-
+    inputWrapper.simulate('focus');
     expandableWrapper.simulate('mousedown');
     inputWrapper.simulate('blur');
 
@@ -588,5 +592,12 @@ describe('Select', () => {
     const wrapper = shallow(<Select isLoading />);
 
     expect(wrapper.find(Loader)).toHaveLength(1);
+  });
+
+  it('should be able to return input element', () => {
+    const getInputSpy = jest.fn();
+    mount(<Select getInput={getInputSpy} />);
+
+    expect(getInputSpy.mock.calls[0][0]).toBeTruthy();
   });
 });

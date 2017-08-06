@@ -54,39 +54,12 @@ describe('Movies Page', () => {
     });
   });
 
-  it('should ignore blur on movie search when movie is selected', () => {
-    const getMoviePromise = Promise.resolve();
-    const getMovie = () => getMoviePromise;
-
-    const wrapper = shallow(<Movies getMovie={getMovie} />);
-    wrapper.find(MovieList).simulate('movieSelect', 12);
-
-    return getMoviePromise.then(() => {
-      expect(wrapper.find(MovieSearch).props().ignoreInputBlur).toBe(true);
-    });
-  });
-
-  it('should stop ignoring blur on movie search when movie modal is closed', () => {
-    const getMoviePromise = Promise.resolve();
-    const getMovie = () => getMoviePromise;
-
-    const wrapper = shallow(<Movies getMovie={getMovie} />);
-    wrapper.find(MovieList).simulate('movieSelect', 12);
-
-    return getMoviePromise.then(() => {
-      const onWillUnmount = modalServiceMock.createModal.mock.calls[0][1].onWillUnmount;
-      onWillUnmount();
-
-      expect(wrapper.find(MovieSearch).props().ignoreInputBlur).toBe(false);
-    });
-  });
-
   it('should not open modal if movie is loading', () => {
     const getMoviePromise = Promise.resolve();
     const getMovie = () => getMoviePromise;
 
     const wrapper = shallow(<Movies getMovie={getMovie} />);
-    wrapper.setState({ isMovieLoading: true });
+    wrapper.setState({ loadingMovieId: 10 });
     wrapper.find(MovieList).simulate('movieSelect', 12);
 
     return getMoviePromise.then(() => {
@@ -100,10 +73,15 @@ describe('Movies Page', () => {
 
     const wrapper = shallow(<Movies getMovie={getMovie} />);
     wrapper.find(MovieList).simulate('movieSelect', 12);
-    expect(wrapper.state().isMovieLoading).toBe(true);
+    expect(wrapper.state().loadingMovieId).toBe(12);
 
-    return getMoviePromise.catch(() => {
-    }).then(() => expect(wrapper.state().isMovieLoading).toBe(false));
+    // there is no mechanism to check this other way
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        expect(wrapper.state().loadingMovieId).toBe(null);
+        resolve();
+      }, 10);
+    });
   });
 
   it('should stop loading list on error', () => {
@@ -116,6 +94,61 @@ describe('Movies Page', () => {
 
     return discoverMoviesPromise.catch(() => {
     }).then(() => expect(wrapper.state().isListLoading).toBe(false));
+  });
+
+  it('should open movie modal on movie click inside movie search component', () => {
+    const getMoviePromise = Promise.resolve();
+    const getMovie = () => getMoviePromise;
+
+    const wrapper = shallow(<Movies getMovie={getMovie} />);
+    wrapper.find(MovieSearch).simulate('movieClick', 12);
+
+    return getMoviePromise.then(() => {
+      expect(modalServiceMock.createModal).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('should not open another modal if movie from movie search component is selected', () => {
+    const getMoviePromise = Promise.resolve();
+    const getMovie = () => getMoviePromise;
+
+    const wrapper = shallow(<Movies getMovie={getMovie} />);
+    wrapper.find(MovieSearch).simulate('movieClick', 12);
+    wrapper.find(MovieSearch).simulate('movieClick', 12);
+
+    return getMoviePromise.then(() => {
+      expect(modalServiceMock.createModal).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('should re-focus input on movie modal unmount', () => {
+    const getMoviePromise = Promise.resolve();
+    const getMovie = () => getMoviePromise;
+    const input = { focus: jest.fn() };
+
+    const wrapper = shallow(<Movies getMovie={getMovie} />);
+    wrapper.find(MovieSearch).simulate('movieClick', 12);
+    wrapper.find(MovieSearch).props().getInput(input);
+
+    return getMoviePromise.then(() => {
+      modalServiceMock.createModal.mock.calls[0][1].onWillUnmount();
+      expect(input.focus).toHaveBeenCalled();
+    });
+  });
+
+  it('should keep movie search expanded if movie modal is opened', () => {
+    const getMoviePromise = Promise.resolve();
+    const getMovie = () => getMoviePromise;
+    const wrapper = shallow(<Movies getMovie={getMovie} />);
+    wrapper.find(MovieSearch).simulate('movieClick', 12);
+
+    expect(wrapper.find(MovieSearch).props().isExpanded).toBe(true);
+    wrapper.find(MovieSearch).props().getInput({ focus: () => {} });
+
+    return getMoviePromise.then(() => {
+      modalServiceMock.createModal.mock.calls[0][1].onWillUnmount();
+      expect(wrapper.find(MovieSearch).props().isExpanded).toBe(false);
+    });
   });
 
   it('should discover movies on load more', () => {

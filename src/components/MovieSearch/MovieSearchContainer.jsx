@@ -35,6 +35,7 @@ const MovieSearchContainer = props => (
     onMovieClick={props.onMovieClick}
     ignoreInputBlur={props.ignoreInputBlur}
     isExpanded={props.isExpanded}
+    getInput={props.getInput}
   />
 );
 
@@ -79,6 +80,7 @@ MovieSearchContainer.propTypes = {
   keywords: PropTypes.arrayOf(PropTypes.object),
   ignoreInputBlur: PropTypes.bool,
   isExpanded: PropTypes.bool,
+  getInput: PropTypes.func,
 };
 
 MovieSearchContainer.defaultProps = {
@@ -91,6 +93,7 @@ MovieSearchContainer.defaultProps = {
   keywords: [],
   companies: [],
   movies: [],
+  getInput: () => {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieSearchContainer);

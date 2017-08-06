@@ -17,14 +17,26 @@ const MovieOptions = ({
   movies,
   onMovieClick,
 }) => (
-  <div className={styles.container}>
-    { movies.map(movie => (
-      <button onClick={() => onMovieClick(movie.id)} className={styles.movie} key={movie.id}>
-        <div className={styles.image}>
-          {renderImage(movie.imageUrl)}
-        </div>
-      </button>
-    )) }
+  <div
+    className={styles.container}
+  >
+    { movies.map((movie) => {
+      let movieElement = null;
+      const setMovieElement = element => movieElement = element;
+
+      return (
+        <button
+          ref={setMovieElement}
+          onClick={() => onMovieClick(movie.id, movieElement)}
+          className={styles.movie}
+          key={movie.id}
+        >
+          <div className={styles.image}>
+            {renderImage(movie.imageUrl)}
+          </div>
+        </button>
+      );
+    }) }
   </div>
 );
 
