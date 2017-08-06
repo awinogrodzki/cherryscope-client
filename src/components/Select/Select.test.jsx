@@ -600,4 +600,20 @@ describe('Select', () => {
 
     expect(getInputSpy.mock.calls[0][0]).toBeTruthy();
   });
+
+  it('should not select options if component is loading', () => {
+    const options = [
+      { value: 1, label: 'Value', type: 'genre' },
+      { value: 2, label: 'Value2', type: 'genre' },
+      { value: 3, label: 'Value3', type: 'test' },
+    ];
+    const wrapper = mount(<Select isExpanded isLoading options={options} />);
+    const optionWrapper = wrapper.find(Option);
+
+    optionWrapper.at(0).simulate('mousedown');
+    optionWrapper.at(0).simulate('mousedown');
+    optionWrapper.at(0).simulate('mousedown');
+
+    expect(wrapper.find(Value)).toHaveLength(0);
+  });
 });

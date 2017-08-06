@@ -349,7 +349,7 @@ class Select extends React.Component {
   }
 
   selectOption(option) {
-    if (!this.isSelected(option)) {
+    if (!this.isSelected(option) && !this.props.isLoading) {
       this.assignOption(option);
     }
   }
