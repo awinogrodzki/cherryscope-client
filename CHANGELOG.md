@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/awinogrodzki/cherryscope-client/compare/v0.7.2...v0.8.0) (2017-08-06)
+
+
+### Bug Fixes
+
+* refactored mappers ([e6ac8e1](https://github.com/awinogrodzki/cherryscope-client/commit/e6ac8e1))
+* refactored mappers ([1f79fce](https://github.com/awinogrodzki/cherryscope-client/commit/1f79fce))
+* refactored movie service; added mappers; ([14ebbf2](https://github.com/awinogrodzki/cherryscope-client/commit/14ebbf2))
+* refactored movies actions; moved mapping to actions ([305da3c](https://github.com/awinogrodzki/cherryscope-client/commit/305da3c))
+* **MovieSearch:** added ignoring blur on movie select ([fcdb153](https://github.com/awinogrodzki/cherryscope-client/commit/fcdb153))
+* **MovieSearch:** moved input loading trigger to not debounced input change handler ([1507bc0](https://github.com/awinogrodzki/cherryscope-client/commit/1507bc0))
+
+
+### Features
+
+* **MovieOptions:** added movie modal opening on movie option click ([9b640dd](https://github.com/awinogrodzki/cherryscope-client/commit/9b640dd))
+* **MovieOptions:** added movie options component ([c2f5636](https://github.com/awinogrodzki/cherryscope-client/commit/c2f5636))
+* **MovieOptions:** added movie options component skeleton and movie search component tests ([c00736b](https://github.com/awinogrodzki/cherryscope-client/commit/c00736b))
+* **Movies:** handled and tested opening movie modal from movie search component ([f24f521](https://github.com/awinogrodzki/cherryscope-client/commit/f24f521))
+* **MovieService:** added and tested searchMovies method; ([025562a](https://github.com/awinogrodzki/cherryscope-client/commit/025562a))
+* **Select:** disabled option select when component is loading ([ca7dc4a](https://github.com/awinogrodzki/cherryscope-client/commit/ca7dc4a))
+* **Select:** disabled option select when component is loading ([09553df](https://github.com/awinogrodzki/cherryscope-client/commit/09553df))
+
+
+
 <a name="0.7.2"></a>
 ## [0.7.2](https://github.com/awinogrodzki/tmdb-client/compare/v0.7.1...v0.7.2) (2017-08-03)
 
