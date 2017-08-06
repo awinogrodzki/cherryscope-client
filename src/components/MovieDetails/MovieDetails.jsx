@@ -172,7 +172,7 @@ class MovieDetails extends React.Component {
               <div className={classNames(styles.row, styles.content)}>
                 {this.props.overview}
               </div>
-              { this.props.images.length &&
+              { !!this.props.images.length &&
               <div className={styles.row}>
                 <GalleryNav
                   data-test="MovieDetails.imageGalleryNav"
@@ -181,7 +181,7 @@ class MovieDetails extends React.Component {
                   onImageClick={this.onThumbnailClick}
                 />
               </div> }
-              { this.props.videos.length &&
+              { !!this.props.videos.length &&
               <div className={styles.row}>
                 <GalleryNav
                   data-test="MovieDetails.videoGalleryNav"
