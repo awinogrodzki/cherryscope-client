@@ -234,12 +234,8 @@ class MovieSearch extends React.Component {
 
   onInputChange(value) {
     const onInputChangeDebouncedHandler = this.inputChangeObservable.getHandler();
-
     this.setState({ query: value });
-    onInputChangeDebouncedHandler(value);
-  }
 
-  onInputChangeDebounced(value) {
     if (!value) {
       this.props.clearCompanies();
       this.props.clearKeywords();
@@ -252,7 +248,10 @@ class MovieSearch extends React.Component {
     this.setState({
       inputLoading: true,
     });
+    onInputChangeDebouncedHandler(value);
+  }
 
+  onInputChangeDebounced(value) {
     Promise.all([
       this.props.searchCompanies(value),
       this.props.searchPeople(value),
