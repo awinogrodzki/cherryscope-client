@@ -611,8 +611,6 @@ describe('Select', () => {
     const optionWrapper = wrapper.find(Option);
 
     optionWrapper.at(0).simulate('mousedown');
-    optionWrapper.at(0).simulate('mousedown');
-    optionWrapper.at(0).simulate('mousedown');
 
     expect(wrapper.find(Value)).toHaveLength(0);
   });
