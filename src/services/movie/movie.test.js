@@ -1,3 +1,4 @@
+import axios, { CancelToken } from 'axios';
 import movieService from './movie';
 
 jest.mock('services/config', () => {
@@ -34,56 +35,119 @@ jest.mock('./mappers', () => ({
   mapGenresResponse: data => data,
 }));
 
-jest.mock('axios', () => ({
-  get: (url, options = {}) => Promise.resolve({ data: { url, options } }),
-}));
+jest.mock('axios', () => {
+  const cancel = jest.fn();
+
+  return {
+    get: jest.fn(),
+    CancelToken: {
+      source: () => ({
+        cancel,
+        token: 'cancel_token',
+      }),
+    },
+  };
+});
+
+axios.get.mockReturnValue(Promise.resolve({}));
 
 describe('movie service', () => {
+  beforeEach(() => {
+    axios.get.mockClear();
+    CancelToken.source().cancel.mockClear();
+  });
+
   it('should properly generate url', () => {
     expect(movieService.getUrl('/test_uri')).toBe('https://api.themoviedb.org/3/test_uri?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
   });
 
-  it('should be able to discover movies', () => movieService.discover().then((response) => {
-    expect(response.url).toBe('https://api.themoviedb.org/3/discover/movie?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
-  }));
+  it('should be able to discover movies', () => {
+    movieService.discover();
 
-  it('should be able to get movie details by id', () => movieService.getMovie(123).then((response) => {
-    expect(response.url).toBe('https://api.themoviedb.org/3/movie/123?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
-  }));
+    expect(axios.get).toHaveBeenCalledWith(
+      'https://api.themoviedb.org/3/discover/movie?api_key=1ef3f71a318d8d8ed927fdcf2fb90670',
+      expect.any(Object)
+    );
+  });
+
+  it('should be able to get movie details by id', () => {
+    movieService.getMovie(123);
+
+    expect(axios.get).toHaveBeenCalledWith(
+      'https://api.themoviedb.org/3/movie/123?api_key=1ef3f71a318d8d8ed927fdcf2fb90670',
+      expect.any(Object)
+    );
+  });
 
   it('should be able to discover movies with parameters', () => {
     const params = {
       testFilters: [1, 2, 3],
     };
 
-    return movieService.discover(params).then((response) => {
-      expect(response.options.params).toBe(params);
-    });
+    movieService.discover(params);
+
+    expect(axios.get).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        params: {
+          testFilters: [1, 2, 3],
+        },
+      })
+    );
   });
 
-  it('should be able to get genres', () => movieService.getGenres().then((response) => {
-    expect(response.url).toBe('https://api.themoviedb.org/3/genre/movie/list?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
-  }));
+  it('should be able to get genres', () => {
+    movieService.getGenres();
 
-  it('should be able to search keywords', () => movieService.searchKeywords('queryValue').then((response) => {
-    expect(response.url).toBe('https://api.themoviedb.org/3/search/keyword?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
-    expect(response.options.params.query).toBe('queryValue');
-  }));
+    expect(axios.get).toHaveBeenCalledWith(
+      'https://api.themoviedb.org/3/genre/movie/list?api_key=1ef3f71a318d8d8ed927fdcf2fb90670',
+      expect.any(Object)
+    );
+  });
 
-  it('should be able to search people', () => movieService.searchPeople('queryValue').then((response) => {
-    expect(response.url).toBe('https://api.themoviedb.org/3/search/person?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
-    expect(response.options.params.query).toBe('queryValue');
-  }));
+  it('should be able to search keywords', () => {
+    movieService.searchKeywords('queryValue');
 
-  it('should be able to search companies', () => movieService.searchCompanies('queryValue').then((response) => {
-    expect(response.url).toBe('https://api.themoviedb.org/3/search/company?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
-    expect(response.options.params.query).toBe('queryValue');
-  }));
+    expect(axios.get).toHaveBeenCalledWith(
+      'https://api.themoviedb.org/3/search/keyword?api_key=1ef3f71a318d8d8ed927fdcf2fb90670',
+      expect.objectContaining({
+        params: { query: 'queryValue' },
+      })
+    );
+  });
 
-  it('should be able to search movies', () => movieService.searchMovies('queryValue').then((response) => {
-    expect(response.url).toBe('https://api.themoviedb.org/3/search/movie?api_key=1ef3f71a318d8d8ed927fdcf2fb90670');
-    expect(response.options.params.query).toBe('queryValue');
-  }));
+  it('should be able to search people', () => {
+    movieService.searchPeople('queryValue');
+
+    expect(axios.get).toHaveBeenCalledWith(
+      'https://api.themoviedb.org/3/search/person?api_key=1ef3f71a318d8d8ed927fdcf2fb90670',
+      expect.objectContaining({
+        params: { query: 'queryValue' },
+      })
+    );
+  });
+
+  it('should be able to search companies', () => {
+    movieService.searchCompanies('queryValue');
+
+    expect(axios.get).toHaveBeenCalledWith(
+      'https://api.themoviedb.org/3/search/company?api_key=1ef3f71a318d8d8ed927fdcf2fb90670',
+      expect.objectContaining({
+        params: { query: 'queryValue' },
+      })
+    );
+  });
+
+  it('should be able to search movies', () => {
+    movieService.searchMovies('queryValue');
+
+    expect(axios.get).toHaveBeenCalledWith(
+      'https://api.themoviedb.org/3/search/movie?api_key=1ef3f71a318d8d8ed927fdcf2fb90670',
+      expect.objectContaining({
+        params: { query: 'queryValue' },
+      })
+    );
+  });
 
   it('should be able to generate image url', () => {
     expect(movieService.getImageUrl('/test_url')).toBe('https://image.tmdb.org/t/p/w500/test_url');
@@ -91,5 +155,18 @@ describe('movie service', () => {
 
   it('should return null if image uri is incorrect', () => {
     expect(movieService.getImageUrl(undefined)).toBe(null);
+  });
+
+  it('should be able to cancel all requests', async () => {
+    movieService.getMovie(123);
+    movieService.cancelAllRequests();
+
+    expect(axios.get).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        cancelToken: 'cancel_token',
+      })
+    );
+    expect(CancelToken.source().cancel).toHaveBeenCalled();
   });
 });
