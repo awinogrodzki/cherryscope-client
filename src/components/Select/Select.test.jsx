@@ -6,14 +6,15 @@ import Option from './Option';
 import OptionGroup from './OptionGroup';
 import Select from './Select';
 
+const mockOptions = [
+  { value: 1, label: 'Value', type: 'genre' },
+  { value: 2, label: 'Value2', type: 'genre' },
+  { value: 3, label: 'Value3', type: 'test' },
+];
+
 describe('Select', () => {
   it('should display option list', () => {
-    const options = [
-      { value: 1, label: 'Test' },
-      { value: 2, label: 'Test2' },
-      { value: 3, label: 'Test3' },
-    ];
-    const wrapper = mount(<Select isExpanded options={options} />);
+    const wrapper = mount(<Select isExpanded options={mockOptions} />);
     const optionGroupWrapper = wrapper.find(OptionGroup);
 
     expect(optionGroupWrapper).toHaveLength(1);
@@ -149,47 +150,32 @@ describe('Select', () => {
   });
 
   it('should be able to extract selected values on option click', () => {
-    const options = [
-      { value: 1, label: 'Test' },
-      { value: 2, label: 'Test2' },
-      { value: 3, label: 'Test3' },
-    ];
     const onChangeHandler = jest.fn();
-    const wrapper = mount(<Select isExpanded options={options} onChange={onChangeHandler} />);
+    const wrapper = mount(<Select isExpanded options={mockOptions} onChange={onChangeHandler} />);
 
     wrapper.find(Option).at(0).simulate('mousedown');
-    expect(onChangeHandler).toBeCalledWith([options[0]]);
+    expect(onChangeHandler).toBeCalledWith([mockOptions[0]]);
 
     wrapper.find(Option).at(0).simulate('mousedown');
-    expect(onChangeHandler).toBeCalledWith([options[0], options[1]]);
+    expect(onChangeHandler).toBeCalledWith([mockOptions[0], mockOptions[1]]);
 
     wrapper.find(Option).at(0).simulate('mousedown');
-    expect(onChangeHandler).toBeCalledWith([options[0], options[1], options[2]]);
+    expect(onChangeHandler).toBeCalledWith([mockOptions[0], mockOptions[1], mockOptions[2]]);
   });
 
   it('should not add values that are already added', () => {
-    const options = [
-      { value: 1, label: 'Test' },
-      { value: 2, label: 'Test2' },
-      { value: 3, label: 'Test3' },
-    ];
     const onChangeHandler = jest.fn();
-    const wrapper = mount(<Select isExpanded options={options} onChange={onChangeHandler} />);
+    const wrapper = mount(<Select isExpanded options={mockOptions} onChange={onChangeHandler} />);
 
     wrapper.find(Option).at(0).simulate('mousedown');
     wrapper.find(Option).at(0).simulate('mousedown');
     wrapper.find(Option).at(0).simulate('mousedown');
 
-    expect(onChangeHandler).toBeCalledWith([options[0]]);
+    expect(onChangeHandler).toBeCalledWith([mockOptions[0]]);
   });
 
   it('should be able to select options', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select isExpanded options={options} />);
+    const wrapper = mount(<Select isExpanded options={mockOptions} />);
     const optionWrapper = wrapper.find(Option);
 
     optionWrapper.at(0).simulate('mousedown');
@@ -200,12 +186,7 @@ describe('Select', () => {
   });
 
   it('should be able to delete selected values', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select values={options} options={options} />);
+    const wrapper = mount(<Select values={mockOptions} options={mockOptions} />);
 
     wrapper.find(Value).at(0).find('[data-test="Value.deleteButton"]').simulate('mousedown');
     wrapper.find(Value).at(0).find('[data-test="Value.deleteButton"]').simulate('mousedown');
@@ -215,16 +196,11 @@ describe('Select', () => {
   });
 
   it('should be able to delete selected values on input backspace if input is empty', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select inputValue={''} values={options} options={options} />);
+    const wrapper = mount(<Select inputValue={''} values={mockOptions} options={mockOptions} />);
     const valueWrapper = wrapper.find(Value);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
     const event = {
-      keyCode: 8,
+      keyCode: Select.BACKSPACE_KEY,
     };
 
     expect(valueWrapper).toHaveLength(3);
@@ -237,15 +213,10 @@ describe('Select', () => {
   });
 
   it('should be able to select values on enter key', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select options={options} />);
+    const wrapper = mount(<Select options={mockOptions} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
     const event = {
-      keyCode: 13,
+      keyCode: Select.ENTER_KEY,
     };
 
     inputWrapper.simulate('keydown', event);
@@ -274,7 +245,7 @@ describe('Select', () => {
     const wrapper = mount(<Select optionGroups={optionGroups} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
     const event = {
-      keyCode: 13,
+      keyCode: Select.ENTER_KEY,
     };
 
     inputWrapper.simulate('keydown', event);
@@ -301,7 +272,7 @@ describe('Select', () => {
     const wrapper = mount(<Select inputValue={'t'} values={options} options={options} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
     const event = {
-      keyCode: 8,
+      keyCode: Select.BACKSPACE_KEY,
     };
 
     inputWrapper.simulate('keydown', event);
@@ -363,7 +334,7 @@ describe('Select', () => {
     expect(wrapper.find('[data-test="Select.optionContainer"]')).toHaveLength(1);
 
     inputWrapper.simulate('keydown', {
-      keyCode: 27,
+      keyCode: Select.ESCAPE_KEY,
     });
 
     expect(wrapper.find('[data-test="Select.optionContainer"]')).toHaveLength(0);
@@ -373,48 +344,35 @@ describe('Select', () => {
     const wrapper = mount(<Select inputValue={'Test'} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
     inputWrapper.simulate('keydown', {
-      keyCode: 27,
+      keyCode: Select.ESCAPE_KEY,
     });
 
     expect(wrapper.find('[data-test="Select.input"]').props().value).toBe('');
   });
 
   it('should be able to ignore input blur always', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-    ];
-    const wrapper = mount(<Select ignoreInputBlur options={options} />);
+    const wrapper = mount(<Select ignoreInputBlur options={mockOptions} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
     inputWrapper.simulate('focus');
     inputWrapper.simulate('blur');
 
-    expect(wrapper.find(Option)).toHaveLength(2);
+    expect(wrapper.find(Option)).toHaveLength(3);
   });
 
   it('should re-focus on option group area click', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-    ];
-    const wrapper = mount(<Select options={options} />);
+    const wrapper = mount(<Select options={mockOptions} />);
     const expandableWrapper = wrapper.find('[data-test="Select.expandable"]');
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
     inputWrapper.simulate('focus');
     expandableWrapper.simulate('mousedown');
     inputWrapper.simulate('blur');
 
-    expect(wrapper.find(Option)).toHaveLength(2);
+    expect(wrapper.find(Option)).toHaveLength(3);
   });
 
   it('should expand on input keydown when not expanded', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select options={options} />);
+    const wrapper = mount(<Select options={mockOptions} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
     expect(wrapper.find(Option)).toHaveLength(0);
@@ -427,12 +385,7 @@ describe('Select', () => {
   });
 
   it('should make first option active', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select isExpanded options={options} />);
+    const wrapper = mount(<Select isExpanded options={mockOptions} />);
 
     expect(wrapper.find('.activeOption').length).toBe(1);
     expect(wrapper.find('.activeOption').text()).toBe('Value');
@@ -460,16 +413,11 @@ describe('Select', () => {
   });
 
   it('should make active options incrementally on arrow down click', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select isExpanded options={options} />);
+    const wrapper = mount(<Select isExpanded options={mockOptions} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
     inputWrapper.simulate('keydown', {
-      keyCode: 40,
+      keyCode: Select.ARROW_DOWN_KEY,
     });
 
     expect(wrapper.find('.activeOption').length).toBe(1);
@@ -477,66 +425,46 @@ describe('Select', () => {
   });
 
   it('should make active options decrementally on arrow up click', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select isExpanded options={options} />);
+    const wrapper = mount(<Select isExpanded options={mockOptions} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
-    inputWrapper.simulate('keydown', { keyCode: 40 });
-    inputWrapper.simulate('keydown', { keyCode: 40 });
-    inputWrapper.simulate('keydown', { keyCode: 38 });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_UP_KEY });
 
     expect(wrapper.find('.activeOption').length).toBe(1);
     expect(wrapper.find('.activeOption').text()).toBe('Value2');
   });
 
   it('should stop increment on option limit', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select isExpanded options={options} />);
+    const wrapper = mount(<Select isExpanded options={mockOptions} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
-    inputWrapper.simulate('keydown', { keyCode: 40 });
-    inputWrapper.simulate('keydown', { keyCode: 40 });
-    inputWrapper.simulate('keydown', { keyCode: 40 });
-    inputWrapper.simulate('keydown', { keyCode: 40 });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
 
     expect(wrapper.find('.activeOption').length).toBe(1);
     expect(wrapper.find('.activeOption').text()).toBe('Value3');
   });
 
   it('should stop decrement on option limit', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select isExpanded options={options} />);
+    const wrapper = mount(<Select isExpanded options={mockOptions} />);
 
-    wrapper.find('[data-test="Select.input"]').simulate('keydown', { keyCode: 38 });
+    wrapper.find('[data-test="Select.input"]').simulate('keydown', { keyCode: Select.ARROW_UP_KEY });
 
     expect(wrapper.find('.activeOption').length).toBe(1);
     expect(wrapper.find('.activeOption').text()).toBe('Value');
   });
 
   it('should be able to select active option on enter key', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select options={options} />);
+    const wrapper = mount(<Select options={mockOptions} />);
     const inputWrapper = wrapper.find('[data-test="Select.input"]');
 
-    inputWrapper.simulate('keydown', { keyCode: 40 });
-    inputWrapper.simulate('keydown', { keyCode: 40 });
-    inputWrapper.simulate('keydown', { keyCode: 13 });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
+    inputWrapper.simulate('keydown', { keyCode: Select.ENTER_KEY });
 
     expect(wrapper.find(Value)).toHaveLength(1);
     expect(wrapper.find(Value).at(0).props().option.label).toBe('Value3');
@@ -560,13 +488,8 @@ describe('Select', () => {
   });
 
   it('should name value class by option', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
     const wrapper = mount(
-      <Select isExpanded getValueClass={option => option.type} options={options} />
+      <Select isExpanded getValueClass={option => option.type} options={mockOptions} />
     );
     wrapper.find(Option).at(2).simulate('mousedown');
 
@@ -602,16 +525,58 @@ describe('Select', () => {
   });
 
   it('should not select options if component is loading', () => {
-    const options = [
-      { value: 1, label: 'Value', type: 'genre' },
-      { value: 2, label: 'Value2', type: 'genre' },
-      { value: 3, label: 'Value3', type: 'test' },
-    ];
-    const wrapper = mount(<Select isExpanded isLoading options={options} />);
+    const wrapper = mount(<Select isExpanded isLoading options={mockOptions} />);
     const optionWrapper = wrapper.find(Option);
 
     optionWrapper.at(0).simulate('mousedown');
 
     expect(wrapper.find(Value)).toHaveLength(0);
+  });
+
+  it('should always show active option by manipulating container scroll', () => {
+    const wrapper = mount(<Select isExpanded options={mockOptions} />);
+
+    const expandableContainer = wrapper.instance().expandableContainer;
+    const activeOption = wrapper.instance().activeOption;
+
+    expandableContainer.scrollTop = 80;
+    expandableContainer.getBoundingClientRect = () => ({
+      bottom: 120,
+    });
+    activeOption.getBoundingClientRect = () => ({
+      bottom: 40,
+    });
+
+    wrapper.instance().updateExpandableContainerScroll();
+    expect(expandableContainer.scrollTop).toBe(0);
+  });
+
+  it('should make active last available option if last selected option was after it', () => {
+    const wrapper = mount(<Select isExpanded options={mockOptions} />);
+    const inputWrapper = wrapper.find('[data-test="Select.input"]');
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
+    inputWrapper.simulate('keydown', { keyCode: Select.ARROW_DOWN_KEY });
+    inputWrapper.simulate('keydown', { keyCode: Select.ENTER_KEY });
+
+    expect(wrapper.find(Option).at(1).hasClass('activeOption')).toBe(true);
+  });
+
+  it('should adjust expandable container height on window resize', () => {
+    let listenerCallback = null;
+    window.addEventListener = (name, callback) => listenerCallback = callback;
+
+    const wrapper = mount(<Select isExpanded />);
+    const expandableContainer = wrapper.instance().expandableContainer;
+
+    expandableContainer.getBoundingClientRect = () => ({
+      top: 200,
+      left: 40, // distance from left is considered bottom margin
+    });
+    document.body.getBoundingClientRect = () => ({
+      height: 800,
+    });
+
+    listenerCallback();
+    expect(expandableContainer.style.maxHeight).toBe('560px');
   });
 });

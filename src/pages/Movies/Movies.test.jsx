@@ -108,6 +108,23 @@ describe('Movies Page', () => {
     });
   });
 
+  it('should stop loading movie from movie search on error', () => {
+    const getMoviePromise = Promise.reject();
+    const getMovie = () => getMoviePromise;
+
+    const wrapper = shallow(<Movies getMovie={getMovie} />);
+    wrapper.find(MovieSearch).simulate('movieClick', 12);
+    expect(wrapper.state().loadingMovieId).toBe(12);
+
+    // there is no mechanism to check this other way
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        expect(wrapper.state().loadingMovieId).toBe(null);
+        resolve();
+      }, 10);
+    });
+  });
+
   it('should not open another modal if movie from movie search component is selected', () => {
     const getMoviePromise = Promise.resolve();
     const getMovie = () => getMoviePromise;

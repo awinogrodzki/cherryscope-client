@@ -8,13 +8,20 @@ import Value from './Value';
 import styles from './Select.css';
 
 class Select extends React.Component {
+
+  static BACKSPACE_KEY = 8;
+  static ENTER_KEY = 13;
+  static ARROW_DOWN_KEY = 40;
+  static ARROW_UP_KEY = 38;
+  static ESCAPE_KEY = 27;
+
+  input = null;
+  ignoreBlur = false;
+  activeOption = null;
+  expandableContainer = null;
+
   constructor(props) {
     super(props);
-
-    this.input = null;
-    this.ignoreBlur = false;
-    this.activeOption = null;
-    this.expandableContainer = null;
 
     this.state = {
       activeOptionIndex: 0,
@@ -30,6 +37,8 @@ class Select extends React.Component {
     this.onInputBlur = this.onInputBlur.bind(this);
     this.onValueDelete = this.onValueDelete.bind(this);
     this.ignoreBlurOnce = this.ignoreBlurOnce.bind(this);
+    this.handleOptionElement = this.handleOptionElement.bind(this);
+    this.onOptionClick = this.onOptionClick.bind(this);
 
     this.registerEventListeners();
   }
@@ -53,7 +62,7 @@ class Select extends React.Component {
     }
 
     const rect = this.expandableContainer.getBoundingClientRect();
-    const documentHeight = document.body.offsetHeight;
+    const documentHeight = document.body.getBoundingClientRect().height;
     const targetHeight = documentHeight - rect.top - rect.left;
 
     this.expandableContainer.style.maxHeight = `${targetHeight}px`;
@@ -65,6 +74,7 @@ class Select extends React.Component {
 
   handleValuesChange() {
     const optionCount = this.getOptionCount();
+
     if (optionCount && this.state.activeOptionIndex > optionCount - 1) {
       this.setState({ activeOptionIndex: optionCount - 1 });
     }
@@ -83,28 +93,30 @@ class Select extends React.Component {
   }
 
   onInputKeyDown(e) {
-    this.setState({
-      activeOptionIndex: 0,
-    }, () => this.updateExpandableContainerScroll());
-
     switch (e.keyCode) {
-      case 8:
+      case Select.BACKSPACE_KEY:
         this.handleInputBackspace();
         break;
-      case 13:
+      case Select.ENTER_KEY:
         this.handleInputEnter();
         break;
-      case 27:
+      case Select.ESCAPE_KEY:
         this.handleInputEscape();
         break;
-      case 40:
+      case Select.ARROW_DOWN_KEY:
         this.handleArrowDown(e);
         break;
-      case 38:
+      case Select.ARROW_UP_KEY:
         this.handleArrowUp(e);
         break;
       default:
-        if (!this.isExpanded()) { this.expand(); }
+        if (!this.isExpanded()) {
+          this.expand();
+        }
+
+        this.setState({
+          activeOptionIndex: 0,
+        }, () => this.updateExpandableContainerScroll());
     }
   }
 
@@ -191,7 +203,8 @@ class Select extends React.Component {
   }
 
   getOptionCount() {
-    return this.getOptionsFromGroups().length || this.props.options.length;
+    return this.getOptionsFromGroups().length
+      || this.filterOptions(this.props.options).length;
   }
 
   getFilteredOptions() {
@@ -414,13 +427,7 @@ class Select extends React.Component {
     const expandableBottom = expandableRect.bottom;
     const scrollTop = this.expandableContainer.scrollTop;
 
-    if (optionBottom < expandableBottom) {
-      this.setScrollTop(this.expandableContainer, scrollTop + optionBottom - expandableBottom);
-    }
-
-    if (optionBottom > expandableBottom) {
-      this.setScrollTop(this.expandableContainer, scrollTop + optionBottom - expandableBottom);
-    }
+    this.setScrollTop(this.expandableContainer, scrollTop + optionBottom - expandableBottom);
   }
 
   setScrollTop(element, value) {
@@ -456,12 +463,10 @@ class Select extends React.Component {
         labelClass={this.props.getLabelClass(group)}
         getOptionIndex={optionIndex => this.getOptionIndex(optionIndex, index)}
         getOptionClass={optionKey => this.getOptionClass(optionKey, group)}
-        getOptionElement={(element, elementIndex) => (
-          this.handleOptionElement(element, elementIndex)
-        )}
+        getOptionElement={this.handleOptionElement}
         label={group.label}
         options={filteredOptions}
-        onOptionClick={value => this.onOptionClick(value)}
+        onOptionClick={this.onOptionClick}
         customComponent={group.customComponent}
       />
     );

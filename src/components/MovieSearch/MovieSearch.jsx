@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { t } from 'services/translate';
 import { Observable } from 'services/observable';
 import languages from 'services/languages';
+import movieService from 'services/movie';
 import MovieSort from 'components/MovieSort';
 import MovieOptions from 'components/MovieOptions';
 import Select from 'components/Select';
@@ -15,7 +16,6 @@ import styles from './MovieSearch.css';
 import validDateStrings from './validDateStrings';
 
 class MovieSearch extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -224,34 +224,40 @@ class MovieSearch extends React.Component {
       selected: values,
       query: null,
     }, () => {
-      this.props.clearCompanies();
-      this.props.clearKeywords();
-      this.props.clearPeople();
-      this.props.clearMovies();
+      this.resetSearch();
       this.props.onChange(this.getValues());
     });
+  }
+
+  resetSearch() {
+    const onInputChangeDebouncedHandler = this.inputChangeObservable.getHandler();
+    onInputChangeDebouncedHandler(null);
+    movieService.cancelAllRequests();
+    this.props.clearCompanies();
+    this.props.clearKeywords();
+    this.props.clearPeople();
+    this.props.clearMovies();
   }
 
   onInputChange(value) {
     const onInputChangeDebouncedHandler = this.inputChangeObservable.getHandler();
     this.setState({ query: value });
+    onInputChangeDebouncedHandler(value);
 
     if (!value) {
-      this.props.clearCompanies();
-      this.props.clearKeywords();
-      this.props.clearPeople();
-      this.props.clearMovies();
+      this.resetSearch();
+    }
+  }
 
+  onInputChangeDebounced(value) {
+    if (!value) {
       return;
     }
 
     this.setState({
       inputLoading: true,
     });
-    onInputChangeDebouncedHandler(value);
-  }
 
-  onInputChangeDebounced(value) {
     Promise.all([
       this.props.searchCompanies(value),
       this.props.searchPeople(value),

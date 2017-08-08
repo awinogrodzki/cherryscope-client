@@ -22,7 +22,7 @@ jest.mock('services/config', () => {
   };
 
   return {
-    get: string => require('lodash').get(mockConfig, string), //eslint-disable-line global-require
+    get: string => require('lodash').get(mockConfig, string), // eslint-disable-line global-require
   };
 });
 
@@ -41,10 +41,10 @@ jest.mock('axios', () => {
   return {
     get: jest.fn(),
     CancelToken: {
-      source: () => ({
+      source: jest.fn(() => ({
         cancel,
         token: 'cancel_token',
-      }),
+      })),
     },
   };
 });
@@ -54,6 +54,7 @@ axios.get.mockReturnValue(Promise.resolve({}));
 describe('movie service', () => {
   beforeEach(() => {
     axios.get.mockClear();
+    CancelToken.source.mockClear();
     CancelToken.source().cancel.mockClear();
   });
 
@@ -168,5 +169,11 @@ describe('movie service', () => {
       })
     );
     expect(CancelToken.source().cancel).toHaveBeenCalled();
+  });
+
+  it('should be able to refresh cancellation token', async () => {
+    movieService.refreshCancellationToken();
+
+    expect(CancelToken.source).toHaveBeenCalled();
   });
 });

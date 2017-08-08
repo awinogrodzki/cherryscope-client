@@ -21,77 +21,94 @@ import {
   IMAGE_URL,
 } from './constants';
 
-const source = CancelToken.source();
-const getImageUrl = (image, size = 500) => (image ? `${IMAGE_URL}${size}${image}` : null);
-const getUrl = uri => `${API_URL}${uri}?api_key=${API_KEY}`;
+class MovieService {
+  constructor() {
+    this.source = null;
 
-const mapResponse = (response) => {
-  const data = response.data;
-  return data;
-};
+    this.refreshCancellationToken();
+  }
 
-const getConfig = () => ({
-  cancelToken: source.token,
-});
-
-export default {
   discover(filters = {}) {
-    return axios.get(getUrl(DISCOVER_URI), {
+    return axios.get(this.getUrl(DISCOVER_URI), {
       params: filters,
-      ...getConfig(),
+      ...this.getConfig(),
     })
-    .then(response => mapMoviesResponse(mapResponse(response)));
-  },
+    .then(response => mapMoviesResponse(this.mapResponse(response)));
+  }
 
   getMovie(id) {
-    return axios.get(getUrl(`${MOVIE_URI}/${id}`), {
+    return axios.get(this.getUrl(`${MOVIE_URI}/${id}`), {
       params: { append_to_response: 'videos,images,credits' },
-      ...getConfig(),
+      ...this.getConfig(),
     })
-    .then(response => mapMovieResponse(mapResponse(response)));
-  },
+    .then(response => mapMovieResponse(this.mapResponse(response)));
+  }
 
   getGenres() {
-    return axios.get(getUrl(GENRES_URI), getConfig())
-      .then(response => mapGenresResponse(mapResponse(response)));
-  },
+    return axios.get(this.getUrl(GENRES_URI), this.getConfig())
+      .then(response => mapGenresResponse(this.mapResponse(response)));
+  }
 
   searchKeywords(query = null) {
-    return axios.get(getUrl(SEARCH_KEYWORDS_URI), {
+    return axios.get(this.getUrl(SEARCH_KEYWORDS_URI), {
       params: { query },
-      ...getConfig(),
+      ...this.getConfig(),
     })
-    .then(response => mapKeywordsResponse(mapResponse(response)));
-  },
+    .then(response => mapKeywordsResponse(this.mapResponse(response)));
+  }
 
   searchPeople(query = null) {
-    return axios.get(getUrl(SEARCH_PEOPLE_URI), {
+    return axios.get(this.getUrl(SEARCH_PEOPLE_URI), {
       params: { query },
-      ...getConfig(),
+      ...this.getConfig(),
     })
-    .then(response => mapPeopleResponse(mapResponse(response)));
-  },
+    .then(response => mapPeopleResponse(this.mapResponse(response)));
+  }
 
   searchCompanies(query = null) {
-    return axios.get(getUrl(SEARCH_COMPANIES_URI), {
+    return axios.get(this.getUrl(SEARCH_COMPANIES_URI), {
       params: { query },
-      ...getConfig(),
+      ...this.getConfig(),
     })
-    .then(response => mapCompaniesResponse(mapResponse(response)));
-  },
+    .then(response => mapCompaniesResponse(this.mapResponse(response)));
+  }
 
   searchMovies(query = null) {
-    return axios.get(getUrl(SEARCH_MOVIES_URI), {
+    return axios.get(this.getUrl(SEARCH_MOVIES_URI), {
       params: { query },
-      ...getConfig(),
+      ...this.getConfig(),
     })
-    .then(response => mapMoviesResponse(mapResponse(response), 160));
-  },
+    .then(response => mapMoviesResponse(this.mapResponse(response), 160));
+  }
+
+  refreshCancellationToken() {
+    this.source = CancelToken.source();
+  }
 
   cancelAllRequests() {
-    source.cancel('Operation cancelled by the user.');
-  },
+    this.source.cancel('Operation cancelled by the user.');
+    this.refreshCancellationToken();
+  }
 
-  getImageUrl,
-  getUrl,
-};
+  mapResponse(response) {
+    const data = response.data;
+
+    return data;
+  }
+
+  getConfig() {
+    return {
+      cancelToken: this.source.token,
+    };
+  }
+
+  getImageUrl(image, size = 500) {
+    return image ? `${IMAGE_URL}${size}${image}` : null;
+  }
+
+  getUrl(uri) {
+    return `${API_URL}${uri}?api_key=${API_KEY}`;
+  }
+}
+
+export default new MovieService();
