@@ -12,24 +12,13 @@ class Movies extends React.Component {
   constructor(props) {
     super(props);
 
-    this.movieSearchInput = null;
-
     this.onLoadMoreChange = this.onLoadMoreChange.bind(this);
     this.selectMovie = this.selectMovie.bind(this);
     this.onMovieSearchChange = this.onMovieSearchChange.bind(this);
-    this.onMovieSearchMovieClick = this.onMovieSearchMovieClick.bind(this);
-    this.setMovieSearchInput = this.setMovieSearchInput.bind(this);
 
     this.state = {
-      filters: {},
-      dates: [],
-      genres: [],
-      keywords: [],
-      votes: [],
-      sortBy: null,
       isListLoading: false,
       loadingMovieId: null,
-      selectedSearchMovieId: null,
       page: 1,
     };
   }
@@ -46,131 +35,18 @@ class Movies extends React.Component {
       .catch(() => this.setState({ isListLoading: false }));
   }
 
-  mapFilters() {
-    const filters = this.state.filters;
-
-    const mappedFilters = {
-      ...this.mapCompanies(filters.companies),
-      ...this.mapPeople(filters.people),
-      ...this.mapKeywords(filters.keywords),
-      ...this.mapGenres(filters.genres),
-      ...this.mapDateFilters(filters.dates),
-      ...this.mapVoteFilters(filters.votes),
-      sort_by: filters.sortBy,
-      with_original_language: filters.language && filters.language.value || '',
-      page: this.state.page,
-    };
-
-    return mappedFilters;
-  }
-
-  mapCompanies(companies) {
-    if (!companies) {
-      return {};
-    }
-
-    return {
-      with_companies: companies
-        .map(company => company.value)
-        .join(','),
-    };
-  }
-
-  mapPeople(people) {
-    if (!people) {
-      return {};
-    }
-
-    return {
-      with_people: people
-        .map(person => person.value)
-        .join(','),
-    };
-  }
-
-  mapKeywords(keywords) {
-    if (!keywords) {
-      return {};
-    }
-
-    return {
-      with_keywords: keywords
-        .map(keyword => keyword.value)
-        .join(','),
-    };
-  }
-
-  mapGenres(genres) {
-    if (!genres) {
-      return {};
-    }
-
-    return {
-      with_genres: genres
-        .map(genre => genre.value)
-        .join(','),
-    };
-  }
-
-  mapDateFilters(dates = []) {
-    const mappedFilters = {};
-
-    dates.forEach((date) => {
-      if (!date || !date.value || !date.date) {
-        return;
-      }
-
-      mappedFilters[date.value] = date.date;
-    });
-
-    return mappedFilters;
-  }
-
-  mapVoteFilters(votes = []) {
-    const mappedFilters = {};
-
-    votes.forEach((vote) => {
-      if (!vote || !vote.value || !vote.data) {
-        return;
-      }
-
-      mappedFilters[vote.value] = vote.data;
-    });
-
-    return mappedFilters;
-  }
-
   onMovieSearchChange(filters) {
     this.setState({ filters, page: 1 }, () => this.discoverMovies(this.mapFilters()));
   }
 
-  onLoadMoreChange(page) {
-    this.setState({ page }, () => this.discoverMovies(this.mapFilters(), true));
+  mapFilters() {
+    return {
+      page: this.state.page,
+    };
   }
 
-  onMovieSearchMovieClick(id, element) {
-    if (
-      this.state.loadingMovieId !== null ||
-      this.state.selectedSearchMovieId !== null
-    ) {
-      return;
-    }
-
-    this.setState({
-      loadingMovieId: id,
-      selectedSearchMovieId: id,
-    }, () => {
-      this.openMovieModal(id, element, () => {
-        this.setState({
-          loadingMovieId: null,
-          selectedSearchMovieId: null,
-        }, () => this.movieSearchInput.focus());
-      })
-      .catch(() => this.setState({
-        loadingMovieId: null,
-        selectedSearchMovieId: null,
-      }));
-    });
+  onLoadMoreChange(page) {
+    this.setState({ page }, () => this.discoverMovies(this.mapFilters(), true));
   }
 
   setMovieSearchInput(input) {
@@ -241,9 +117,6 @@ class Movies extends React.Component {
       <div className={styles.container}>
         <MovieSearch
           onChange={this.onMovieSearchChange}
-          onMovieClick={this.onMovieSearchMovieClick}
-          isExpanded={!!this.state.selectedSearchMovieId}
-          getInput={this.setMovieSearchInput}
         />
         <MovieList
           movies={this.props.movies}
