@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Option from '../Option';
 import styles from './OptionGroup.css';
+import { optionGroupTypes } from './types';
 
 const renderOptions = ({
   options,
@@ -65,32 +66,21 @@ const OptionGroup = ({
   </div>
 );
 
-OptionGroup.propTypes = {
-  id: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  index: PropTypes.number,
-  getOptionIndex: PropTypes.func,
-  getOptionClass: PropTypes.func,
-  getOptionElement: PropTypes.func,
-  label: PropTypes.string,
-  labelClass: PropTypes.string,
-  onOptionClick: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.object),
-  customComponent: PropTypes.node,
-};
+OptionGroup.propTypes = optionGroupTypes;
 
 OptionGroup.defaultProps = {
   id: null,
   index: 0,
-  getOptionClass: () => {},
   label: null,
   labelClass: null,
   getOptionIndex: null,
-  onOptionClick: () => {},
+  getOptionClass: () => {},
   getOptionElement: () => {},
   options: [],
+  onOptionClick: () => {},
+  filterByInput: PropTypes.bool,
+  isSingle: PropTypes.bool,
+  isUnique: PropTypes.bool,
   customComponent: null,
 };
 

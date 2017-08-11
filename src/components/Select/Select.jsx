@@ -6,6 +6,7 @@ import Loader from 'components/Loader';
 import OptionGroup from './OptionGroup';
 import Value from './Value';
 import styles from './Select.css';
+import { optionGroupTypes } from './OptionGroup/types';
 
 class Select extends React.Component {
 
@@ -483,20 +484,7 @@ Select.propTypes = {
   getLabelClass: PropTypes.func,
   getValueClass: PropTypes.func,
   getOptionClass: PropTypes.func,
-  optionGroups: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.any,
-    index: PropTypes.number,
-    labelClass: PropTypes.string,
-    getOptionClass: PropTypes.func,
-    getOptionElement: PropTypes.func,
-    label: PropTypes.string,
-    onOptionClick: PropTypes.func,
-    filterByInput: PropTypes.bool,
-    isSingle: PropTypes.bool,
-    isUnique: PropTypes.bool,
-    options: PropTypes.arrayOf(PropTypes.object),
-    customComponent: PropTypes.node,
-  })),
+  optionGroups: PropTypes.arrayOf(PropTypes.shape(optionGroupTypes)),
   options: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
   isExpanded: PropTypes.bool,
