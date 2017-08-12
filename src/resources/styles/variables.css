@@ -40,10 +40,12 @@
 
   --default-font-family: 'Palanquin', sans-serif;
   --default-font-size: 16px;
-  --input-font-size: 24px;
   --large-font-size: 18px;
   --medium-font-size: 14px;
   --small-font-size: 12px;
+
+  --default-border-width: 2px;
+  --default-border: var(--default-border-width) solid var(--color-black);
 
   @custom-media --only-small-desktop (max-width: 1280px);
   @custom-media --only-tablet (max-width: 1024px);

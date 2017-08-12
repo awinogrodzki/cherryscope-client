@@ -1,0 +1,23 @@
+@import 'resources/styles/variables';
+
+.container {
+  background-color: color(var(--color-white) alpha(86%));
+  border: none;
+  cursor: pointer;
+  display: block;
+  font-size: var(--medium-font-size);
+  margin: 0;
+  outline: none;
+  padding: var(--small-padding);
+  text-align: left;
+  transition: background var(--default-animation);
+  width: 100%;
+
+  &:hover {
+    background-color: color(var(--color-white) alpha(66%) blackness(5%));
+  }
+
+  &:nth-child(2n) {
+    background-color: color(var(--color-white) alpha(66%));
+  }
+}

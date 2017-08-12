@@ -1,0 +1,28 @@
+@import 'resources/styles/variables';
+
+:root {
+  --font-size: 24px;
+}
+
+.container {
+  width: 100%;
+  height: auto;
+  padding: var(--small-padding) 0;
+  display: flex;
+  box-sizing: border-box;
+  border-bottom: var(--default-border);
+}
+
+.input {
+  display: block;
+  flex: 1;
+  height: auto;
+  outline: none;
+  height: auto;
+  font-size: var(--font-size);
+  padding: 0;
+  margin: 0;
+  line-height: 1em;
+  border: none;
+  background: none;
+}

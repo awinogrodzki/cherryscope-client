@@ -1,0 +1,11 @@
+.container {
+
+}
+
+.expandableContainer {
+  display: none;
+
+  &.isExpanded {
+    display: block;
+  }
+}
