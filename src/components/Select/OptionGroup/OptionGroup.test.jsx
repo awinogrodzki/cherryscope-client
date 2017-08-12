@@ -2,13 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import OptionGroup from './OptionGroup';
 import Option from '../Option';
-import { createSelectHandler } from '../SelectHandler';
+import SelectHandler from '../SelectHandler';
 
 let selectHandler = null;
 
 describe('OptionGroup', () => {
   beforeEach(() => {
-    selectHandler = createSelectHandler();
+    selectHandler = new SelectHandler();
   });
 
   it('should render provided options', () => {
@@ -55,5 +55,21 @@ describe('OptionGroup', () => {
 
     expect(selectHandler.getSelectedOptions()).toHaveLength(1);
     expect(selectHandler.getSelectedOptions()[0]).toEqual(options[1]);
+  });
+
+  it('should filter options by query', () => {
+    const options = [
+      { label: 'Adventure', value: 123 },
+      { label: 'Science Fiction', value: 321 },
+    ];
+    const query = 'FICT';
+
+    const wrapper = shallow(
+      <OptionGroup options={options} query={query} shouldFilterByQuery />,
+      { context: { selectHandler } }
+    );
+
+    expect(wrapper.find(Option)).toHaveLength(1);
+    expect(wrapper.find(Option).props().option).toEqual(options[1]);
   });
 });

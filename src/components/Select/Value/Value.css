@@ -19,6 +19,7 @@
 
 .deleteButton {
   font-size: 0;
+  width: 30px;
   height: 30px;
   padding: 5px;
   border: none;
@@ -29,6 +30,12 @@
   box-sizing: border-box;
   display: inline-block;
   vertical-align: middle;
+  border-radius: 50%;
+  transition: background var(--default-animation);
+
+  &:hover {
+    background-color: color(var(--color-black) alpha(13%));
+  }
 
   & > svg {
     font-size: 20px;

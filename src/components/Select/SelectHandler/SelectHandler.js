@@ -1,15 +1,17 @@
 import { find, isEqual } from 'lodash';
+import EventEmitter from 'events';
 
-const CHANGE = 'change';
+export const SELECT = 'select';
+export const DESELECT = 'deselect';
 
 class SelectHandler {
-  constructor(eventEmitter) {
+  constructor() {
     this.selectedOptions = [];
-    this.eventEmitter = eventEmitter;
+    this.eventEmitter = new EventEmitter();
   }
 
-  addChangeListener(listener) {
-    this.eventEmitter.on(CHANGE, listener);
+  addListener(eventName, listener) {
+    this.eventEmitter.on(eventName, listener);
   }
 
   getSelectedOptions() {
@@ -25,14 +27,14 @@ class SelectHandler {
       return;
     }
 
-    this.eventEmitter.emit(CHANGE, this.selectedOptions);
+    this.eventEmitter.emit(SELECT, this.selectedOptions);
     this.selectedOptions.push(option);
   }
 
-  unselectOption(option) {
+  deselectOption(option) {
     this.selectedOptions = this.selectedOptions
       .filter(selectedOption => !isEqual(option, selectedOption));
-    this.eventEmitter.emit(CHANGE, this.selectedOptions);
+    this.eventEmitter.emit(DESELECT, this.selectedOptions);
   }
 }
 

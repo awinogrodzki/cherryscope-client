@@ -1,2 +1,1 @@
-export { default as createSelectHandler } from './SelectHandler.factory';
-export { default as SelectHandler } from './SelectHandler';
+export { default, SELECT, DESELECT } from './SelectHandler';

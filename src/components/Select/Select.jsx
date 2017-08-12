@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { createSelectHandler, SelectHandler } from './SelectHandler';
+import SelectHandler, {
+  SELECT,
+  DESELECT,
+} from './SelectHandler';
 import styles from './Select.css';
 import Input from './Input';
 import { optionType } from './Option/types';
@@ -10,13 +13,42 @@ class Select extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onChange = this.onChange.bind(this);
-    this.selectHandler = createSelectHandler();
-    this.selectHandler.addChangeListener(this.onChange);
+    this.onSelect = this.onSelect.bind(this);
+    this.onDeselect = this.onDeselect.bind(this);
+    this.onOptionDelete = this.onOptionDelete.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+
+    this.selectHandler = new SelectHandler();
+    this.selectHandler.addListener(SELECT, this.onSelect);
+    this.selectHandler.addListener(DESELECT, this.onDeselect);
+
+    this.state = {
+      inputValue: '',
+    };
   }
 
-  onChange(selectedOptions) {
+  onSelect(selectedOptions) {
     this.props.onChange(selectedOptions);
+    this.changeInputValue('');
+  }
+
+  onDeselect(selectedOptions) {
+    this.props.onChange(selectedOptions);
+  }
+
+  onOptionDelete(option) {
+    this.selectHandler.deselectOption(option);
+  }
+
+  onInputChange(event) {
+    const inputValue = event.target.value;
+    this.changeInputValue(inputValue);
+  }
+
+  changeInputValue(value) {
+    this.setState({
+      inputValue: value,
+    }, () => this.props.onInputChange(value));
   }
 
   getChildContext() {
@@ -33,7 +65,9 @@ class Select extends React.Component {
     return (
       <div className={styles.container}>
         <Input
-          onOptionDelete={option => this.selectHandler.unselectOption(option)}
+          value={this.state.inputValue}
+          onChange={this.onInputChange}
+          onOptionDelete={this.onOptionDelete}
           options={this.props.selectedOptions}
         />
         <div
@@ -50,6 +84,7 @@ class Select extends React.Component {
 }
 
 Select.propTypes = {
+  onInputChange: PropTypes.func,
   onChange: PropTypes.func,
   selectedOptions: PropTypes.arrayOf(optionType),
   isExpanded: PropTypes.bool,
@@ -60,6 +95,7 @@ Select.propTypes = {
 };
 
 Select.defaultProps = {
+  onInputChange: () => {},
   onChange: () => {},
   selectedOptions: [],
   isExpanded: false,

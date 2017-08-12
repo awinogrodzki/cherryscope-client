@@ -13,14 +13,22 @@ class MovieSearch extends React.Component {
 
     this.state = {
       selectedOptions: [],
+      query: '',
     };
 
     this.onSelectChange = this.onSelectChange.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
   }
 
   onSelectChange(selectedOptions) {
     this.setState({
       selectedOptions,
+    });
+  }
+
+  onInputChange(query) {
+    this.setState({
+      query,
     });
   }
 
@@ -31,9 +39,11 @@ class MovieSearch extends React.Component {
           selectedOptions={this.state.selectedOptions}
           isExpanded={this.props.isExpanded}
           onChange={this.onSelectChange}
+          onInputChange={this.onInputChange}
         >
           <GenreOptionGroup
             options={mapGenresToOptions(this.props.genres)}
+            query={this.state.query}
           />
         </Select>
       </div>
