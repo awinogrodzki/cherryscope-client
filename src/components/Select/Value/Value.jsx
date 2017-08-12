@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DeleteIcon from 'react-icons/lib/ti/delete-outline';
 import styles from './Value.css';
 import { optionType } from '../Option/types';
 
@@ -8,8 +9,10 @@ const Value = ({
   onDelete,
 }) => (
   <div className={styles.container}>
-    <button onClick={() => onDelete(option)}>x</button>
-    <span>{option.label}</span>
+    <button className={styles.deleteButton} onClick={() => onDelete(option)}>
+      <DeleteIcon />
+    </button>
+    <span className={styles.label}>{option.label}</span>
   </div>
 );
 

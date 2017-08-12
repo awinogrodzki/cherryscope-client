@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import SelectHandler from './SelectHandler';
+import { createSelectHandler, SelectHandler } from './SelectHandler';
 import styles from './Select.css';
 import Input from './Input';
 import { optionType } from './Option/types';
@@ -11,7 +11,7 @@ class Select extends React.Component {
     super(props);
 
     this.onChange = this.onChange.bind(this);
-    this.selectHandler = new SelectHandler();
+    this.selectHandler = createSelectHandler();
     this.selectHandler.addChangeListener(this.onChange);
   }
 
@@ -25,6 +25,10 @@ class Select extends React.Component {
     };
   }
 
+  isExpanded() {
+    return this.props.isExpanded;
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -35,7 +39,7 @@ class Select extends React.Component {
         <div
           className={classNames({
             [styles.expandableContainer]: true,
-            [styles.isExpanded]: this.props.isExpanded,
+            [styles.isExpanded]: this.isExpanded(),
           })}
         >
           {this.props.children}

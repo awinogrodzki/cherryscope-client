@@ -1,12 +1,11 @@
 import { find, isEqual } from 'lodash';
-import EventEmitter from 'events';
 
 const CHANGE = 'change';
 
 class SelectHandler {
-  constructor() {
+  constructor(eventEmitter) {
     this.selectedOptions = [];
-    this.eventEmitter = new EventEmitter();
+    this.eventEmitter = eventEmitter;
   }
 
   addChangeListener(listener) {

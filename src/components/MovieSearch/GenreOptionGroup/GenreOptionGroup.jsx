@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OptionGroup, optionType, SelectHandler } from 'components/Select';
+import { OptionGroup, optionType } from 'components/Select';
 
 const GenreOptionGroup = ({
   options,

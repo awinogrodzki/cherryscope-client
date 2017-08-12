@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SelectHandler from '../SelectHandler';
+import { SelectHandler } from '../SelectHandler';
 import Option from '../Option';
 import { optionType } from '../Option/types';
 

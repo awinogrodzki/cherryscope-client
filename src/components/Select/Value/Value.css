@@ -1,1 +1,36 @@
-.container {}
+@import 'resources/styles/variables';
+
+.container {
+  height: 34px;
+  border: var(--default-border);
+  border-radius: 17px;
+  padding: 0 10px 0 0;
+  margin: 0 5px 5px;
+  box-sizing: border-box;
+  font-size: var(--medium-font-size);
+}
+
+
+.label {
+  line-height: 30px;
+  white-space: nowrap;
+      vertical-align: middle;
+}
+
+.deleteButton {
+  font-size: 0;
+  height: 30px;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  line-height: 1em;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+
+  & > svg {
+    font-size: 20px;
+  }
+}

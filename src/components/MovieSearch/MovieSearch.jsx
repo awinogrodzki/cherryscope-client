@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select, { SelectHandler } from 'components/Select';
+import Select from 'components/Select';
 import styles from './MovieSearch.css';
 import GenreOptionGroup from './GenreOptionGroup';
 import { genrePropTypes } from './types';
