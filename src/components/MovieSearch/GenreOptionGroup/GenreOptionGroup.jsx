@@ -4,16 +4,13 @@ import { OptionGroup, optionType, SelectHandler } from 'components/Select';
 
 const GenreOptionGroup = ({
   options,
-  selectHandler,
 }) => (
   <OptionGroup
-    selectHandler={selectHandler}
     options={options}
   />
 );
 
 GenreOptionGroup.propTypes = {
-  selectHandler: PropTypes.instanceOf(SelectHandler).isRequired,
   options: PropTypes.arrayOf(optionType),
 };
 

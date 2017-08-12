@@ -6,31 +6,48 @@ import styles from './Select.css';
 import Input from './Input';
 import { optionType } from './Option/types';
 
-const Select = ({
-  selectedOptions,
-  children,
-  isExpanded,
-  selectHandler,
-}) => (
-  <div className={styles.container}>
-    <Input
-      onOptionDelete={option => selectHandler.unselectOption(option)}
-      options={selectedOptions}
-    />
-    <div
-      className={classNames({
-        [styles.expandableContainer]: true,
-        [styles.isExpanded]: isExpanded,
-      })}
-    >
-      {children}
-    </div>
-  </div>
-);
+class Select extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onChange = this.onChange.bind(this);
+    this.selectHandler = new SelectHandler();
+    this.selectHandler.addChangeListener(this.onChange);
+  }
+
+  onChange(selectedOptions) {
+    this.props.onChange(selectedOptions);
+  }
+
+  getChildContext() {
+    return {
+      selectHandler: this.selectHandler,
+    };
+  }
+
+  render() {
+    return (
+      <div className={styles.container}>
+        <Input
+          onOptionDelete={option => this.selectHandler.unselectOption(option)}
+          options={this.props.selectedOptions}
+        />
+        <div
+          className={classNames({
+            [styles.expandableContainer]: true,
+            [styles.isExpanded]: this.props.isExpanded,
+          })}
+        >
+          {this.props.children}
+        </div>
+      </div>
+    );
+  }
+}
 
 Select.propTypes = {
+  onChange: PropTypes.func,
   selectedOptions: PropTypes.arrayOf(optionType),
-  selectHandler: PropTypes.instanceOf(SelectHandler).isRequired,
   isExpanded: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.element,
@@ -39,9 +56,14 @@ Select.propTypes = {
 };
 
 Select.defaultProps = {
+  onChange: () => {},
   selectedOptions: [],
   isExpanded: false,
   children: null,
+};
+
+Select.childContextTypes = {
+  selectHandler: PropTypes.instanceOf(SelectHandler).isRequired,
 };
 
 export default Select;

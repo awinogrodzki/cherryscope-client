@@ -6,8 +6,7 @@ import { optionType } from '../Option/types';
 
 const OptionGroup = ({
   options,
-  selectHandler,
-}) => (
+}, { selectHandler }) => (
   <div>
     { options.filter(option => !selectHandler.isOptionSelected(option)).map(option => (
       <Option
@@ -20,12 +19,15 @@ const OptionGroup = ({
 );
 
 OptionGroup.propTypes = {
-  selectHandler: PropTypes.instanceOf(SelectHandler).isRequired,
   options: PropTypes.arrayOf(optionType),
 };
 
 OptionGroup.defaultProps = {
   options: [],
+};
+
+OptionGroup.contextTypes = {
+  selectHandler: PropTypes.instanceOf(SelectHandler).isRequired,
 };
 
 export default OptionGroup;

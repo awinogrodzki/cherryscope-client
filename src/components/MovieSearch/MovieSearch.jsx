@@ -11,12 +11,11 @@ class MovieSearch extends React.Component {
   constructor(props) {
     super(props);
 
-    this.selectHandler = new SelectHandler();
-    this.selectHandler.addChangeListener(this.onSelectChange.bind(this));
-
     this.state = {
       selectedOptions: [],
     };
+
+    this.onSelectChange = this.onSelectChange.bind(this);
   }
 
   onSelectChange(selectedOptions) {
@@ -31,11 +30,10 @@ class MovieSearch extends React.Component {
         <Select
           selectedOptions={this.state.selectedOptions}
           isExpanded={this.props.isExpanded}
-          selectHandler={this.selectHandler}
+          onChange={this.onSelectChange}
         >
           <GenreOptionGroup
             options={mapGenresToOptions(this.props.genres)}
-            selectHandler={this.selectHandler}
           />
         </Select>
       </div>
