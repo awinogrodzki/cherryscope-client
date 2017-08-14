@@ -4,52 +4,53 @@ import SelectHandler from '../SelectHandler';
 import Option from '../Option';
 import { optionType } from '../Option/types';
 
-const filterByQuery = (options, query) => {
-  return options.filter((option) => {
-    let foundSimilarWords = false;
-    const words = option.label.trim().split(' ');
+class OptionGroup extends React.Component {
+  filterByQuery(options, query) {
+    return options.filter((option) => {
+      let foundSimilarWords = false;
+      const words = option.label.trim().split(' ');
 
-    words.forEach(word => {
-      if (
-        !foundSimilarWords
-        && word.trim().toLowerCase().indexOf(query.toLowerCase()) >= 0
-      ) {
-        foundSimilarWords = true;
-      }
+      words.forEach(word => {
+        if (
+          !foundSimilarWords
+          && word.trim().toLowerCase().indexOf(query.toLowerCase()) >= 0
+        ) {
+          foundSimilarWords = true;
+        }
+      });
+
+      return foundSimilarWords;
     });
+  }
 
-    return foundSimilarWords;
-  });
-}
-
-const OptionGroup = ({
-  options,
-  query,
-  shouldFilterByQuery,
-}, { selectHandler }) => {
-  const applyFilters = (options) => {
+  applyFilters(options) {
     let filteredOptions = options;
 
-    if (query && shouldFilterByQuery) {
-      filteredOptions = filterByQuery(options, query);
+    if (this.props.query && this.props.shouldFilterByQuery) {
+      filteredOptions = this.filterByQuery(options, this.props.query);
     }
 
+    filteredOptions = filteredOptions
+      .filter(option => !this.context.selectHandler.isOptionSelected(option));
+
     return filteredOptions;
-  };
+  }
 
-  const optionsToRender = applyFilters(options).filter(option => !selectHandler.isOptionSelected(option));
-
-  return (
-    <div>
-      { optionsToRender.map(option => (
-        <Option
-          key={option.value}
-          option={option}
-          onClick={clickedOption => selectHandler.selectOption(clickedOption)}
-        />
-      )) }
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        { this.applyFilters(this.props.options).map(option => (
+          <Option
+            key={option.value}
+            option={option}
+            onClick={clickedOption =>
+              this.context.selectHandler.selectOption(clickedOption)
+            }
+          />
+        )) }
+      </div>
+    );
+  }
 }
 
 OptionGroup.propTypes = {
