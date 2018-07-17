@@ -19,6 +19,7 @@ import {
   SEARCH_MOVIES_URI,
   MOVIE_URI,
   IMAGE_URL,
+  CONFIGURATION_URI,
 } from './constants';
 
 class MovieService {
@@ -28,57 +29,72 @@ class MovieService {
     this.refreshCancellationToken();
   }
 
+  getConfiguration() {
+    return axios
+      .get(this.getUrl(CONFIGURATION_URI), {
+        ...this.getConfig(),
+      })
+      .then(response => this.mapResponse(response));
+  }
+
   discover(filters = {}) {
-    return axios.get(this.getUrl(DISCOVER_URI), {
-      params: filters,
-      ...this.getConfig(),
-    })
-    .then(response => mapMoviesResponse(this.mapResponse(response)));
+    return axios
+      .get(this.getUrl(DISCOVER_URI), {
+        params: filters,
+        ...this.getConfig(),
+      })
+      .then(response => mapMoviesResponse(this.mapResponse(response)));
   }
 
   getMovie(id) {
-    return axios.get(this.getUrl(`${MOVIE_URI}/${id}`), {
-      params: { append_to_response: 'videos,images,credits' },
-      ...this.getConfig(),
-    })
-    .then(response => mapMovieResponse(this.mapResponse(response)));
+    return axios
+      .get(this.getUrl(`${MOVIE_URI}/${id}`), {
+        params: { append_to_response: 'videos,images,credits' },
+        ...this.getConfig(),
+      })
+      .then(response => mapMovieResponse(this.mapResponse(response)));
   }
 
   getGenres() {
-    return axios.get(this.getUrl(GENRES_URI), this.getConfig())
+    return axios
+      .get(this.getUrl(GENRES_URI), this.getConfig())
       .then(response => mapGenresResponse(this.mapResponse(response)));
   }
 
   searchKeywords(query = null) {
-    return axios.get(this.getUrl(SEARCH_KEYWORDS_URI), {
-      params: { query },
-      ...this.getConfig(),
-    })
-    .then(response => mapKeywordsResponse(this.mapResponse(response)));
+    return axios
+      .get(this.getUrl(SEARCH_KEYWORDS_URI), {
+        params: { query },
+        ...this.getConfig(),
+      })
+      .then(response => mapKeywordsResponse(this.mapResponse(response)));
   }
 
   searchPeople(query = null) {
-    return axios.get(this.getUrl(SEARCH_PEOPLE_URI), {
-      params: { query },
-      ...this.getConfig(),
-    })
-    .then(response => mapPeopleResponse(this.mapResponse(response)));
+    return axios
+      .get(this.getUrl(SEARCH_PEOPLE_URI), {
+        params: { query },
+        ...this.getConfig(),
+      })
+      .then(response => mapPeopleResponse(this.mapResponse(response)));
   }
 
   searchCompanies(query = null) {
-    return axios.get(this.getUrl(SEARCH_COMPANIES_URI), {
-      params: { query },
-      ...this.getConfig(),
-    })
-    .then(response => mapCompaniesResponse(this.mapResponse(response)));
+    return axios
+      .get(this.getUrl(SEARCH_COMPANIES_URI), {
+        params: { query },
+        ...this.getConfig(),
+      })
+      .then(response => mapCompaniesResponse(this.mapResponse(response)));
   }
 
   searchMovies(query = null) {
-    return axios.get(this.getUrl(SEARCH_MOVIES_URI), {
-      params: { query },
-      ...this.getConfig(),
-    })
-    .then(response => mapMoviesResponse(this.mapResponse(response), 160));
+    return axios
+      .get(this.getUrl(SEARCH_MOVIES_URI), {
+        params: { query },
+        ...this.getConfig(),
+      })
+      .then(response => mapMoviesResponse(this.mapResponse(response), 300));
   }
 
   refreshCancellationToken() {

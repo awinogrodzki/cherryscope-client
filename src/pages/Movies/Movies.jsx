@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { t } from 'services/translate';
-import modalService from 'services/modal';
-import MovieSearch from 'components/MovieSearch';
-import MovieList from 'components/MovieList';
-import MovieDetails, { movieDetailsPropTypes } from 'components/MovieDetails';
-import LoadMore from 'components/LoadMore';
-import styles from './Movies.css';
+import React from "react";
+import PropTypes from "prop-types";
+import { t } from "services/translate";
+import modalService from "services/modal";
+import MovieSearch from "components/MovieSearch";
+import MovieList from "components/MovieList";
+import MovieDetails, { movieDetailsPropTypes } from "components/MovieDetails";
+import LoadMore from "components/LoadMore";
+import styles from "./Movies.css";
 
 class Movies extends React.Component {
   constructor(props) {
@@ -30,18 +30,20 @@ class Movies extends React.Component {
       isListLoading: false,
       loadingMovieId: null,
       selectedSearchMovieId: null,
-      page: 1,
+      page: 1
     };
   }
 
   componentDidMount() {
     this.discoverMovies();
+    this.props.getConfiguration();
   }
 
   discoverMovies(filters = {}, append = false) {
     this.setState({ isListLoading: true });
 
-    this.props.discoverMovies(filters, append)
+    this.props
+      .discoverMovies(filters, append)
       .then(() => this.setState({ isListLoading: false }))
       .catch(() => this.setState({ isListLoading: false }));
   }
@@ -57,8 +59,9 @@ class Movies extends React.Component {
       ...this.mapDateFilters(filters.dates),
       ...this.mapVoteFilters(filters.votes),
       sort_by: filters.sortBy,
-      with_original_language: filters.language && filters.language.value || '',
-      page: this.state.page,
+      with_original_language:
+        (filters.language && filters.language.value) || "",
+      page: this.state.page
     };
 
     return mappedFilters;
@@ -70,9 +73,7 @@ class Movies extends React.Component {
     }
 
     return {
-      with_companies: companies
-        .map(company => company.value)
-        .join(','),
+      with_companies: companies.map(company => company.value).join(",")
     };
   }
 
@@ -82,9 +83,7 @@ class Movies extends React.Component {
     }
 
     return {
-      with_people: people
-        .map(person => person.value)
-        .join(','),
+      with_people: people.map(person => person.value).join(",")
     };
   }
 
@@ -94,9 +93,7 @@ class Movies extends React.Component {
     }
 
     return {
-      with_keywords: keywords
-        .map(keyword => keyword.value)
-        .join(','),
+      with_keywords: keywords.map(keyword => keyword.value).join(",")
     };
   }
 
@@ -106,16 +103,14 @@ class Movies extends React.Component {
     }
 
     return {
-      with_genres: genres
-        .map(genre => genre.value)
-        .join(','),
+      with_genres: genres.map(genre => genre.value).join(",")
     };
   }
 
   mapDateFilters(dates = []) {
     const mappedFilters = {};
 
-    dates.forEach((date) => {
+    dates.forEach(date => {
       if (!date || !date.value || !date.date) {
         return;
       }
@@ -129,7 +124,7 @@ class Movies extends React.Component {
   mapVoteFilters(votes = []) {
     const mappedFilters = {};
 
-    votes.forEach((vote) => {
+    votes.forEach(vote => {
       if (!vote || !vote.value || !vote.data) {
         return;
       }
@@ -141,7 +136,9 @@ class Movies extends React.Component {
   }
 
   onMovieSearchChange(filters) {
-    this.setState({ filters, page: 1 }, () => this.discoverMovies(this.mapFilters()));
+    this.setState({ filters, page: 1 }, () =>
+      this.discoverMovies(this.mapFilters())
+    );
   }
 
   onLoadMoreChange(page) {
@@ -156,21 +153,28 @@ class Movies extends React.Component {
       return;
     }
 
-    this.setState({
-      loadingMovieId: id,
-      selectedSearchMovieId: id,
-    }, () => {
-      this.openMovieModal(id, element, () => {
-        this.setState({
-          loadingMovieId: null,
-          selectedSearchMovieId: null,
-        }, () => this.movieSearchInput.focus());
-      })
-      .catch(() => this.setState({
-        loadingMovieId: null,
-        selectedSearchMovieId: null,
-      }));
-    });
+    this.setState(
+      {
+        loadingMovieId: id,
+        selectedSearchMovieId: id
+      },
+      () => {
+        this.openMovieModal(id, element, () => {
+          this.setState(
+            {
+              loadingMovieId: null,
+              selectedSearchMovieId: null
+            },
+            () => this.movieSearchInput.focus()
+          );
+        }).catch(() =>
+          this.setState({
+            loadingMovieId: null,
+            selectedSearchMovieId: null
+          })
+        );
+      }
+    );
   }
 
   setMovieSearchInput(input) {
@@ -182,57 +186,63 @@ class Movies extends React.Component {
       return;
     }
 
-    this.setState({
-      loadingMovieId: id,
-    }, () => {
-      this.openMovieModal(id, element)
-        .then(() => this.setState({ loadingMovieId: null }))
-        .catch(() => {
-          this.setState({ loadingMovieId: null });
-        });
-    });
+    this.setState(
+      {
+        loadingMovieId: id
+      },
+      () => {
+        this.openMovieModal(id, element)
+          .then(() => this.setState({ loadingMovieId: null }))
+          .catch(() => {
+            this.setState({ loadingMovieId: null });
+          });
+      }
+    );
   }
 
   openMovieModal(id, element, onWillUnmountCallback) {
     return this.props.getMovie(id).then(() => {
-      modalService.createModal(() => {
-        const {
-          originalTitle,
-          title,
-          overview,
-          imdbId,
-          image,
-          genres,
-          voteCount,
-          voteAverage,
-          directors,
-          writers,
-          cast,
-          images,
-          videos,
-        } = this.props.movieDetails;
+      modalService.createModal(
+        () => {
+          const {
+            originalTitle,
+            title,
+            overview,
+            imdbId,
+            image,
+            genres,
+            voteCount,
+            voteAverage,
+            directors,
+            writers,
+            cast,
+            images,
+            videos
+          } = this.props.movieDetails;
 
-        return (
-          <MovieDetails
-            originalTitle={originalTitle}
-            title={title}
-            overview={overview}
-            imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
-            image={image}
-            genres={genres}
-            voteCount={voteCount}
-            voteAverage={voteAverage}
-            directors={directors}
-            writers={writers}
-            cast={cast}
-            images={images}
-            videos={videos}
-          />
-        );
-      }, {
-        animateFromElement: element,
-        onWillUnmount: onWillUnmountCallback,
-      });
+          return (
+            <MovieDetails
+              originalTitle={originalTitle}
+              title={title}
+              overview={overview}
+              imdbUrl={imdbId && `http://www.imdb.com/title/${imdbId}`}
+              image={image}
+              genres={genres}
+              voteCount={voteCount}
+              voteAverage={voteAverage}
+              directors={directors}
+              writers={writers}
+              cast={cast}
+              images={images}
+              videos={videos}
+            />
+          );
+        },
+        {
+          animateFromElement: element,
+          onWillUnmount: onWillUnmountCallback
+        }
+      );
     });
   }
 
@@ -251,15 +261,14 @@ class Movies extends React.Component {
           loadingMovieId={this.state.loadingMovieId}
           onMovieSelect={this.selectMovie}
         />
-        {
-          this.state.page < this.props.pageCount
-          && <LoadMore
+        {this.state.page < this.props.pageCount && (
+          <LoadMore
             isLoading={this.state.isListLoading}
-            label={t('movies.loadMore')}
+            label={t("movies.loadMore")}
             page={this.state.page}
             onChange={this.onLoadMoreChange}
           />
-        }
+        )}
       </div>
     );
   }
@@ -268,17 +277,19 @@ class Movies extends React.Component {
 Movies.propTypes = {
   movieDetails: PropTypes.shape(movieDetailsPropTypes),
   discoverMovies: PropTypes.func,
+  getConfiguration: PropTypes.func,
   getMovie: PropTypes.func,
   movies: PropTypes.arrayOf(PropTypes.object),
-  pageCount: PropTypes.number,
+  pageCount: PropTypes.number
 };
 
 Movies.defaultProps = {
   movieDetails: {},
   discoverMovies: null,
   getMovie: null,
+  getConfiguration: () => {},
   movies: [],
-  pageCount: 0,
+  pageCount: 0
 };
 
 export default Movies;

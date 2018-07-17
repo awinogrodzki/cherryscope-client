@@ -2,14 +2,15 @@ import movieService from 'services/movie';
 import { get } from 'lodash';
 
 export const mapDirectors = response =>
-  get(response, 'credits.crew', [])
-  .filter(item => item.job === 'Director');
+  get(response, 'credits.crew', []).filter(item => item.job === 'Director');
 
 export const mapWriters = response =>
-  get(response, 'credits.crew', [])
-  .filter(item => item.job === 'Writer' || item.job === 'Screenplay');
+  get(response, 'credits.crew', []).filter(
+    item => item.job === 'Writer' || item.job === 'Screenplay'
+  );
 
-export const mapCast = response => get(response, 'credits.cast', []).slice(0, 10);
+export const mapCast = response =>
+  get(response, 'credits.cast', []).slice(0, 10);
 
 export const mapMovieResponse = data => ({
   id: data.id,
@@ -18,8 +19,8 @@ export const mapMovieResponse = data => ({
   image: movieService.getImageUrl(data.poster_path),
   images: data.images.backdrops.map((image, index) => ({
     id: index,
-    url: movieService.getImageUrl(image.file_path, 1000),
-    thumbnailUrl: movieService.getImageUrl(image.file_path, 160),
+    url: movieService.getImageUrl(image.file_path, 1280),
+    thumbnailUrl: movieService.getImageUrl(image.file_path, 300),
   })),
   videos: data.videos.results.map(video => ({
     id: video.id,

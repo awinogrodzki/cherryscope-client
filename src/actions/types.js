@@ -9,3 +9,4 @@ export const CLEAR_COMPANIES = 'CLEAR_COMPANIES';
 export const SEARCH_MOVIES = 'SEARCH_MOVIES';
 export const CLEAR_MOVIES = 'CLEAR_MOVIES';
 export const GET_MOVIE = 'GET_MOVIE';
+export const GET_CONFIGURATION = 'GET_CONFIGURATION';

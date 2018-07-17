@@ -10,9 +10,11 @@ import {
   SEARCH_MOVIES,
   CLEAR_MOVIES,
   GET_MOVIE,
+  GET_CONFIGURATION,
 } from '../actions/types';
 
 const initialState = {
+  configuration: {},
   items: [],
   page: 1,
   pageCount: null,
@@ -88,6 +90,10 @@ export default function moviesReducer(state = initialState, action) {
     case GET_MOVIE:
       return Object.assign({}, state, {
         details: action.details,
+      });
+    case GET_CONFIGURATION:
+      return Object.assign({}, state, {
+        configuration: action.payload,
       });
     default:
       return state;

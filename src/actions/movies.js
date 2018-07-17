@@ -12,26 +12,36 @@ import {
   SEARCH_MOVIES,
   CLEAR_MOVIES,
   GET_MOVIE,
+  GET_CONFIGURATION,
 } from './types';
 
-const discoverMovies = (filters, append = false) =>
-  (dispatch, getState) => movieService.discover(filters)
-    .then((data) => {
-      const currentMovies = get(getState(), 'movies.items');
-
-      dispatch({
-        type: DISCOVER_MOVIES,
-        items: append ? currentMovies.concat(data.movies) : data.movies,
-        page: data.page,
-        pageCount: data.pageCount,
-        itemCount: data.itemCount,
-      });
-
-      return data;
+const getConfiguration = () => dispatch =>
+  movieService.getConfiguration().then((data) => {
+    dispatch({
+      type: GET_CONFIGURATION,
+      payload: data,
     });
 
-const getGenres = () => dispatch => movieService.getGenres()
-  .then((data) => {
+    return data;
+  });
+
+const discoverMovies = (filters, append = false) => (dispatch, getState) =>
+  movieService.discover(filters).then((data) => {
+    const currentMovies = get(getState(), 'movies.items');
+
+    dispatch({
+      type: DISCOVER_MOVIES,
+      items: append ? currentMovies.concat(data.movies) : data.movies,
+      page: data.page,
+      pageCount: data.pageCount,
+      itemCount: data.itemCount,
+    });
+
+    return data;
+  });
+
+const getGenres = () => dispatch =>
+  movieService.getGenres().then((data) => {
     dispatch({
       type: GET_GENRES,
       genres: data.genres,
@@ -40,8 +50,8 @@ const getGenres = () => dispatch => movieService.getGenres()
     return data;
   });
 
-const searchKeywords = query => dispatch => movieService.searchKeywords(query)
-  .then((data) => {
+const searchKeywords = query => dispatch =>
+  movieService.searchKeywords(query).then((data) => {
     dispatch({
       type: SEARCH_KEYWORDS,
       keywords: data.keywords,
@@ -54,8 +64,8 @@ const clearKeywords = () => ({
   type: CLEAR_KEYWORDS,
 });
 
-const searchPeople = query => dispatch => movieService.searchPeople(query)
-  .then((data) => {
+const searchPeople = query => dispatch =>
+  movieService.searchPeople(query).then((data) => {
     dispatch({
       type: SEARCH_PEOPLE,
       people: data.people,
@@ -68,8 +78,8 @@ const clearPeople = () => ({
   type: CLEAR_PEOPLE,
 });
 
-const searchCompanies = query => dispatch => movieService.searchCompanies(query)
-  .then((data) => {
+const searchCompanies = query => dispatch =>
+  movieService.searchCompanies(query).then((data) => {
     dispatch({
       type: SEARCH_COMPANIES,
       companies: data.companies,
@@ -82,8 +92,8 @@ const clearCompanies = () => ({
   type: CLEAR_COMPANIES,
 });
 
-const searchMovies = query => dispatch => movieService.searchMovies(query)
-  .then((data) => {
+const searchMovies = query => dispatch =>
+  movieService.searchMovies(query).then((data) => {
     dispatch({
       type: SEARCH_MOVIES,
       movies: data.movies,
@@ -96,8 +106,8 @@ const clearMovies = () => ({
   type: CLEAR_MOVIES,
 });
 
-const getMovie = id => dispatch => movieService.getMovie(id)
-  .then((data) => {
+const getMovie = id => dispatch =>
+  movieService.getMovie(id).then((data) => {
     dispatch({
       type: GET_MOVIE,
       details: data,
@@ -118,4 +128,5 @@ module.exports = {
   searchMovies,
   clearMovies,
   getMovie,
+  getConfiguration,
 };
